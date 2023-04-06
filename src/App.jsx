@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Home from './home/Home';
+import MovieDetail from './components/MovieDetail';
+import { ResetStyle } from './styles/ResetStyle';
+import { GlobalWrap } from './styles/GlobalStyle';
+import Sidebar from './components/Sidebar';
+import Login from './components/auth/Login';
+import Top from './components/Top';
+import { Provider } from 'react-redux';
+import store from './redux/store';
+import SearchResults from './components/SearchResults';
+import Board from './components/board/Board';
+import KoreanMovie from './components/category/KoreanMovie';
+import Animation from './components/category/Animation';
+import JapanAni from './components/category/JapanAni';
+import Footer from './components/Footer';
+import TvDetail from './components/TvDetail';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <Provider store={store}>
+      <Router>
+        <GlobalWrap>
+          <ResetStyle />
+          <Header />
+          <Sidebar />
+          <Top />
+          <Routes>
+            <Route path="/" exact element={<Home />} />
+            <Route path="movies/:id" exact element={<MovieDetail />} />
+            <Route path="tv/:id" exact element={<TvDetail />} />
+            <Route path="/search/:query" exact element={<SearchResults />} />
+            <Route path="/kor_movie" exact element={<KoreanMovie />} />
+            <Route path="/jp_ani" exact element={<JapanAni />} />
+            <Route path="/animation" exact element={<Animation />} />
+            <Route path="/board" exact element={<Board />} />
+            <Route path="login" exact element={<Login />} />
+          </Routes>
+          <Footer />
+        </GlobalWrap>
+      </Router>
+    </Provider>
+  );
 }
 
-export default App
+export default App;
