@@ -18,14 +18,14 @@ const MovieDetail = () => {
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_API_URL = `${API_BASE_URL}/movie/${id}/images?api_key=${API_KEY}&language=ko`;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
-  const history = useNavigate('/');
+  const history = useNavigate();
 
   const { data, isLoading, error } = useAxios(
     `${API_BASE_URL}/movie/${id}?api_key=${API_KEY}&language=ko`
   );
 
   const handleClick = () => {
-    history("/");
+    history(-1);
   }
 
   console.log(data);

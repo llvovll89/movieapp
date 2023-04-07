@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { Card, Loading, Section, Error, Results } from '../styles/GlobalStyle';
+import {
+  Card,
+  Loading,
+  Section,
+  Error,
+  SearchContainer,
+  Results,
+} from '../styles/GlobalStyle';
 import { Link, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import useAxios from '../hooks/useAxios';
 
 function SearchResults() {
   const { query } = useParams();
-  const isOpen = useSelector((state) => state.sidebar.isOpen);
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
@@ -43,13 +48,13 @@ function SearchResults() {
     return <Error>Error: {error.message}</Error>;
   }
 
-
   return (
-    <Section style={{ paddingLeft: isOpen ? '80px' : '250px' }}>
-      <Results>
+    <Section>
+      <SearchContainer>
         <div className="top">
           <p>
-            <span>" {query} "</span> (으)로 검색하신 결과 입니다.
+            <span>" {query} "</span> (으)로 검색하신 결과 입니다. 
+            <span> 총 {data.total_results}개</span>
           </p>
           <div className="filter">
             <select name="filter" value={filter} onChange={handleFilterChange}>
@@ -59,35 +64,37 @@ function SearchResults() {
             </select>
           </div>
         </div>
-        {data &&
-          (filteredData.length > 0 ? (
-            filteredData.map((movie) => (
-              <Card key={movie.id}>
-                <div className="left">
-                  <Link to={`/movies/${movie.id}`}>
-                    <img src={`${POSTER_URL}${movie.poster_path}`} alt="" />
-                  </Link>
-                </div>
-                <div className="right">
-                  <p className="title">{movie.title}</p>
-                  <p className="over">
-                    {movie.overview.length > 30
-                      ? movie.overview.slice(0, 30) + '...'
-                      : movie.overview}
-                  </p>
-                  <p className="aver">{movie.vote_average}</p>
-                  <p className="date">{movie.release_date}</p>
-                </div>
-              </Card>
-            ))
-          ) : (
-            <div className="non_page">
-              <h1>404 NOT FOUND</h1>
-              <p>검색 결과가 없습니다.</p>
-              <p>다른 검색어로 다시 시도해주세요.</p>
-            </div>
-          ))}
-      </Results>
+        <Results>
+          {data &&
+            (filteredData.length > 0 ? (
+              filteredData.map((movie) => (
+                <Card key={movie.id}>
+                  <div className="left">
+                    <Link to={`/movies/${movie.id}`}>
+                      <img src={`${POSTER_URL}${movie.poster_path}`} alt="" />
+                    </Link>
+                  </div>
+                  <div className="right">
+                    <p className="title">{movie.title}</p>
+                    <p className="over">
+                      {movie.overview.length > 30
+                        ? movie.overview.slice(0, 30) + '...'
+                        : movie.overview}
+                    </p>
+                    <p className="aver">{movie.vote_average}</p>
+                    <p className="date">{movie.release_date}</p>
+                  </div>
+                </Card>
+              ))
+            ) : (
+              <div className="non_page">
+                <h1>404 NOT FOUND</h1>
+                <p>검색 결과가 없습니다.</p>
+                <p>다른 검색어로 다시 시도해주세요.</p>
+              </div>
+            ))}
+        </Results>
+      </SearchContainer>
     </Section>
   );
 }

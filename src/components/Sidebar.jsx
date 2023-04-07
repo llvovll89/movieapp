@@ -22,8 +22,8 @@ const Sidebar = () => {
                 <p>Category</p>
               </div>
               <div className="side_bot">
-                <Link to="/kor_movie">영화 (최신순)</Link>
-                <Link to="/animation">애니메이션 (영화)</Link>
+                <Link to="/category/movies">전체영화</Link>
+                <Link to="/category/animation">애니메이션 (영화)</Link>
                 </div>
                 </div>
                 <div className="side_content">
@@ -31,9 +31,9 @@ const Sidebar = () => {
                 <p>방송프로그램</p>
                 </div>
                 <div className="side_bot">
-                <span>드라마</span>
-                <span>예능프로그램</span>
-                <Link to="/jp_ani">에니메이션</Link>
+                <Link to="/category/drama">드라마</Link>
+                <Link to="/category/tv_enter">예능프로그램</Link>
+                <Link to="/category/jp_ani">에니메이션</Link>
               </div>
             </div>
             <div className="side_content">

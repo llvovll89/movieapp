@@ -70,4 +70,26 @@ allSlice 에 sidebar reducer
 > 모달 팝업으로 detailpage를 새로 만들려다가 약간의 시간 방해이슈로 멈춤
 > 
 
+04-07
+
+api에서 총 데이터를 받아와서 page 전환해서 보여주기 위해 npm install react-paginate 설치
+라이브러리를 이용해서 페이지네이션 하기위해!
+이슈발생 ) 복잡한 코드 & api에서 총 결과를 각 page번호 에 맞게 부여하는게 생각보다 복잡하고 어려워서 포기
+
+최종적으로 pagination 할때 라이브러리 도움 안받고 그냥
+redux-toolkit으로 관리함
+
+PaginationContainer & PaginationButton 스타일 컴포넌트를 생성 (박스 & 버튼)
+
+dispatch로 handlePageChange 파라미터에 page를 받아옴 이때
+page는 redux 스토에 저장된 state값 -1 , +1 형식으로 한칸식 이동 기본값이 1
+<PaginationButton
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+        >
+disabled 에 조건을 줘서 1일때 1 이하로 비활성화 하기
+slice(0,12) 로 매핑시 12개 까지 보여줌
+
+lazyloading을 위해 각 컴포넌트 isLoading && 추가
+
  -->

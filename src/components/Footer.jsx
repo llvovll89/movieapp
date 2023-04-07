@@ -1,13 +1,11 @@
 import React from 'react';
 import { FooterContainer } from '../styles/GlobalStyle';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
 
   return (
-    <FooterContainer style={{ paddingLeft: `${sidebarWidth}px` }}>
+    <FooterContainer>
       <div className="top">
         <Link to="/">공지사항</Link>
         <Link to="/board">게시판 가기</Link>

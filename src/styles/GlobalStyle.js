@@ -27,6 +27,12 @@ const Error = styled.div`
 const Loading = styled.div`
   display: 'block';
   width: 100%;
+  text-align: center;
+  h1 {
+    color: #07f;
+    font-size: 36px;
+    font-weight: 600;
+  }
 `;
 
 const Container = styled.div`
@@ -108,7 +114,6 @@ const DetailPage = styled.div`
         h1 {
           font-size: 28px;
           font-weight: bold;
-          margin-bottom: 8px;
         }
         span {
           font-size: 18px;
@@ -130,8 +135,35 @@ const DetailPage = styled.div`
   }
 
   @media screen and (max-width: 768px) {
+    padding: 30px 16px;
     .content {
-      padding: 0 18px;
+      padding: 0;
+      gap: 6px;
+
+      button {
+        right: 4px;
+        top: 4px;
+      }
+      .top {
+        /* height: ; */
+      }
+
+      .bot {
+        padding: 26px 12px;
+        gap: 8px;
+        .title {
+          h1 {
+            font-size: 20px;
+          }
+          span {
+            font-size: 13.5px;
+          }
+        }
+        p {
+          font-size: 14px;
+          line-height: 1.5;
+        }
+      }
     }
   }
 `;
@@ -270,9 +302,21 @@ const Section = styled.section`
   padding-top: 76px;
   min-height: 100vh;
   transition: padding-left 0.15s ease;
+  padding-left: 80px;
+  #page-numbers {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #fff;
+    padding: 12px;
+    width: 100%;
 
-  @media screen and (max-width: 768px) {
-    padding-left: 50px;
+    li {
+      padding: 6px 20px;
+      background: #08f;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -318,7 +362,7 @@ const LoginLink = styled(Link)`
   max-width: 100%;
   height: 36px;
   border-radius: 3px;
-  font-size: 16px
+  font-size: 16px;
   font-weight: 600;
   background: #1de9b6;
   color: #050306;
@@ -350,19 +394,24 @@ const Card = styled.div`
   justify-content: center;
   overflow: hidden;
   color:#fff;
+  background: rgb(29, 29, 29);
   gap: 20px;
+
   .left {
-    flex: 1 1 35%;
+    flex: 1 1 30%;
     img {
       width: 100%;
     }
   }
   .right {
-    flex 1 1 65%;
+    flex 1 1 70%;
+    height: 100%;
     display: flex;
     flex-flow: column wrap;
+    justify-content: center;
     gap: 12px;
     padding: 16px;
+    
     .title {
       font-size: 20px;
     }
@@ -370,15 +419,37 @@ const Card = styled.div`
       color: #d6c8c8; 
     }
   }
+
+  
+  @media screen and (max-width: 768px) {
+    gap: 6px;  
+    .right {
+      padding: 12px;
+
+      .title {
+        font-size: 16px;
+      }
+      .over, .date {
+        font-size: 14px;
+      }
+      .over {
+        
+            max-height: 3.9em; /* 3줄만 보이도록 설정 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+      }
+    }
+  }
 `;
 
-const Results = styled.div`
+const SearchContainer = styled.div`
+  display: flex;
+  flex-flow: column wrap;
   padding: 40px 36px;
-  width: 100%;
   margin: auto;
+  max-width: 1280px;
+  width: 100%;
   gap: 30px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
 
   .top {
     padding: 20px 0;
@@ -465,12 +536,76 @@ const Results = styled.div`
       color: #fff;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 24px 20px;
+    gap: 16px;
+
+    .top {
+      padding: 12px 0px 0px 0px;
+      flex-flow: column wrap;
+      align-items: flex-end;
+      gap: 16px;
+
+      p {
+        font-size: 16px;
+        span {
+          font-size: 18px;
+        }
+      }
+
+      .filter select {
+        width: 125px;
+        padding: 8px;
+        background: #202123;
+        border: 1px solid rgba(0, 0, 0, 0.11);
+        color: #fff;
+        outline: none;
+        font-size: 13px;
+      }
+    }
+
+    .non_page {
+      position: relative;
+      width: 100%;
+      /* border: 1px solid rgba(255,255,255,0.16); */
+
+      h1 {
+        padding: 16px 0;
+        font-size: 26px;
+        letter-spacing: 0.03rem;
+        color: #fe5493;
+      }
+
+      p {
+        font-size: 14px;
+        padding: 3px 0;
+        color: #fff;
+      }
+    }
+  }
+`;
+
+const Results = styled.div`
+  padding: 40px 36px;
+  max-width: 1280px;
+  width: 100%;
+  margin: auto;
+  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  @media screen and (max-width: 768px) {
+    padding: 24px 20px;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 `;
 
 const FooterContainer = styled.footer`
   width: 100%;
   display: flex;
-  padding: 0px 0px 30px 0px;
+  padding: 0px 0px 30px 80px;
   gap: 12px;
   color: #fff;
   flex-flow: column wrap;
@@ -506,6 +641,28 @@ const FooterContainer = styled.footer`
       line-height: 1.5;
       font-size: 13px;
       color: #8c8888;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    gap: 8px;
+
+    .top {
+      a {
+        font-size: 14px;
+      }
+    }
+
+    .links {
+        a {
+          font-size: 13px;
+        }
+      }
+
+    .contents {
+      p {
+        font-size: 11.5px;
+      }
     }
   }
 `;
@@ -546,6 +703,21 @@ const ModalContainer = styled.div`
   }
 `;
 
+const PaginationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 12px 0;
+  width: 100%;
+`;
+
+const PaginationButton = styled.button`
+  padding: 12px 20px;
+  background: #08f;
+  color: #fff;
+`;
+
 export {
   Section,
   GlobalWrap,
@@ -563,4 +735,7 @@ export {
   Results,
   FooterContainer,
   ModalContainer,
+  PaginationContainer,
+  PaginationButton,
+  SearchContainer,
 };
