@@ -1,14 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import reactRefresh from '@vitejs/plugin-react-refresh';
-import { VitePluginPages } from 'vite-plugin-pages';
+import pages from 'vite-plugin-pages';
 
-export default {
+export default defineConfig({
   plugins: [
     react(),
     reactRefresh(),
-    VitePluginPages({ pagesDir: 'src/pages' }),
-    VitePlugin404Page({ path: '/404.html' }),
+    pages({ pagesDir: 'src/pages' }),
   ],
   base: '/movieapp/',
   build: {
@@ -17,4 +16,4 @@ export default {
   optimizeDeps: {
     include: ['axios'],
   },
-};
+});
