@@ -92,4 +92,26 @@ slice(0,12) 로 매핑시 12개 까지 보여줌
 
 lazyloading을 위해 각 컴포넌트 isLoading && 추가
 
+04.08
+디테일 페이지에 트레일러가 있을 시 ? 트레일러 : posterIMG 로
+
+이슈발생 >
+ Indicate whether to send a cookie in a cross-site request by specifying its SameSite attribute X 90~ 이상
+ 이건 youtube 트레일러 받아올때 크로스브라우징 , 쿠키 이슈다. 나는 프로젝트용이고 상업용이 아니라서 굳이 수정하지 않는걸로 결정!
+
+기능추가하기 (+ detailpage)
+
+Home 컴포넌트 수정 (인기,넷플 등 한곳에서 관리하도록 추가)
+
+UI 변경함 / 기본적으로 title, average, date로
+
+sidebar 에 맨 위 홈, 즐겨찾기, 시간 추가
+
+04.09 
+> 각 section padding-left 원래대로 돌림.
+allsi
+
+이슈발생 > 
+배역,배우,이미지 받아서 Splide js 로 감쌌는데 castData 가 20개 이상의 결과물을 가진 contents 는 화면을 벗어나느 이슈 발생..
+
  -->

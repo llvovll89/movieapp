@@ -1,20 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Header from './components/Header';
 import Home from './home/Home';
 import MovieDetail from './components/MovieDetail';
 import Sidebar from './components/Sidebar';
 import Login from './components/auth/Login';
 import Top from './components/Top';
-import { Provider } from 'react-redux';
 import store from './redux/store';
 import SearchResults from './components/SearchResults';
 import Board from './components/board/Board';
-import Animation from './components/category/Animation';
-import JapanAni from './components/category/JapanAni';
 import Footer from './components/Footer';
 import TvDetail from './components/TvDetail';
-import Movies from './components/category/Movies';
-import Drama from './components/category/Drama';
 import NotFound from './components/NotFound';
 import Category from './components/category/Category';
 
@@ -36,7 +32,7 @@ function App() {
             <Route path="/movies/:id" element={<MovieDetail />} />
             <Route path="/tv/:id" element={<TvDetail />} />
             <Route path="/search/:query" element={<SearchResults />} />
-            <Route path="/category/*" element={<Category />} /> />
+            <Route path="/category/*" element={<Category />} />
             <Route path="/board" element={<Board />} />
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<NotFound />} />

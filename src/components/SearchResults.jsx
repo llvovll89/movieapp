@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import {
   Card,
-  Loading,
   Section,
   Error,
   SearchContainer,
   Results,
 } from '../styles/GlobalStyle';
+import { Loading, Spinner } from '../styles/Loading';
 import { Link, useParams } from 'react-router-dom';
 import useAxios from '../hooks/useAxios';
+import { useSelector } from 'react-redux';
 
 function SearchResults() {
+  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const { query } = useParams();
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -41,7 +43,12 @@ function SearchResults() {
         });
 
   if (isLoading) {
-    return <Loading>Loading...</Loading>;
+    return (
+      <Loading>
+        <h1>Loading...</h1>
+        <Spinner />
+      </Loading>
+    );
   }
 
   if (error) {
@@ -49,11 +56,11 @@ function SearchResults() {
   }
 
   return (
-    <Section>
+    <Section style={{paddingLeft: `${sidebarWidth}px`}}>
       <SearchContainer>
-        <div className="top">
+        <div className="items">
           <p>
-            <span>" {query} "</span> (으)로 검색하신 결과 입니다. 
+            <span>" {query} "</span> (으)로 검색하신 결과 입니다.
             <span> 총 {data.total_results}개</span>
           </p>
           <div className="filter">
@@ -69,20 +76,17 @@ function SearchResults() {
             (filteredData.length > 0 ? (
               filteredData.map((movie) => (
                 <Card key={movie.id}>
-                  <div className="left">
-                    <Link to={`/movies/${movie.id}`}>
-                      <img src={`${POSTER_URL}${movie.poster_path}`} alt="" />
-                    </Link>
-                  </div>
-                  <div className="right">
-                    <p className="title">{movie.title}</p>
-                    <p className="over">
-                      {movie.overview.length > 30
-                        ? movie.overview.slice(0, 30) + '...'
-                        : movie.overview}
-                    </p>
-                    <p className="aver">{movie.vote_average}</p>
-                    <p className="date">{movie.release_date}</p>
+                  <div className="contents">
+                    <div className="top">
+                      <Link to={`/movies/${movie.id}`}>
+                        <img src={`${POSTER_URL}${movie.poster_path}`} alt="" />
+                      </Link>
+                    </div>
+                    <div className="bot">
+                      <p className="title">{movie.title}</p>
+                      <p className="aver">{movie.vote_average}</p>
+                      <p className="date">{movie.release_date}</p>
+                    </div>
                   </div>
                 </Card>
               ))

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import sidebarReducer from './allSlice';
+import sidebarReducer from './sideSlice';
 import searchReducer from './searchSlice';
 import paginationReducer from './paginationSlice';
 

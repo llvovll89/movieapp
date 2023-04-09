@@ -7,13 +7,17 @@ import {
   Section,
   PaginationButton,
   PaginationContainer,
-  Loading,
 } from '../../styles/GlobalStyle';
+import { Loading, Spinner } from '../../styles/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentPage, setCurrentPage } from '../../redux/paginationSlice';
 
+// react-icons
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+
 const Movies = () => {
   const currentPage = useSelector(selectCurrentPage);
+  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const dispatch = useDispatch();
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
     .env;
@@ -30,11 +34,11 @@ const Movies = () => {
   };
 
   return (
-    <Section>
+    <Section style={{ paddingLeft: `${sidebarWidth}px` }}>
       <Results>
         {isLoading && (
           <Loading>
-            <h1>Loading...</h1>
+            <Spinner />
           </Loading>
         )}
         {error && <p>Error: {error.message}</p>}
@@ -42,25 +46,26 @@ const Movies = () => {
           data.results &&
           data.results.slice(0, 12).map((ani) => (
             <Card key={ani.id}>
-              <div className="left">
-                {ani.poster_path && (
-                  <Link to={`/movies/${ani.id}`}>
-                    <img
-                      src={`${POSTER_URL}${ani.poster_path}`}
-                      alt={ani.title}
-                    />
-                  </Link>
-                )}
-              </div>
-              <div className="right">
-                <p className="title">{ani.title}</p>
-                <p className="over">
-                  {ani.overview.length > 30
-                    ? ani.overview.slice(0, 30) + '...'
-                    : ani.overview}
-                </p>
-                <p className="aver">{ani.vote_average}</p>
-                <p className="date">{ani.release_date}</p>
+              <div className="contents">
+                <div className="top">
+                  {ani.poster_path && (
+                    <Link to={`/movies/${ani.id}`}>
+                      <img
+                        src={`${POSTER_URL}${ani.poster_path}`}
+                        alt={ani.title}
+                      />
+                    </Link>
+                  )}
+                </div>
+                <div className="bot">
+                  <p className="title">{ani.title}</p>
+                  <p className="aver">
+                    평점 - <span>{ani.vote_average}</span>
+                  </p>
+                  <p className="date">
+                    개봉일 - <span>{ani.vote_average}</span>
+                  </p>
+                </div>
               </div>
             </Card>
           ))}
@@ -71,10 +76,10 @@ const Movies = () => {
             disabled={currentPage === 1}
             onClick={() => handlePageChange(currentPage - 1)}
           >
-            PREV
+            <FaArrowLeft />
           </PaginationButton>
           <PaginationButton onClick={() => handlePageChange(currentPage + 1)}>
-            NEXT
+            <FaArrowRight / >
           </PaginationButton>
         </PaginationContainer>
       )}

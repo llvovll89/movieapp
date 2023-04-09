@@ -7,6 +7,8 @@ const useAxios = (url) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    
+
     const getData = async () => {
       try {
         const response = await axios.get(url);

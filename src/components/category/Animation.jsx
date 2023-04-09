@@ -6,14 +6,19 @@ import {
   Card,
   PaginationContainer,
   PaginationButton,
-  Loading,
 } from '../../styles/GlobalStyle';
+import { Loading, Spinner } from '../../styles/Loading';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentPage, setCurrentPage } from '../../redux/paginationSlice';
 
+// react-icons
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+
+
 const Animation = () => {
   const currentPage = useSelector(selectCurrentPage);
+  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const dispatch = useDispatch();
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
@@ -32,37 +37,40 @@ const Animation = () => {
   };
 
   return (
-    <Section>
+    <Section style={{paddingLeft: `${sidebarWidth}px`}}>
       <Results>
-      {isLoading && (
-        <Loading>
-          <h1>Loading...</h1>
-        </Loading>
-      )}
-      {error && <h1>Error: {error.message}</h1>}
+        {isLoading && (
+          <Loading>
+            <Spinner />
+          </Loading>
+        )}
+        {error && <h1>Error: {error.message}</h1>}
         {data &&
           data.results &&
-          data.results.slice(0, 12).map((ani) => (
+          data.results.map((ani) => (
             <Card key={ani.id}>
-              <div className="left">
-                {ani.poster_path && (
-                  <Link to={`/movies/${ani.id}`}>
-                    <img
-                      src={`${POSTER_URL}${ani.poster_path}`}
-                      alt={ani.title}
-                    />
-                  </Link>
-                )}
-              </div>
-              <div className="right">
-                <p className="title">{ani.title}</p>
-                <p className="over">
-                  {ani.overview.length > 30
-                    ? ani.overview.slice(0, 30) + '...'
-                    : ani.overview}
-                </p>
-                <p className="aver">{ani.vote_average}</p>
-                <p className="date">{ani.release_date}</p>
+              <div className="contents">
+                <div className="top">
+                  {ani.poster_path && (
+                    <Link to={`/movies/${ani.id}`}>
+                      <img
+                        src={`${POSTER_URL}${ani.poster_path}`}
+                        alt={ani.title}
+                      />
+                    </Link>
+                  )}
+                </div>
+                <div className="bot">
+                  <p className="title">{ani.title}</p>
+                  <p className="aver">
+                  평점 -
+                    <span> {ani.vote_average}</span>
+                  </p>
+                  <p className="date">
+                  개봉일 
+                    <span> {ani.release_date}</span>
+                  </p>
+                </div>
               </div>
             </Card>
           ))}
@@ -74,10 +82,10 @@ const Animation = () => {
             disabled={currentPage === 1}
             onClick={() => handlePageChange(currentPage - 1)}
           >
-            PREV
+            <FaArrowLeft />
           </PaginationButton>
           <PaginationButton onClick={() => handlePageChange(currentPage + 1)}>
-            NEXT
+            <FaArrowRight />
           </PaginationButton>
         </PaginationContainer>
       )}

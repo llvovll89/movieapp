@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import useAxios from '../../hooks/useAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentPage, setCurrentPage } from '../../redux/paginationSlice';
@@ -6,15 +6,24 @@ import { Link } from 'react-router-dom';
 import {
   Results,
   Section,
-  Loading,
   Card,
   PaginationButton,
   PaginationContainer,
 } from '../../styles/GlobalStyle';
+import { Loading, Spinner } from '../../styles/Loading';
+
+// react-icons
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
 const Drama = () => {
   const currentPage = useSelector(selectCurrentPage);
+  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const dispatch = useDispatch();
+
+  const resultsRef = useRef(null);
+  // const [resultsWidth, setResultsWidth] = useState(0); 
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
     .env;
@@ -33,37 +42,38 @@ const Drama = () => {
 
   return (
     <>
-      <Section>
-        <Results>
+      <Section style={{ paddingLeft: `${sidebarWidth}px` }} >
+        <Results ref={resultsRef}>
           {isLoading && (
             <Loading>
-              <h1>Loading...</h1>
+              <Spinner />
             </Loading>
           )}
           {error && <h1>Error: {error.message}</h1>}
           {data &&
             data.results &&
-            data.results.slice(0, 12).map((drama) => (
+            data.results.map((drama) => (
               <Card key={drama.id}>
-                <div className="left">
-                  {drama.poster_path && (
-                    <Link to={`/tv/${drama.id}`}>
-                      <img
-                        src={`${POSTER_URL}${drama.poster_path}`}
-                        alt={drama.name}
-                      />
-                    </Link>
-                  )}
-                </div>
-                <div className="right">
-                  <p className="title">{drama.name}</p>
-                  <p className="over">
-                    {drama.overview.length > 70
-                      ? drama.overview.slice(0, 70) + '...'
-                      : drama.overview}
-                  </p>
-                  <p className="aver">{drama.vote_average}</p>
-                  <p className="date">{drama.release_date}</p>
+                <div className="contents">
+                  <div className="top">
+                    {drama.poster_path && (
+                      <Link to={`/tv/${drama.id}`}>
+                        <img
+                          src={`${POSTER_URL}${drama.poster_path}`}
+                          alt={drama.name}
+                        />
+                      </Link>
+                    )}
+                  </div>
+                  <div className="bot">
+                    <p className="title">{drama.name}</p>
+                    <p className="aver">
+                      평점 - <span>{drama.vote_average}</span>
+                    </p>
+                    <p className="date">
+                      첫 방송 <span>{drama.first_air_date}</span>
+                    </p>
+                  </div>
                 </div>
               </Card>
             ))}
@@ -71,16 +81,16 @@ const Drama = () => {
 
         {data && (
           <PaginationContainer>
-            <PaginationButton
-              disabled={currentPage === 1}
-              onClick={() => handlePageChange(currentPage - 1)}
-            >
-              PREV
-            </PaginationButton>
-            <PaginationButton onClick={() => handlePageChange(currentPage + 1)}>
-              NEXT
-            </PaginationButton>
-          </PaginationContainer>
+          <PaginationButton
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            <FaArrowLeft />
+          </PaginationButton>
+          <PaginationButton onClick={() => handlePageChange(currentPage + 1)}>
+            <FaArrowRight />
+          </PaginationButton>
+        </PaginationContainer>
         )}
       </Section>
     </>

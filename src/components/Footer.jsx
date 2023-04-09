@@ -20,7 +20,7 @@ const Footer = () => {
         <a href="#" target="_blank">
           저작권보호
         </a>
-        <Link to="/mobile">모바일 버전</Link>
+        <button title='mobile버전'>MOBILE</button>
       </div>
       <div className="contents">
         <p>

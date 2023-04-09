@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
-import { SearchForm, Loading, Error } from '../styles/GlobalStyle';
+import { SearchForm, Error } from '../styles/GlobalStyle';
+import { Loading, Spinner } from '../styles/Loading';
 import { AiOutlineSearch } from 'react-icons/ai';
 import useAxios from '../hooks/useAxios';
 import useDebounce from '../hooks/useDebounce';
@@ -46,7 +47,11 @@ const Search = () => {
   }, [searchQuery]);
 
   if (isLoading) {
-    return <Loading>Loading...</Loading>;
+    return (
+      <Loading>
+        <Spinner />
+      </Loading>
+    );
   }
 
   if (error) {

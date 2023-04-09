@@ -1,19 +1,27 @@
 import React from 'react';
-import { SearchForm, Section } from '../../styles/GlobalStyle';
+import { Auth, LoginForm, Section } from '../../styles/GlobalStyle';
 import { useSelector } from 'react-redux';
 
 const Login = () => {
-  const isOpen = useSelector((state) => state.sidebar.isOpen);
-
-
+  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
 
   return (
-<Section style={{ paddingLeft: isOpen ? '50px' : '200px' }}>
-      <SearchForm>
-        <input type="text" />
-        <input type="text" />
-        <input type="text" />
-      </SearchForm>
+    <Section style={{ paddingLeft: `${sidebarWidth}px` }}>
+      <Auth>
+        <LoginForm>
+          <div className="area">
+            <input type="text" />
+          </div>
+          <div className="area">
+            <input type="text" />
+          </div>
+          <div className="area">
+            <input type="text" />
+          </div>
+
+          <input type="submit" value="로그인" />
+        </LoginForm>
+      </Auth>
     </Section>
   );
 };

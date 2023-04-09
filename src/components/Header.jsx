@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { HeaderContainer, LoginLink } from '../styles/GlobalStyle';
-import { toggleSidebar } from '../redux/allSlice.js';
+import { toggleSidebar } from '../redux/sideSlice.js';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import Search from './Search';
 
@@ -25,7 +25,7 @@ const Header = () => {
         <Search />
       </div>
       <div className="auth">
-        <LoginLink to="/login">Login</LoginLink>
+        <LoginLink to="/login">로그인</LoginLink>
       </div>
     </HeaderContainer>
   );

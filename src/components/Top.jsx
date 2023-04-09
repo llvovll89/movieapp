@@ -20,7 +20,7 @@ const Top = () => {
   return (
     <>
       {arrow && (
-        <TopArrow onClick={() => window.scrollTo(0, 0)}>
+        <TopArrow onClick={() => window.scrollTo({top: 0, left: 0, behavior: "smooth"})}>
           <AiOutlineArrowUp />
         </TopArrow>
       )}

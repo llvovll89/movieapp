@@ -24,34 +24,64 @@ const Error = styled.div`
   width: 100%;
 `;
 
-const Loading = styled.div`
-  display: 'block';
-  width: 100%;
-  text-align: center;
-  h1 {
-    color: #07f;
-    font-size: 36px;
-    font-weight: 600;
-  }
-`;
-
 const Container = styled.div`
   position: relative;
   max-width: 1280px;
   margin: 0 auto;
-  padding-top: 80px;
+  padding: 40px 12px;
   width: 100%;
   height: 100%;
   color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+
+  .slick-slide {
+    margin-right: 20px;
+  }
+
+  .splide__arrow {
+    height: 3em;
+    width: 3em;
+    background: #181818;
+    opacity: 1;
+
+    svg {
+      fill: #fff;
+    }
+  }
+
+  .splide__slide {
+    min-width: 200px;
+  }
 
   span {
     display: block;
     font-size: 20px;
     padding: 36px 0;
+    font-weight: 700;
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .btnBox {
+      display: flex;
+      gap: 12px;
+
+      button {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.14);
+        border-radius: 50%;
+      }
+    }
   }
 
   @media screen and (max-width: 768px) {
-    padding: 60px 16px 0px 16px;
+    /* padding: 60px 16px 0px 16px; */
 
     span {
       font-size: 18px;
@@ -61,9 +91,9 @@ const Container = styled.div`
 
 const DetailPage = styled.div`
   margin: 0 auto;
-  max-width: 768px;
+  max-width: 964px;
   color: #b1b1b1;
-  padding: 60px 0;
+  padding: 60px 12px;
 
   .content {
     position: relative;
@@ -74,6 +104,40 @@ const DetailPage = styled.div`
     width: 100%;
     height: 100%;
 
+    .splide__arrow {
+      height: 2.5em;
+      width: 2.5em;
+      background: #181818;
+      opacity: 1;
+      top: 50%;
+      transform: translateY(-50%);
+
+      .splide__arrow.splide__arrow--prev {
+        left: 0.5em;
+      }
+
+      svg {
+        width: 1em;
+        height: 1em;
+        fill: #fff;
+      }
+    }
+
+    .slide-wrapper {
+      overflow-x: auto;
+    }
+
+    .net {
+      text-align: center;
+      color: salmon;
+      padding: 6px 0;
+    }
+
+    .cast_contents {
+      display: flex;
+      flex-flow: column wrap;
+    }
+
     button {
       position: absolute;
       right: 12px;
@@ -83,6 +147,12 @@ const DetailPage = styled.div`
       border-radius: 50%;
       background: #181818;
       color: #fff;
+      transition: 0.25s all ease;
+
+      &:hover {
+        background: #fff;
+        color: #181818;
+      }
     }
 
     .top {
@@ -93,11 +163,11 @@ const DetailPage = styled.div`
       width: 100%;
       height: 500px;
       overflow: hidden;
+      /* background: #fff; */
       img {
-        width: 100%;
-        height: 100%;
-        vertical-align: center;
-        object-fit: cover;
+        padding: 24px 0;
+        max-width: 100%;
+        max-height: 100%;
       }
     }
 
@@ -111,12 +181,14 @@ const DetailPage = styled.div`
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding-bottom: 6px;
+
         h1 {
-          font-size: 28px;
+          font-size: 22px;
           font-weight: bold;
         }
         span {
-          font-size: 18px;
+          font-size: 16px;
         }
       }
 
@@ -125,10 +197,46 @@ const DetailPage = styled.div`
         flex-wrap: wrap;
         justify-content: space-between;
         margin-top: 16px;
+
+        /* 현재 span 쓴곳 없음 */
         span {
           padding: 6px 0;
           font-size: 16px;
           margin-right: 8px;
+          color: #8f8f8f;
+          border-bottom: 1px dotted #8f8f8f;
+        }
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-top: 16px;
+        color: #d2d2d2;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #8f8f8f;
+      }
+
+      .cast_contents {
+        display: flex;
+        flex-flow: column;
+        gap: 12px;
+
+        img {
+          width: 100%;
+          height: 180px;
+        }
+
+        .cast_name {
+          display: flex;
+          flex-flow: column;
+
+          p {
+            font-size: 14px;
+            border-bottom: 0;
+            line-height: inherit;
+            margin-top: 0;
+            color: rgb(210, 210, 210);
+          }
         }
       }
     }
@@ -144,9 +252,6 @@ const DetailPage = styled.div`
         right: 4px;
         top: 4px;
       }
-      .top {
-        /* height: ; */
-      }
 
       .bot {
         padding: 26px 12px;
@@ -160,8 +265,19 @@ const DetailPage = styled.div`
           }
         }
         p {
-          font-size: 14px;
+          font-size: 16px;
           line-height: 1.5;
+        }
+        .contents {
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          margin-top: 12px;
+          span {
+            font-size: 14px;
+            margin-right: 0;
+            border: none;
+          }
         }
       }
     }
@@ -204,7 +320,7 @@ const HeaderContainer = styled.header`
     gap: 12px;
 
     a {
-      font-size: 23px;
+      font-size: 26px;
       color: skyblue;
       letter-spacing: 0.2rem;
       text-shadow: 0 0 15px skyblue 0 0 25px;
@@ -213,7 +329,7 @@ const HeaderContainer = styled.header`
     }
 
     .toggle {
-      width: 20px;
+      width: 26px;
       display: flex;
       justify-content: center;
       position: relative;
@@ -223,6 +339,11 @@ const HeaderContainer = styled.header`
       svg {
         width: 100%;
         height: 100%;
+      }
+
+      &:focus,
+      &:active {
+        color: #1de9b6;
       }
     }
   }
@@ -242,6 +363,7 @@ const SideContainer = styled.div`
   left: 0;
   z-index: 1200;
   background: #202123;
+
   .sidebar_contents {
     display: flex;
     flex-flow: column wrap;
@@ -253,14 +375,23 @@ const SideContainer = styled.div`
         display: flex;
         flex-flow: column wrap;
 
-        a {
+        a,
+        span {
           margin: 12px auto;
           color: #b1aab1;
           font-size: 22px;
           transition: color 0.2s ease;
-          &:hover {
-            color: rgb(29, 233, 182);
+          &:hover,
+          &:focus {
+            color: #09f;
           }
+        }
+
+        span {
+          display: inline-block;
+          text-align: center;
+          font-size: 14px;
+          letter-spacing: 0.1rem;
         }
       }
     }
@@ -272,6 +403,9 @@ const SideContainer = styled.div`
       gap: 12px;
       padding: 12px 0px 10px 0px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
 
       .side_top {
         color: #fff;
@@ -285,12 +419,35 @@ const SideContainer = styled.div`
         display: flex;
         flex-flow: column wrap;
         gap: 3px;
+
+        .link_items {
+          padding: 6px;
+          padding-left: 12px;
+          span {
+            font-size: 17px;
+            color: #fff;
+            padding: 0;
+          }
+          a {
+            display: flex;
+            padding: 0;
+            align-items: center;
+            gap: 16px;
+          }
+        }
+
         a,
         span {
           color: #b1aab1;
           display: block;
           padding: 2px 0px 2px 22px;
           font-size: 13px;
+        }
+
+        a:hover,
+        a:focus,
+        span:hover {
+          color: #09fe;
         }
       }
     }
@@ -302,7 +459,6 @@ const Section = styled.section`
   padding-top: 76px;
   min-height: 100vh;
   transition: padding-left 0.15s ease;
-  padding-left: 80px;
   #page-numbers {
     display: flex;
     align-items: center;
@@ -365,11 +521,42 @@ const LoginLink = styled(Link)`
   font-size: 16px;
   font-weight: 600;
   background: #1de9b6;
-  color: #050306;
+  color: #fff;
 
   @media screen and (max-width: 768px) {
     width: 60px;
   }
+`;
+
+const LoginForm = styled.form`
+  width: 100%;
+  padding: 20px;
+  background: #f0fcfc;
+  color: #000;
+
+  display: flex;
+  gap: 12px;
+  flex-flow: column wrap;
+  justify-content: center;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.33);
+
+  input {
+    height: 46px;
+    border: 1px solid #ccc;
+    padding: 12px 20px;
+  }
+`;
+
+const Auth = styled.div`
+  padding: 42px 22px;
+  margin: auto;
+  width: 100%;
+  max-width: 768px;
+  height: 100%;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
 `;
 
 const TopArrow = styled.div`
@@ -385,6 +572,12 @@ const TopArrow = styled.div`
   justify-content: center;
   cursor: pointer;
   z-index: 1000;
+
+  @media screen and (max-width: 768px) {
+    width: 36px;
+    height: 36px;
+    bottom: 10%;
+  }
 `;
 
 const Card = styled.div`
@@ -392,67 +585,73 @@ const Card = styled.div`
   align-items: center;
   width: 100%;
   justify-content: center;
-  overflow: hidden;
-  color:#fff;
+  flex-flow: column wrap;
+  color: #fff;
   background: rgb(29, 29, 29);
-  gap: 20px;
+  overflow: hidden;
 
-  .left {
-    flex: 1 1 30%;
-    img {
-      width: 100%;
-    }
-  }
-  .right {
-    flex 1 1 70%;
-    height: 100%;
+  .contents {
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
-    gap: 12px;
-    padding: 16px;
-    
-    .title {
-      font-size: 20px;
+    width: 100%;
+    transition: 0.15s transform linear;
+    overflow: hidden;
+    &:hover {
+      transform: scale(1.05);
     }
-    .over {
-      color: #d6c8c8; 
+
+    .top {
+      width: 100%;
+      height: 300px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .bot {
+      padding: 12px 0;
+      p {
+        padding: 2px 6px;
+      }
+      .title {
+        font-weight: 600;
+      }
+      .aver,
+      .date {
+        line-height: 1.5;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.66);
+        span {
+          font-size: 16px;
+          color: salmon;
+        }
+      }
+
+      .date span {
+        font-size: 15px;
+        color: #fff;
+      }
     }
   }
 
-  
   @media screen and (max-width: 768px) {
-    gap: 6px;  
-    .right {
-      padding: 12px;
-
-      .title {
-        font-size: 16px;
-      }
-      .over, .date {
-        font-size: 14px;
-      }
-      .over {
-        
-            max-height: 3.9em; /* 3줄만 보이도록 설정 */
-    overflow: hidden;
-    text-overflow: ellipsis;
-      }
-    }
   }
 `;
 
 const SearchContainer = styled.div`
   display: flex;
   flex-flow: column wrap;
-  padding: 40px 36px;
+  padding: 30px 16px;
   margin: auto;
   max-width: 1280px;
   width: 100%;
   gap: 30px;
 
-  .top {
-    padding: 20px 0;
+  .items {
+    padding: 20px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -538,10 +737,10 @@ const SearchContainer = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    padding: 24px 20px;
+    padding: 24px 12px;
     gap: 16px;
 
-    .top {
+    .items {
       padding: 12px 0px 0px 0px;
       flex-flow: column wrap;
       align-items: flex-end;
@@ -587,18 +786,22 @@ const SearchContainer = styled.div`
 `;
 
 const Results = styled.div`
-  padding: 40px 36px;
+  padding: 40px 26px;
   max-width: 1280px;
   width: 100%;
   margin: auto;
-  gap: 30px;
+  gap: 16px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 
   @media screen and (max-width: 768px) {
-    padding: 24px 20px;
-    grid-template-columns: 1fr;
+    padding: 20px 12px;
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+  }
+
+  @media screen and (max-width: 501px) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -628,7 +831,7 @@ const FooterContainer = styled.footer`
     width: 100%;
     text-align: center;
     padding: 6px 0;
-    a {
+    a, button {
       padding: 0 16px;
       color: #8c8888;
     }
@@ -654,10 +857,10 @@ const FooterContainer = styled.footer`
     }
 
     .links {
-        a {
-          font-size: 13px;
-        }
+      a {
+        font-size: 13px;
       }
+    }
 
     .contents {
       p {
@@ -667,55 +870,39 @@ const FooterContainer = styled.footer`
   }
 `;
 
-const ModalContainer = styled.div`
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  top: 50%;
-  width: 100%;
-  height: 100%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 800px;
-    max-height: 80%;
-    overflow: auto;
-  }
-
-  .close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 28px;
-    font-weight: bold;
-    color: #aaa;
-    cursor: pointer;
-  }
-`;
-
 const PaginationContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  padding: 12px 0;
+  padding: 30px 0;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    padding: 24px 0;
+    gap: 16px;
+  }
 `;
 
 const PaginationButton = styled.button`
   padding: 12px 20px;
-  background: #08f;
+  background: #1de9b6;
   color: #fff;
+  border-radius: 3px;
+
+  @media screen and (max-width: 768px) {
+    padding: 9px 16px;
+  }
+`;
+
+const Board = styled.div`
+  /* table 형식으로 만들어야댐 */
+  display: block;
+  max-width: 1024px;
+
+  /* thead */
+  /* tbody */
+  /*  */
 `;
 
 export {
@@ -724,7 +911,6 @@ export {
   Container,
   Content,
   Error,
-  Loading,
   HeaderContainer,
   SideContainer,
   SearchForm,
@@ -734,8 +920,9 @@ export {
   Card,
   Results,
   FooterContainer,
-  ModalContainer,
   PaginationContainer,
   PaginationButton,
   SearchContainer,
+  LoginForm,
+  Auth,
 };
