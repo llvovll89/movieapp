@@ -1,8 +1,13 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  base: "/movieapp/",
-})
+export default {
+  base: '/movieapp/',
+  build: {
+    outDir: 'dist',
+  },
+  optimizeDeps: {
+    include: ['axios'],
+  },
+  plugins: [reactRefresh(), VitePluginPages({ pagesDir: 'src/pages' }), VitePlugin404Page({ path: '/404.html' })],
+};

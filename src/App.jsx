@@ -21,21 +21,23 @@ import { GlobalWrap } from './styles/GlobalStyle';
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename="movieapp">
         <GlobalWrap>
           <ResetStyle />
           <Header />
           <Sidebar />
           <Top />
           <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route path="/movies/:id" element={<MovieDetail />} />
-            <Route path="/tv/:id" element={<TvDetail />} />
-            <Route path="/search/:query" element={<SearchResults />} />
-            <Route path="/category/*" element={<Category />} />
-            <Route path="/board" element={<Board />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/">
+              <Route index exact element={<Home />} />
+              <Route path="movies/:id" element={<MovieDetail />} />
+              <Route path="tv/:id" element={<TvDetail />} />
+              <Route path="search/:query" element={<SearchResults />} />
+              <Route path="category/*" element={<Category />} />
+              <Route path="board" element={<Board />} />
+              <Route path="login" element={<Login />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
           <Footer />
         </GlobalWrap>
