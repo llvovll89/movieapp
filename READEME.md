@@ -114,4 +114,24 @@ allsi
 이슈발생 > 
 배역,배우,이미지 받아서 Splide js 로 감쌌는데 castData 가 20개 이상의 결과물을 가진 contents 는 화면을 벗어나느 이슈 발생..
 
+04.10
+
+          <Routes>
+            <Route path="/">
+              <Route index exact element={<Home />} />
+              <Route path="movies/:id" element={<MovieDetail />} />
+              <Route path="tv/:id" element={<TvDetail />} />
+              <Route path="search/:query" element={<SearchResults />} />
+              <Route path="category/*" element={<Category />} />
+              <Route path="board" element={<Board />} />
+              <Route path="login" element={<Login />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+
+- Router 수정 / react-router-dom v6 에서 새로 생긴 index 기능을 통해 하위에 다 넣음
+
+      <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
+      전체적인 Section에 조건추가! 모바일 사이즈에서 toggle 바로 인해 padding-left 가 같이 움직여서
+
  -->

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { useEffect } from 'react';
+import { Provider, useSelector , useDispatch } from 'react-redux';
 import Header from './components/Header';
 import Home from './home/Home';
 import MovieDetail from './components/MovieDetail';
@@ -18,7 +19,9 @@ import Category from './components/category/Category';
 import { ResetStyle } from './styles/ResetStyle';
 import { GlobalWrap } from './styles/GlobalStyle';
 
+
 function App() {
+
   return (
     <Provider store={store}>
       <Router basename="movieapp">

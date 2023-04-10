@@ -14,7 +14,7 @@ const Header = () => {
   };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer >
       <div className="logo">
         <div className="toggle" onClick={toggleOpen}>
           <RxHamburgerMenu />

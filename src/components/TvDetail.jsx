@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState, useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAxios from '../hooks/useAxios';
 import { Section, Error, DetailPage } from '../styles/GlobalStyle';
@@ -10,10 +10,12 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
 const TvDetail = () => {
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const { id } = useParams();
-  const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
+  const [perPage, setPerPage] = useState(6);
+  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const history = useNavigate();
+  
+  const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w300/';
@@ -21,8 +23,6 @@ const TvDetail = () => {
   const { data, isLoading, error } = useAxios(
     `${API_BASE_URL}/tv/${id}?api_key=${API_KEY}&language=ko`
   );
-
-  console.log(data);
 
   const { data: trailerData } = useAxios(
     `${API_BASE_URL}/tv/${id}/videos?api_key=${API_KEY}&language=ko`
@@ -34,6 +34,22 @@ const TvDetail = () => {
   const handleClick = () => {
     history(-1);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1280) {
+        setPerPage(6);
+      } else if (window.innerWidth >= 924) {
+        setPerPage(4);
+      } else if (window.innerWidth >= 628) {
+        setPerPage(3);
+      } else {
+        setPerPage(1);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (isLoading)
     return (
@@ -50,7 +66,7 @@ const TvDetail = () => {
 
   return (
     <>
-      <Section style={{ paddingLeft: `${sidebarWidth}px` }}>
+      <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
         <DetailPage>
           <div className="content">
             <div className="top">
@@ -85,7 +101,7 @@ const TvDetail = () => {
               
               <Splide
                 options={{
-                  perPage: 4,
+                  perPage,
                   pagination: false,
                   gap: '12px',
                   drag: 'free',

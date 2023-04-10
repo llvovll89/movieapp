@@ -1,16 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const mobileSlice = createSlice({
-  name: 'mobile_ver',
+const mobileSlice = createSlice({
+  name: 'mobileApp',
   initialState: {
-    maxSize: '768px',
+    isMobile: false,
   },
   reducers: {
     mobileSizeOn: (state, action) => {
-      console.log(state, action);
+      state.isMobile = !state.isMobile;
+      console.log(state.isMobile);
     },
   },
 });
 
-export const { mobileSizeOn } = mobileSlice.actions;
-export default mobileSizeOn.reducer;
+export const { mobileSizeOn, mobileSizeOff } = mobileSlice.actions;
+export default mobileSlice.reducer;

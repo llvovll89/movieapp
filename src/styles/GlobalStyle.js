@@ -98,8 +98,7 @@ const DetailPage = styled.div`
   .content {
     position: relative;
     background-color: #1d1d1d;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: block;
     gap: 12px;
     width: 100%;
     height: 100%;
@@ -254,29 +253,34 @@ const DetailPage = styled.div`
       }
 
       .bot {
-        padding: 26px 12px;
-        gap: 8px;
+        padding: 20px 9px;
+        gap: 6px;
         .title {
           h1 {
-            font-size: 20px;
+            font-size: 18px;
           }
           span {
             font-size: 13.5px;
           }
         }
+
+        .net {
+          font-size: 14px;
+        }
+
         p {
           font-size: 16px;
           line-height: 1.5;
         }
+        
         .contents {
           flex-direction: column;
           justify-content: flex-start;
           align-items: flex-start;
           margin-top: 12px;
-          span {
-            font-size: 14px;
-            margin-right: 0;
-            border: none;
+          
+          p {
+            font-size: 15px;
           }
         }
       }
@@ -318,6 +322,7 @@ const HeaderContainer = styled.header`
   .logo {
     display: flex;
     gap: 12px;
+    align-items: center;
 
     a {
       font-size: 26px;
@@ -349,6 +354,13 @@ const HeaderContainer = styled.header`
   }
 
   @media screen and (max-width: 768px) {
+    .logo  { 
+      gap: 7.5px;
+      a {
+      font-size: 22px;
+      letter-spacing: 0.15rem;
+    }
+  }
   }
 `;
 
@@ -506,7 +518,12 @@ const SearchForm = styled.form`
   }
 
   @media screen and (max-width: 768px) {
-    width: 300px;
+    width: 100%;
+
+    button {
+      flex: 1 1 15%;
+      font-size: 16px;
+    }
   }
 `;
 
@@ -524,7 +541,7 @@ const LoginLink = styled(Link)`
   color: #fff;
 
   @media screen and (max-width: 768px) {
-    width: 60px;
+    width: 100%;
   }
 `;
 
@@ -598,7 +615,7 @@ const Card = styled.div`
     transition: 0.15s transform linear;
     overflow: hidden;
     &:hover {
-      transform: scale(1.05);
+      transform: translateY(-2%);
     }
 
     .top {
@@ -801,6 +818,7 @@ const Results = styled.div`
   }
 
   @media screen and (max-width: 501px) {
+    padding: 20px 18px;
     grid-template-columns: 1fr;
   }
 `;

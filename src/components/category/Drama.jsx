@@ -42,7 +42,7 @@ const Drama = () => {
 
   return (
     <>
-      <Section style={{ paddingLeft: `${sidebarWidth}px` }} >
+    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
         <Results ref={resultsRef}>
           {isLoading && (
             <Loading>

@@ -39,7 +39,7 @@ const JapanAni = () => {
   };
 
   return (
-    <Section style={{ paddingLeft: `${sidebarWidth}px` }}>
+    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
       <Results>
         {isLoading && (
           <Loading>

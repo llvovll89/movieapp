@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAxios from '../hooks/useAxios';
 import { Section, Error, DetailPage } from '../styles/GlobalStyle';
@@ -11,6 +11,7 @@ import '@splidejs/react-splide/css';
 
 const MovieDetail = () => {
   const { id } = useParams();
+  const [perPage, setPerPage] = useState(6);
   const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
 
   const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
@@ -30,11 +31,25 @@ const MovieDetail = () => {
     `${API_BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=ko-KR`
   );
 
-  console.log(castData);
-
   const handleClick = () => {
     history(-1);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1280) {
+        setPerPage(6);
+      } else if (window.innerWidth >= 924) {
+        setPerPage(4);
+      } else if (window.innerWidth >= 628) {
+        setPerPage(3);
+      } else {
+        setPerPage(1);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (isLoading)
     return (
@@ -51,7 +66,7 @@ const MovieDetail = () => {
     );
 
   return (
-    <Section style={{ paddingLeft: `${sidebarWidth}px` }}>
+    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
       <DetailPage>
         <div className="content">
           <div className="top">
@@ -89,7 +104,7 @@ const MovieDetail = () => {
 
             <Splide
               options={{
-                perPage: 4,
+                perPage,
                 pagination: false,
                 gap: '12px',
                 drag: 'free',
@@ -98,7 +113,7 @@ const MovieDetail = () => {
               }}
             >
               {castData && castData.cast ? (
-                castData.cast.slice(0,9).map((c) => (
+                castData.cast.slice(0, 12).map((c) => (
                   <SplideSlide key={c.id}>
                     <div className="cast_contents">
                       <img

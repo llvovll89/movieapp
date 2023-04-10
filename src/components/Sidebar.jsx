@@ -1,24 +1,40 @@
-import React from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { SideContainer } from '../styles/GlobalStyle';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   AiOutlineStar,
   AiOutlineHome,
   AiOutlineFieldTime,
 } from 'react-icons/ai';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { toggleSidebar } from '../redux/sideSlice';
 
 const Sidebar = () => {
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
-  const isOpen = useSelector((state) => state.sidebar.isOpen);
+  const { sidebarWidth, isOpen } = useSelector((state) => state.sidebar);
+
+  const dispatch = useDispatch();
   const [currentTime, setCurrentTime] = useState(new Date());
+
+  const toggleHandler = useCallback(() => {
+    if (window.innerWidth <= 768) {
+      if (!isOpen) {
+        dispatch(toggleSidebar());
+      }
+    } else {
+      if (isOpen) {
+        dispatch(toggleSidebar());
+      }
+    }
+  }, [dispatch, isOpen]);
 
   useEffect(() => {
     const intervalTime = setInterval(() => setCurrentTime(new Date()), 1000);
-    return () => clearInterval(intervalTime);
-  }, []);
+    window.addEventListener('resize', toggleHandler);
+    return () => {
+      clearInterval(intervalTime);
+      window.removeEventListener('resize', toggleHandler);
+    };
+  }, [isOpen, toggleHandler]);
 
   return (
     <SideContainer style={{ width: `${sidebarWidth}px` }}>
