@@ -19,9 +19,11 @@ const GlobalWrap = styled.div`
   flex-direction: column;
 `;
 
-const Error = styled.div`
-  display: 'block';
+const ErrorBox = styled.div`
+  display: block;
   width: 100%;
+  font-size: 30px;
+  color: salmon;
 `;
 
 const Container = styled.div`
@@ -196,15 +198,6 @@ const DetailPage = styled.div`
         flex-wrap: wrap;
         justify-content: space-between;
         margin-top: 16px;
-
-        /* 현재 span 쓴곳 없음 */
-        span {
-          padding: 6px 0;
-          font-size: 16px;
-          margin-right: 8px;
-          color: #8f8f8f;
-          border-bottom: 1px dotted #8f8f8f;
-        }
       }
       p {
         font-size: 16px;
@@ -212,7 +205,7 @@ const DetailPage = styled.div`
         margin-top: 16px;
         color: #d2d2d2;
         padding-bottom: 6px;
-        border-bottom: 1px solid #8f8f8f;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
       }
 
       .cast_contents {
@@ -928,7 +921,7 @@ export {
   GlobalWrap,
   Container,
   Content,
-  Error,
+  ErrorBox,
   HeaderContainer,
   SideContainer,
   SearchForm,

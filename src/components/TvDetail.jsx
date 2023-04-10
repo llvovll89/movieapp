@@ -1,11 +1,9 @@
-import React , {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import useAxios from '../hooks/useAxios';
-import { Section, Error, DetailPage } from '../styles/GlobalStyle';
-import { Loading } from '../styles/Loading';
 import { useSelector } from 'react-redux';
-
-// splide
+import useAxios from '../hooks/useAxios';
+import { Section, ErrorBox, DetailPage } from '../styles/GlobalStyle';
+import { Loading } from '../styles/Loading';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
@@ -14,7 +12,7 @@ const TvDetail = () => {
   const [perPage, setPerPage] = useState(6);
   const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const history = useNavigate();
-  
+
   const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -31,25 +29,26 @@ const TvDetail = () => {
     `${API_BASE_URL}/tv/${id}/credits?api_key=${API_KEY}&language=ko-KR`
   );
 
-  const handleClick = () => {
-    history(-1);
+  const handleResize = () => {
+    if (window.innerWidth >= 1280) {
+      setPerPage(6);
+    } else if (window.innerWidth >= 924) {
+      setPerPage(4);
+    } else if (window.innerWidth >= 628) {
+      setPerPage(3);
+    } else {
+      setPerPage(1);
+    }
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1280) {
-        setPerPage(6);
-      } else if (window.innerWidth >= 924) {
-        setPerPage(4);
-      } else if (window.innerWidth >= 628) {
-        setPerPage(3);
-      } else {
-        setPerPage(1);
-      }
-    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleClick = () => {
+    history(-1);
+  };
 
   if (isLoading)
     return (
@@ -59,14 +58,18 @@ const TvDetail = () => {
     );
   if (error)
     return (
-      <Error>
-        <h1>{error}</h1>
-      </Error>
+      <ErrorBox>
+        <h1>Error : {error.message}</h1>
+      </ErrorBox>
     );
 
   return (
     <>
-      <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
+      <Section
+        style={{
+          paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px`,
+        }}
+      >
         <DetailPage>
           <div className="content">
             <div className="top">
@@ -98,7 +101,7 @@ const TvDetail = () => {
               <div className="net">
                 <span>{data.networks[0].name}</span>
               </div>
-              
+
               <Splide
                 options={{
                   perPage,
@@ -111,13 +114,19 @@ const TvDetail = () => {
                 }}
               >
                 {castData && castData?.cast ? (
-                  castData.cast.slice(0,9).map((c) => (
+                  castData.cast.slice(0, 9).map((c) => (
                     <SplideSlide key={c.id}>
                       <div className="cast_contents">
                         <img src={`${POSTER_URL}${c.profile_path}`} />
                         <div className="cast_name">
-                          <p>배우 - <span>{c.name}</span></p>
-                        {c.charater ?   <p>배역 - <span>{c.character}</span></p> : null}
+                          <p>
+                            배우 - <span>{c.name}</span>
+                          </p>
+                          {c.charater ? (
+                            <p>
+                              배역 - <span>{c.character}</span>
+                            </p>
+                          ) : null}
                         </div>
                       </div>
                     </SplideSlide>
@@ -129,10 +138,10 @@ const TvDetail = () => {
                 )}
               </Splide>
 
-                <div className="contents">
+              <div className="contents">
                 <p>{data.overview}</p>
                 <p>{data.first_air_date}</p>
-                </div>
+              </div>
             </div>
             <button onClick={handleClick}>X</button>
           </div>

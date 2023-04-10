@@ -1,9 +1,9 @@
 import React, { useEffect, useCallback } from 'react';
-import { SearchForm, Error } from '../styles/GlobalStyle';
-import { Loading, Spinner } from '../styles/Loading';
-import { AiOutlineSearch } from 'react-icons/ai';
 import useAxios from '../hooks/useAxios';
 import useDebounce from '../hooks/useDebounce';
+import { SearchForm, ErrorBox } from '../styles/GlobalStyle';
+import { Loading, Spinner } from '../styles/Loading';
+import { AiOutlineSearch } from 'react-icons/ai';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSearch } from '../redux/searchSlice';
 import { useNavigate } from 'react-router-dom';
@@ -44,32 +44,27 @@ const Search = () => {
       dispatch(updateSearch(''));
       return;
     }
-  }, [searchQuery]);
-
-  if (isLoading) {
-    return (
-      <Loading>
-        <Spinner />
-      </Loading>
-    );
-  }
-
-  if (error) {
-    return <Error>Error: {error.message}</Error>;
-  }
+  }, [dispatch, searchQuery]);
 
   return (
     <>
-      <SearchForm onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={(e) => dispatch(updateSearch(e.target.value))}
-        />
-        <button type="submit">
-          <AiOutlineSearch />
-        </button>
-      </SearchForm>
+      {isLoading ? (
+        <Loading>
+          <Spinner />
+        </Loading>
+      ) : (
+        <SearchForm onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Search"
+            onChange={(e) => dispatch(updateSearch(e.target.value))}
+          />
+          <button type="submit">
+            <AiOutlineSearch />
+          </button>
+        </SearchForm>
+      )}
+      {error && <ErrorBox>Error: {error.message}</ErrorBox>}
     </>
   );
 };

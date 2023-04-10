@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Card,
   Section,
-  Error,
+  ErrorBox,
   SearchContainer,
   Results,
 } from '../styles/GlobalStyle';
@@ -52,7 +52,7 @@ function SearchResults() {
   }
 
   if (error) {
-    return <Error>Error: {error.message}</Error>;
+    return <ErrorBox>Error: {error.message}</ErrorBox>;
   }
 
   return (

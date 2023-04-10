@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import useAxios from '../hooks/useAxios';
-import { Section, Error, DetailPage } from '../styles/GlobalStyle';
+import { Section, ErrorBox, DetailPage } from '../styles/GlobalStyle';
 import { Loading, Spinner } from '../styles/Loading';
 import { useSelector } from 'react-redux';
-
-// splide
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import useAxios from '../hooks/useAxios';
 
 const MovieDetail = () => {
   const { id } = useParams();
@@ -35,18 +33,19 @@ const MovieDetail = () => {
     history(-1);
   };
 
+  const handleResize = () => {
+    if (window.innerWidth >= 1280) {
+      setPerPage(6);
+    } else if (window.innerWidth >= 924) {
+      setPerPage(4);
+    } else if (window.innerWidth >= 628) {
+      setPerPage(3);
+    } else {
+      setPerPage(1);
+    }
+  };
+
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1280) {
-        setPerPage(6);
-      } else if (window.innerWidth >= 924) {
-        setPerPage(4);
-      } else if (window.innerWidth >= 628) {
-        setPerPage(3);
-      } else {
-        setPerPage(1);
-      }
-    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -54,19 +53,22 @@ const MovieDetail = () => {
   if (isLoading)
     return (
       <Loading>
-        <h1>Loading...</h1>
         <Spinner />
       </Loading>
     );
   if (error)
     return (
-      <Error>
+      <ErrorBox>
         <h1>{error}</h1>
-      </Error>
+      </ErrorBox>
     );
 
   return (
-    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
+    <Section
+      style={{
+        paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px`,
+      }}
+    >
       <DetailPage>
         <div className="content">
           <div className="top">

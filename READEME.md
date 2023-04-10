@@ -134,4 +134,8 @@ allsi
       <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
       전체적인 Section에 조건추가! 모바일 사이즈에서 toggle 바로 인해 padding-left 가 같이 움직여서
 
+  Sidebar에서 Link 클릭시 토글이 안닫히는걸 해결하기 위해 useLocation으로 path값이 변경될때만 dispatch하여 isOpen 값을 변경 했는데 이슈발생 > isOpen이 전역적 으로 쓰이기에 다른 Link에 영향을 끼침
+
+  해결 >   
+
  -->

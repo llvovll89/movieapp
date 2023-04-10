@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { SideContainer } from '../styles/GlobalStyle';
+import { SideContainer , ErrorBox } from '../styles/GlobalStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
