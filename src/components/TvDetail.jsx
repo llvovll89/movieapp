@@ -42,9 +42,10 @@ const TvDetail = () => {
   };
 
   useEffect(() => {
+    handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [handleResize]);
 
   const handleClick = () => {
     history(-1);

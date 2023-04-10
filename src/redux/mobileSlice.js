@@ -8,7 +8,6 @@ const mobileSlice = createSlice({
   reducers: {
     mobileSizeOn: (state, action) => {
       state.isMobile = !state.isMobile;
-      console.log(state.isMobile);
     },
   },
 });

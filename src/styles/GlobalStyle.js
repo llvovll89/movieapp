@@ -14,7 +14,9 @@ const LogoAnimation = keyframes`
 const GlobalWrap = styled.div`
   width: 100%;
   background: #050306;
-  min-height: 100vh;
+  min-height: calc(
+    100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top)
+  );
   display: flex;
   flex-direction: column;
 `;
@@ -87,6 +89,7 @@ const Container = styled.div`
 
     span {
       font-size: 18px;
+      padding: 36px 0px 36px 12px;
     }
   }
 `;
@@ -205,7 +208,7 @@ const DetailPage = styled.div`
         margin-top: 16px;
         color: #d2d2d2;
         padding-bottom: 6px;
-        border-bottom: 1px solid rgba(255,255,255,0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       }
 
       .cast_contents {
@@ -265,13 +268,13 @@ const DetailPage = styled.div`
           font-size: 16px;
           line-height: 1.5;
         }
-        
+
         .contents {
           flex-direction: column;
           justify-content: flex-start;
           align-items: flex-start;
           margin-top: 12px;
-          
+
           p {
             font-size: 15px;
           }
@@ -312,6 +315,7 @@ const HeaderContainer = styled.header`
   align-items: center;
   padding: 0 12px;
   z-index: 1000;
+  box-shadow: 0 1px 12px rgba(255,255,255,0.12);
   .logo {
     display: flex;
     gap: 12px;
@@ -347,13 +351,13 @@ const HeaderContainer = styled.header`
   }
 
   @media screen and (max-width: 768px) {
-    .logo  { 
+    .logo {
       gap: 7.5px;
       a {
-      font-size: 22px;
-      letter-spacing: 0.15rem;
+        font-size: 22px;
+        letter-spacing: 0.15rem;
+      }
     }
-  }
   }
 `;
 
@@ -363,16 +367,18 @@ const SideContainer = styled.div`
   flex-flow: column wrap;
   align-items: center;
   padding: 60px 12px 0px 12px;
-  height: calc(100% - 76px);
-  top: 76px;
+  height: calc(100% - 77px);
+  top: 77px;
   left: 0;
   z-index: 1200;
   background: #202123;
 
   .sidebar_contents {
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: column;
     width: 100%;
+    align-items: center;
+    justify-content: center;
     gap: 6px;
 
     &.close {
@@ -400,6 +406,93 @@ const SideContainer = styled.div`
         }
       }
     }
+
+    .side_content {
+      display: flex;
+      flex-flow: column wrap;
+      width: 100%;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .side_top {
+        color: #fff;
+        p {
+          padding-left: 20px;
+          font-size: 17px;
+        }
+      }
+
+      .side_bot {
+        display: flex;
+        flex-flow: column wrap;
+        gap: 3px;
+
+        .link_items {
+          padding: 6px;
+          padding-left: 12px;
+          span {
+            font-size: 17px;
+            color: #fff;
+            padding: 0;
+          }
+          a {
+            display: flex;
+            padding: 0;
+            align-items: center;
+            gap: 16px;
+          }
+        }
+
+        a,
+        span {
+          color: #b1aab1;
+          display: block;
+          padding: 2px 0px 2px 22px;
+          font-size: 13px;
+        }
+
+        a:hover,
+        a:focus,
+        span:hover {
+          color: #09fe;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .sidebar_contents {
+    gap: 26px;
+
+    &.close  {
+      .sidebar_link {
+        display: flex;
+        flex-flow: column wrap;
+        gap: 16px;
+        a,
+        span {
+          margin: 12px auto;
+          color: #b1aab1;
+          font-size: 20px;
+          transition: color 0.2s ease;
+          &:hover,
+          &:focus {
+            color: #09f;
+          }
+        }
+
+        span {
+          display: inline-block;
+          text-align: center;
+          font-size: 14px;
+          letter-spacing: 0.012rem;
+        }
+      }}
+    }
+  }
 
     .side_content {
       display: flex;
@@ -456,6 +549,7 @@ const SideContainer = styled.div`
         }
       }
     }
+  }
   }
 `;
 
@@ -524,17 +618,17 @@ const LoginLink = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
-  max-width: 100%;
+  width: 100%;
   height: 36px;
   border-radius: 3px;
   font-size: 16px;
   font-weight: 600;
   background: #1de9b6;
   color: #fff;
+  padding: 12px 26px;
 
   @media screen and (max-width: 768px) {
-    width: 100%;
+    padding: 8px 16px;
   }
 `;
 
@@ -842,7 +936,8 @@ const FooterContainer = styled.footer`
     width: 100%;
     text-align: center;
     padding: 6px 0;
-    a, button {
+    a,
+    button {
       padding: 0 16px;
       color: #8c8888;
     }

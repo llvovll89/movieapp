@@ -19,7 +19,7 @@ const PopularMovies = ({ url }) => {
 
   return (
     <Container>
-      <span>현재 가장 인기있는</span>
+      <span>현재 가장 인기있는 🤩</span>
       {isLoading && (
         <Loading>
           <Spinner />

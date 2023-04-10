@@ -138,4 +138,10 @@ allsi
 
   해결 >   
 
+  mobile min-height 100vh 안먹는거 떄문에
+  min-height: calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top));
+
+  적용.
+  env 가 알아서계산해줌
+
  -->

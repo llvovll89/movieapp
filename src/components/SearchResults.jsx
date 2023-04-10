@@ -56,7 +56,7 @@ function SearchResults() {
   }
 
   return (
-    <Section style={{paddingLeft: `${sidebarWidth}px`}}>
+    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
       <SearchContainer>
         <div className="items">
           <p>

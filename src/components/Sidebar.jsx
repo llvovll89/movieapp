@@ -34,11 +34,12 @@ const Sidebar = () => {
       clearInterval(intervalTime);
       window.removeEventListener('resize', toggleHandler);
     };
-  }, [isOpen, toggleHandler]);
+  }, [toggleHandler, isOpen]);
+
 
   return (
     <SideContainer style={{ width: `${sidebarWidth}px` }}>
-      <div className={`sidebar_contents${isOpen ? ' close' : ''}`}>
+      <div className={`sidebar_contents${!isOpen ? ' ' : ' close'}`}>
         {!isOpen ? (
           <>
             <div className="side_content">

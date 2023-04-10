@@ -18,7 +18,7 @@ const ForeignNetflix = ({ url }) => {
 
   return (
     <Container>
-      <span>현재 외국에서 인기있는 Netflix</span>
+      <span>현재 외국에서 인기있는 Netflix 😎</span>
       {isLoading && (
         <Loading>
           <Spinner />

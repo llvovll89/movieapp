@@ -10,11 +10,6 @@ import {
 import { Link } from 'react-router-dom';
 import { Loading, Spinner } from '../styles/Loading';
 
-// slick
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
 // splide
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
@@ -36,7 +31,7 @@ const HappyMovies = ({ url }) => {
   return (
     <Container>
       <div className="top">
-        <span>웃고싶을때 보는</span>
+        <span>재미와 감동을 느끼고싶을때 😂</span>
       </div>
       {isLoading && (
         <Loading>
