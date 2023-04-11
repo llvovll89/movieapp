@@ -97,14 +97,13 @@ const Container = styled.div`
 const DetailPage = styled.div`
   margin: 0 auto;
   max-width: 964px;
-  color: #b1b1b1;
   padding: 60px 12px;
+  color: #b1b1b1;
 
   .content {
     position: relative;
     background-color: #1d1d1d;
     display: block;
-    gap: 12px;
     width: 100%;
     height: 100%;
 
@@ -135,11 +134,8 @@ const DetailPage = styled.div`
       text-align: center;
       color: salmon;
       padding: 6px 0;
-    }
 
-    .cast_contents {
-      display: flex;
-      flex-flow: column wrap;
+      font-size: 20px;
     }
 
     button {
@@ -165,13 +161,15 @@ const DetailPage = styled.div`
       justify-content: center;
       align-items: center;
       width: 100%;
-      height: 500px;
+      height: max-content;
       overflow: hidden;
-      /* background: #fff; */
+
       img {
-        padding: 24px 0;
+        /* padding: 24px 0; */
+        width: 100%;
         max-width: 100%;
         max-height: 100%;
+        object-fit: fill;
       }
     }
 
@@ -214,10 +212,12 @@ const DetailPage = styled.div`
       .cast_contents {
         display: flex;
         flex-flow: column;
+        align-items: center;
         gap: 12px;
 
         img {
           width: 100%;
+          max-width: 300px;
           height: 180px;
         }
 
@@ -351,6 +351,7 @@ const HeaderContainer = styled.header`
   }
 
   @media screen and (max-width: 768px) {
+    padding: 0 6px;
     .logo {
       gap: 7.5px;
       a {
@@ -366,12 +367,20 @@ const SideContainer = styled.div`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  padding: 60px 12px 0px 12px;
-  height: calc(100% - 77px);
-  top: 77px;
+  padding: 60px 0px;
+  height: calc(100% - 76px);
+  top: 76px;
   left: 0;
   z-index: 1200;
   background: #202123;
+
+  /* mobile */
+  &.mobile {
+    top: calc(100% - 76px);
+    left: 0;
+    height: 76px;
+    flex-flow: row;
+  }
 
   .sidebar_contents {
     display: flex;
@@ -380,6 +389,7 @@ const SideContainer = styled.div`
     align-items: center;
     justify-content: center;
     gap: 6px;
+    padding: 0 12px;
 
     &.close {
       .sidebar_link {
@@ -555,7 +565,7 @@ const SideContainer = styled.div`
 
 const Section = styled.section`
   position: relative;
-  padding-top: 76px;
+  padding: 76px 0px 0px 0px;
   min-height: 100vh;
   transition: padding-left 0.15s ease;
   #page-numbers {
@@ -628,7 +638,8 @@ const LoginLink = styled(Link)`
   padding: 12px 26px;
 
   @media screen and (max-width: 768px) {
-    padding: 8px 16px;
+    padding: 6px 12px;
+    font-size: 14px;
   }
 `;
 
@@ -740,9 +751,6 @@ const Card = styled.div`
       }
     }
   }
-
-  @media screen and (max-width: 768px) {
-  }
 `;
 
 const SearchContainer = styled.div`
@@ -847,7 +855,6 @@ const SearchContainer = styled.div`
     .items {
       padding: 12px 0px 0px 0px;
       flex-flow: column wrap;
-      align-items: flex-end;
       gap: 16px;
 
       p {
@@ -913,7 +920,7 @@ const Results = styled.div`
 const FooterContainer = styled.footer`
   width: 100%;
   display: flex;
-  padding: 0px 0px 30px 80px;
+  padding: 0px 0px 12px 0px;
   gap: 12px;
   color: #fff;
   flex-flow: column wrap;
