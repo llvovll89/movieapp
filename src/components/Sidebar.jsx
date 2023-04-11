@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { SideContainer , ErrorBox } from '../styles/GlobalStyle';
+import { SideContainer, ErrorBox } from '../styles/GlobalStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -14,15 +14,19 @@ const Sidebar = () => {
 
   const dispatch = useDispatch();
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [mobile, setMobile] = useState(false);
 
   const toggleHandler = useCallback(() => {
     if (window.innerWidth <= 768) {
       if (!isOpen) {
         dispatch(toggleSidebar());
+
+        setMobile(true);
       }
     } else {
       if (isOpen) {
         dispatch(toggleSidebar());
+        setMobile(false);
       }
     }
   }, [dispatch, isOpen]);
@@ -36,9 +40,10 @@ const Sidebar = () => {
     };
   }, [toggleHandler, isOpen]);
 
-
   return (
-    <SideContainer style={{ width: `${sidebarWidth}px` }}>
+    <SideContainer
+      style={{ width: `${sidebarWidth}px` }}
+    >
       <div className={`sidebar_contents${!isOpen ? ' ' : ' close'}`}>
         {!isOpen ? (
           <>
@@ -96,18 +101,7 @@ const Sidebar = () => {
             </div>
           </>
         ) : (
-          <div className="sidebar_link">
-            <Link to="/">
-              <AiOutlineHome />
-            </Link>
-            <Link to="/favorite">
-              <AiOutlineStar />
-            </Link>
-            <Link>
-              <AiOutlineFieldTime />
-            </Link>
-            <span>{currentTime.toLocaleTimeString()}</span>
-          </div>
+          null
         )}
       </div>
     </SideContainer>
