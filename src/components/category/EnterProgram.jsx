@@ -37,7 +37,7 @@ const EnterProgram = () => {
 
   return (
     <>
-    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
+    <Section>
         <Results>
           {isLoading && (
             <Loading>

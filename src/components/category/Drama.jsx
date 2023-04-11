@@ -15,11 +15,9 @@ import { Loading, Spinner } from '../../styles/Loading';
 // react-icons
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { useRef } from 'react';
-import { useEffect } from 'react';
 
 const Drama = () => {
   const currentPage = useSelector(selectCurrentPage);
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const dispatch = useDispatch();
 
   const resultsRef = useRef(null);
@@ -42,7 +40,7 @@ const Drama = () => {
 
   return (
     <>
-    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
+    <Section>
         <Results ref={resultsRef}>
           {isLoading && (
             <Loading>

@@ -18,7 +18,6 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const JapanAni = () => {
   const currentPage = useSelector(selectCurrentPage);
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const dispatch = useDispatch();
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
@@ -32,14 +31,12 @@ const JapanAni = () => {
       .slice(0, 10)}&page=${currentPage}`
   );
 
-  console.log(data);
-
   const handlePageChange = (page) => {
     dispatch(setCurrentPage(page));
   };
 
   return (
-    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
+    <Section>
       <Results>
         {isLoading && (
           <Loading>

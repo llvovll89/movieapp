@@ -5,22 +5,27 @@ import {
   ErrorBox,
   SearchContainer,
   Results,
+  PaginationButton,
+  PaginationContainer,
 } from '../styles/GlobalStyle';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCurrentPage, setCurrentPage } from '../redux/paginationSlice';
 import { Loading, Spinner } from '../styles/Loading';
 import { Link, useParams } from 'react-router-dom';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import useAxios from '../hooks/useAxios';
-import { useSelector } from 'react-redux';
 
 function SearchResults() {
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
+  const currentPage = useSelector(selectCurrentPage);
   const { query } = useParams();
+  const dispatch = useDispatch();
+  const [filter, setFilter] = useState('all');
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
-  const [filter, setFilter] = useState('all');
 
   const { data, isLoading, error } = useAxios(
-    `${API_BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=ko`
+    `${API_BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=ko&page=${currentPage}`
   );
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
@@ -42,6 +47,10 @@ function SearchResults() {
               );
         });
 
+  const handlePageChange = (page) => {
+    dispatch(setCurrentPage(page));
+  };
+
   if (isLoading) {
     return (
       <Loading>
@@ -56,7 +65,7 @@ function SearchResults() {
   }
 
   return (
-    <Section style={{ paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px` }}>
+    <Section>
       <SearchContainer>
         <div className="items">
           <p>
@@ -84,7 +93,9 @@ function SearchResults() {
                     </div>
                     <div className="bot">
                       <p className="title">{movie.title}</p>
-                      <p className="aver">{movie.vote_average}</p>
+                      <p className="aver">
+                        평점 - <span>{movie.vote_average.toFixed(2)}</span>
+                      </p>
                       <p className="date">{movie.release_date}</p>
                     </div>
                   </div>
@@ -98,6 +109,20 @@ function SearchResults() {
               </div>
             ))}
         </Results>
+
+        {data && (
+          <PaginationContainer>
+            <PaginationButton
+              disabled={currentPage === 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              <FaArrowLeft />
+            </PaginationButton>
+            <PaginationButton onClick={() => handlePageChange(currentPage + 1)}>
+              <FaArrowRight />
+            </PaginationButton>
+          </PaginationContainer>
+        )}
       </SearchContainer>
     </Section>
   );
