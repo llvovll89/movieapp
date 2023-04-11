@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Section, ErrorBox, DetailPage } from '../styles/GlobalStyle';
 import { Loading, Spinner } from '../styles/Loading';
-import { useSelector } from 'react-redux';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import useAxios from '../hooks/useAxios';
@@ -10,7 +9,6 @@ import useAxios from '../hooks/useAxios';
 const MovieDetail = () => {
   const { id } = useParams();
   const [perPage, setPerPage] = useState(6);
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
 
   const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
   const API_KEY = import.meta.env.VITE_API_KEY;

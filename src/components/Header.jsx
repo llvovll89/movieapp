@@ -14,7 +14,7 @@ const Header = () => {
   };
 
   return (
-    <HeaderContainer >
+    <HeaderContainer>
       <div className="logo">
         <div className="toggle" onClick={toggleOpen}>
           <RxHamburgerMenu />
@@ -24,9 +24,9 @@ const Header = () => {
       <div className="search">
         <Search />
       </div>
-      <div className="auth">
+      {/*      <div className="auth">
         <LoginLink to="/login">로그인</LoginLink>
-      </div>
+      </div> */}
     </HeaderContainer>
   );
 };

@@ -9,8 +9,12 @@ const sidebarSlice = createSlice({
     reducers : {
         toggleSidebar: (state) => {
             state.isOpen = !state.isOpen;
-            state.sidebarWidth = state.sidebarWidth === 0 ? 220 : 0;
-        }
+            if (window.innerWidth <= 564) {
+              state.sidebarWidth = state.isOpen ? 0 : 200;
+            } else {
+              state.sidebarWidth = state.isOpen ? 0 : 220;
+            }
+          },
     }
 })
 

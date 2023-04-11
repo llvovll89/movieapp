@@ -52,6 +52,10 @@ const SliderWrapper = styled.div`
   flex-wrap: nowrap;
   width: calc(100% - 200px);
   gap: 12px;
+
+  /* @media screen and (max-width: 564px) {
+    width: calc(100% - 250px);
+  } */
 `;
 
 const SliderItem = styled.div`
@@ -72,6 +76,15 @@ const SliderItem = styled.div`
       font-size: 15px;
       padding: 0;
       color: salmon;
+    }
+  }
+
+    @media screen and (max-width: 564px) {
+    min-width: 150px;
+    gap: 4px;
+    h3 {
+      font-size: 15px;
+      padding: 4px 0;
     }
   }
 `;

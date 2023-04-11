@@ -5,14 +5,13 @@ import { Link } from 'react-router-dom';
 import {
   AiOutlineStar,
   AiOutlineHome,
-  AiOutlineFieldTime,
 } from 'react-icons/ai';
 import { toggleSidebar } from '../redux/sideSlice';
 
 const Sidebar = () => {
   const { sidebarWidth, isOpen } = useSelector((state) => state.sidebar);
-
   const dispatch = useDispatch();
+
   const [currentTime, setCurrentTime] = useState(new Date());
   const [mobile, setMobile] = useState(false);
 
@@ -32,6 +31,7 @@ const Sidebar = () => {
   }, [dispatch, isOpen]);
 
   useEffect(() => {
+
     const intervalTime = setInterval(() => setCurrentTime(new Date()), 1000);
     window.addEventListener('resize', toggleHandler);
     return () => {
