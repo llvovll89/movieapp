@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import useAxios from '../hooks/useAxios';
 import { Section, ErrorBox, DetailPage } from '../styles/GlobalStyle';
 import { Loading } from '../styles/Loading';
@@ -10,13 +9,13 @@ import '@splidejs/react-splide/css';
 const TvDetail = () => {
   const { id } = useParams();
   const [perPage, setPerPage] = useState(6);
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
   const history = useNavigate();
 
   const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w300/';
+  const BACKDROP_URL = 'https://image.tmdb.org/t/p/w1280/';
 
   const { data, isLoading, error } = useAxios(
     `${API_BASE_URL}/tv/${id}?api_key=${API_KEY}&language=ko`
@@ -65,12 +64,7 @@ const TvDetail = () => {
     );
 
   return (
-    <>
-      <Section
-        style={{
-          paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px`,
-        }}
-      >
+      <Section>
         <DetailPage>
           <div className="content">
             <div className="top">
@@ -78,18 +72,18 @@ const TvDetail = () => {
                 <iframe
                   title={`${data.title} trailer`}
                   width="100%"
-                  height="100%"
+                  height="500px"
                   src={`https://www.youtube.com/embed/${trailerData.results[0].key}`}
                   allowFullScreen
                   style={{ border: 'none' }}
                 />
               ) : (
                 <img
-                  src={
-                    data.poster_path
-                      ? `${POSTER_URL}${data.poster_path}`
-                      : NO_IMAGE_URL
-                  }
+                src={
+                  data.backdrop_path
+                  ? `${BACKDROP_URL}${data.backdrop_path}`
+                  : NO_IMAGE_URL
+                }
                   alt={data.name}
                 />
               )}
@@ -140,7 +134,7 @@ const TvDetail = () => {
               </Splide>
 
               <div className="contents">
-                <p>{data.overview}</p>
+                <p>{data.overview.length > 300 ? data.overview.slice(0, 300) + "..." : data.overview}</p>
                 <p>{data.first_air_date}</p>
               </div>
             </div>
@@ -148,7 +142,6 @@ const TvDetail = () => {
           </div>
         </DetailPage>
       </Section>
-    </>
   );
 };
 

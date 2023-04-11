@@ -16,6 +16,8 @@ const MovieDetail = () => {
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
+  const BACKDROP_URL = 'https://image.tmdb.org/t/p/w1280/';
+
   const history = useNavigate();
 
   const { data, isLoading, error } = useAxios(
@@ -65,11 +67,7 @@ const MovieDetail = () => {
     );
 
   return (
-    <Section
-      style={{
-        paddingLeft: `${window.innerWidth <= 564 ? 80 : sidebarWidth}px`,
-      }}
-    >
+    <Section>
       <DetailPage>
         <div className="content">
           <div className="top">
@@ -77,7 +75,7 @@ const MovieDetail = () => {
               <iframe
                 title={`${data.title} trailer`}
                 width="100%"
-                height="100%"
+                height="500px"
                 src={`https://www.youtube.com/embed/${trailerData.results[0].key}`}
                 allowFullScreen
                 style={{ border: 'none' }}
@@ -85,9 +83,9 @@ const MovieDetail = () => {
             ) : (
               <img
                 src={
-                  data.poster_path
-                    ? `${POSTER_URL}${data.poster_path}`
-                    : NO_IMAGE_URL
+                  data.backdrop_path
+                  ? `${BACKDROP_URL}${data.backdrop_path}`
+                  : NO_IMAGE_URL
                 }
                 alt={data.name}
               />
