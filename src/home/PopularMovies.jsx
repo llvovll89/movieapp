@@ -1,9 +1,12 @@
 import React from 'react';
 import useAxios from '../hooks/useAxios';
 import { Container } from '../styles/GlobalStyle';
-import { SliderContainer, SliderItem, SliderWrapper } from '../styles/Sliders';
+import { SliderItem } from '../styles/Sliders';
 import { Loading, Spinner } from '../styles/Loading';
 import { Link } from 'react-router-dom';
+
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 
 const PopularMovies = ({ url }) => {
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -16,7 +19,6 @@ const PopularMovies = ({ url }) => {
     error,
   } = useAxios(`${API_BASE_URL}${url}?api_key=${API_KEY}&language=ko`);
 
-
   return (
     <Container>
       <span>현재 가장 인기있는 🤩</span>
@@ -26,26 +28,35 @@ const PopularMovies = ({ url }) => {
         </Loading>
       )}
       {error && <h1>Error: {error.message}</h1>}
-      <SliderContainer>
-        <SliderWrapper>
-          {popularMovies.results &&
-            popularMovies.results.map((movie) => (
-              <SliderItem key={movie.id}>
-                {movie.poster_path && (
-                  <Link to={`/movies/${movie.id}`}>
-                    <img
-                      src={`${POSTER_URL}${movie.poster_path}`}
-                      alt={movie.title}
-                    />
-                  </Link>
-                )}
+      <Splide
+        options={{
+          perPage: 6,
+          pagination: false,
+          gap: '12px',
+          drag: 'free',
+          focus: 'center',
+          arrows: true,
+        }}
+      >
+        {popularMovies.results &&
+          popularMovies.results.map((movie) => (
+            <SplideSlide key={movie.id}>
+              <SliderItem>
+                <Link to={`/movies/${movie.id}`}>
+                  <img
+                    src={`${POSTER_URL}${movie.poster_path}`}
+                    alt={movie.title}
+                  />
+                </Link>
                 <h3>{movie.title}</h3>
-                <p>평점 - <span>{movie.vote_average}</span></p>
+                <p>
+                  평점 - <span>{movie.vote_average}</span>
+                </p>
                 <p>{movie.release_date}</p>
               </SliderItem>
-            ))}
-        </SliderWrapper>
-      </SliderContainer>
+            </SplideSlide>
+          ))}
+      </Splide>
     </Container>
   );
 };

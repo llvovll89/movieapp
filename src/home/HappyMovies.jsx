@@ -1,21 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import useAxios from '../hooks/useAxios';
 import { Container } from '../styles/GlobalStyle';
-import {
-  SliderContainer,
-  SliderWrapper,
-  SliderItem,
-  SlickContainer,
-} from '../styles/Sliders';
+import { SliderItem } from '../styles/Sliders';
 import { Link } from 'react-router-dom';
 import { Loading, Spinner } from '../styles/Loading';
 
 // splide
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-
-// react-icons
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const HappyMovies = ({ url }) => {
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -54,14 +46,12 @@ const HappyMovies = ({ url }) => {
           happyMovies.results.map((movie) => (
             <SplideSlide key={movie.id}>
               <SliderItem>
-                {movie.poster_path && (
-                  <Link to={`/movies/${movie.id}`}>
-                    <img
-                      src={`${POSTER_URL}${movie.poster_path}`}
-                      alt={movie.title}
-                    />
-                  </Link>
-                )}
+                <Link to={`/movies/${movie.id}`}>
+                  <img
+                    src={`${POSTER_URL}${movie.poster_path}`}
+                    alt={movie.title}
+                  />
+                </Link>
                 <h3>{movie.title}</h3>
                 <p>
                   평점 - <span>{movie.vote_average}</span>

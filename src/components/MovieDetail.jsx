@@ -5,10 +5,16 @@ import { Loading, Spinner } from '../styles/Loading';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import useAxios from '../hooks/useAxios';
+import { useDispatch, useSelector } from 'react-redux';
+import { likeClick } from '../redux/likeSlice';
 
 const MovieDetail = () => {
   const { id } = useParams();
   const [perPage, setPerPage] = useState(6);
+  const like = useSelector((state) => state.like.likeCount);
+  const dispatch = useDispatch();
+
+  console.log(like);
 
   const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -82,8 +88,8 @@ const MovieDetail = () => {
               <img
                 src={
                   data.backdrop_path
-                  ? `${BACKDROP_URL}${data.backdrop_path}`
-                  : NO_IMAGE_URL
+                    ? `${BACKDROP_URL}${data.backdrop_path}`
+                    : NO_IMAGE_URL
                 }
                 alt={data.name}
               />
@@ -140,7 +146,10 @@ const MovieDetail = () => {
               )}
             </Splide>
             <div className="contents">
-              <p>{data.release_date}</p>
+              <div className="top">
+                <p>개봉일 {data.release_date}</p>
+                <button onClick={() => dispatch(likeClick())}>♥️{like}</button>
+              </div>
               <p>
                 {data.overview.length > 400
                   ? data.overview.slice(0, 400) + '...'

@@ -1,34 +1,38 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { SideContainer, ErrorBox } from '../styles/GlobalStyle';
+import { SideContainer, ErrorBox, ToggleSection } from '../styles/GlobalStyle';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   AiOutlineStar,
   AiOutlineHome,
+  AiOutlineClose
 } from 'react-icons/ai';
 import { toggleSidebar } from '../redux/sideSlice';
+import {          RxHamburgerMenu} from 'react-icons/rx'
 
 const Sidebar = () => {
   const { sidebarWidth, isOpen } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
+  const toggleBtn = () => {
+    dispatch(toggleSidebar());
+  }
 
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [mobile, setMobile] = useState(false);
 
   const toggleHandler = useCallback(() => {
-    if (window.innerWidth <= 768) {
-      if (!isOpen) {
-        dispatch(toggleSidebar());
-
-        setMobile(true);
-      }
-    } else {
-      if (isOpen) {
-        dispatch(toggleSidebar());
-        setMobile(false);
-      }
+    const defaultIsOpen = false;
+    const isSmallScreen = window.innerWidth <= 768;
+    const isExtraSmallScreen = window.innerWidth <= 564;
+    const shouldOpenSidebar = !isOpen && isSmallScreen;
+    const shouldCloseSidebar = isOpen && (isSmallScreen || isExtraSmallScreen);
+  
+    if (shouldOpenSidebar) {
+      dispatch(toggleSidebar());
+    } else if (shouldCloseSidebar) {
+      dispatch(toggleSidebar());
     }
   }, [dispatch, isOpen]);
+  
 
   useEffect(() => {
 
@@ -44,7 +48,12 @@ const Sidebar = () => {
     <SideContainer
       style={{ width: `${sidebarWidth}px` }}
     >
-      <div className={`sidebar_contents${!isOpen ? ' ' : ' close'}`}>
+      <div className={`sidebar_contents${isOpen ? ' close' : ' '}`}>
+
+      <div className={`toggle${isOpen ? '' : ' active' }`} onClick={toggleBtn}>
+      {isOpen ? <RxHamburgerMenu /> : <AiOutlineClose />}
+      </div>
+
         {!isOpen ? (
           <>
             <div className="side_content">
@@ -101,7 +110,7 @@ const Sidebar = () => {
             </div>
           </>
         ) : (
-          null
+          ""
         )}
       </div>
     </SideContainer>

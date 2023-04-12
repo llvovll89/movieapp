@@ -34,29 +34,7 @@ const SlickContainer = styled.div`
     }
     
   }
-
 `
-
-const SliderContainer = styled.div`
-  display: flex;
-  align-items: center;
-  overflow-x: scroll;
-  width: 100%;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const SliderWrapper = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  width: calc(100% - 200px);
-  gap: 12px;
-
-  /* @media screen and (max-width: 564px) {
-    width: calc(100% - 250px);
-  } */
-`;
 
 const SliderItem = styled.div`
   min-width: 200px;
@@ -79,14 +57,25 @@ const SliderItem = styled.div`
     }
   }
 
+  img {
+    max-height: 250px;
+    width: 100%;
+  }
+
     @media screen and (max-width: 564px) {
     min-width: 150px;
+    /* max-width: 150px; */
     gap: 4px;
     h3 {
       font-size: 15px;
       padding: 4px 0;
     }
+
+    img {
+    max-height: 180px;
+    width: 100%;
+  }
   }
 `;
 
-export { SlickContainer, SliderContainer, SliderItem, SliderWrapper };
+export { SlickContainer, SliderItem };

@@ -25,7 +25,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router basename="movieapp">
-        <GlobalWrap>
+        <GlobalWrap >
           <ResetStyle />
           <Header />
           <Sidebar />

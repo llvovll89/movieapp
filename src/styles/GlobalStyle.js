@@ -12,6 +12,7 @@ const LogoAnimation = keyframes`
 `;
 
 const GlobalWrap = styled.div`
+  position: relative;
   width: 100%;
   background: #050306;
   min-height: calc(
@@ -43,8 +44,8 @@ const Container = styled.div`
   }
 
   .splide__arrow {
-    height: 3em;
-    width: 3em;
+    height: 2.5em;
+    width: 2.5em;
     background: #181818;
     opacity: 1;
 
@@ -89,6 +90,10 @@ const Container = styled.div`
       font-size: 18px;
       padding: 36px 0px 36px 12px;
     }
+
+    .splide__slide {
+      min-width: 150px;
+    }
   }
 
   @media screen and (max-width: 564px) {
@@ -97,6 +102,13 @@ const Container = styled.div`
       font-size: 16px;
       letter-spacing: 0.015rem;
       padding: 26px 0 26px 12px;
+    }
+
+    .splide__arrow {
+      height: 2em;
+      width: 2em;
+      background: #181818;
+      opacity: 1;
     }
   }
 `;
@@ -342,11 +354,11 @@ const HeaderContainer = styled.header`
   position: fixed;
   width: 100%;
   height: 76px;
-  background: #202123;
+  background: #2c3e50;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 12px;
+  padding: 0 20px;
   z-index: 1000;
   box-shadow: 0 1px 12px rgba(255, 255, 255, 0.12);
   .logo {
@@ -384,7 +396,7 @@ const HeaderContainer = styled.header`
   }
 
   @media screen and (max-width: 768px) {
-    padding: 0 6px;
+    padding: 0 12px;
     .logo {
       gap: 7.5px;
       a {
@@ -397,13 +409,13 @@ const HeaderContainer = styled.header`
   @media screen and (max-width: 564px) {
     .logo {
       gap: 9px;
-    .toggle {
-      width: 32px;
-    }
+      .toggle {
+        width: 32px;
+      }
 
-    a {
-      font-size: 26px;
-    }
+      a {
+        font-size: 26px;
+      }
     }
   }
 `;
@@ -418,7 +430,7 @@ const SideContainer = styled.div`
   top: 76px;
   left: 0;
   z-index: 1200;
-  background: #202123;
+  background: #2c3e50;
 
   .sidebar_contents {
     display: flex;
@@ -426,40 +438,44 @@ const SideContainer = styled.div`
     width: 100%;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 26px;
     padding: 0 12px;
 
-    &.close {
-      .sidebar_link {
-        display: flex;
-        flex-flow: column wrap;
+  .toggle {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
-        a,
-        span {
-          margin: 12px auto;
-          color: #b1aab1;
-          font-size: 22px;
-          transition: color 0.2s ease;
-          &:hover,
-          &:focus {
-            color: #09f;
-          }
-        }
+  transition: color 0.15s linear;
 
-        span {
-          display: inline-block;
-          text-align: center;
-          font-size: 14px;
-          letter-spacing: 0.1rem;
-        }
-      }
-    }
+  &:hover ,
+  &:active {
+    color: rgba(255, 255, 255, 0.16);
+  }
+
+  &.active {
+    left: calc(100% - 36px);
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
 
     .side_content {
       display: flex;
       flex-flow: column wrap;
       width: 100%;
       gap: 12px;
+      padding-bottom: 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       &:hover {
         background: rgba(255, 255, 255, 0.12);
@@ -498,7 +514,7 @@ const SideContainer = styled.div`
         span {
           color: #b1aab1;
           display: block;
-          padding: 2px 0px 2px 22px;
+          padding: 4px 0px 4px 22px;
           font-size: 13px;
         }
 
@@ -514,32 +530,6 @@ const SideContainer = styled.div`
   @media screen and (max-width: 768px) {
     .sidebar_contents {
       gap: 26px;
-
-      &.close {
-        .sidebar_link {
-          display: flex;
-          flex-flow: column wrap;
-          gap: 16px;
-          a,
-          span {
-            margin: 12px auto;
-            color: #b1aab1;
-            font-size: 20px;
-            transition: color 0.2s ease;
-            &:hover,
-            &:focus {
-              color: #09f;
-            }
-          }
-
-          span {
-            display: inline-block;
-            text-align: center;
-            font-size: 14px;
-            letter-spacing: 0.012rem;
-          }
-        }
-      }
     }
 
     .side_content {
@@ -605,6 +595,11 @@ const SideContainer = styled.div`
     .sidebar_contents {
       padding: 0 6px;
 
+      .toggle {
+        width: 26px;
+        height: 26px;
+      }
+
       .side_content .side_bot .link_items {
         padding: 4px 4px 4px 10px;
 
@@ -615,6 +610,24 @@ const SideContainer = styled.div`
     }
   }
 `;
+
+const ToggleSection = styled.div`
+  position: fixed;
+  top: 76px;
+  left: 12px;
+  width: 30px;
+  height: 30px;
+  z-index: 1500;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      svg {
+        width: 100%;
+        height: 100%;
+        color: #fff;
+      }
+`
 
 const Section = styled.section`
   position: relative;
@@ -1091,4 +1104,5 @@ export {
   SearchContainer,
   LoginForm,
   Auth,
+  ToggleSection
 };

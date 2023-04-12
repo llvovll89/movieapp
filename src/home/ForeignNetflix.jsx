@@ -1,9 +1,12 @@
 import React from 'react';
 import useAxios from '../hooks/useAxios';
 import { Container } from '../styles/GlobalStyle';
-import { SliderContainer, SliderWrapper, SliderItem } from '../styles/Sliders';
+import { SliderItem } from '../styles/Sliders';
 import { Loading, Spinner } from '../styles/Loading';
 import { Link } from 'react-router-dom';
+
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 
 const ForeignNetflix = ({ url }) => {
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -25,26 +28,32 @@ const ForeignNetflix = ({ url }) => {
         </Loading>
       )}
       {error && <h1>Error: {error.message}</h1>}
-      <SliderContainer>
-        <SliderWrapper>
-          {foreignNetflix.results &&
-            foreignNetflix.results.map((tv) => (
-              <SliderItem key={tv.id}>
-                {tv.poster_path && (
-                  <Link to={`/tv/${tv.id}`}>
-                    <img
-                      src={`${POSTER_URL}${tv.poster_path}`}
-                      alt={tv.name}
-                    />
-                  </Link>
-                )}
+      <Splide
+        options={{
+          perPage: 6,
+          pagination: false,
+          gap: '12px',
+          drag: 'free',
+          focus: 'center',
+          arrows: true,
+        }}
+      >
+        {foreignNetflix.results &&
+          foreignNetflix.results.map((tv) => (
+            <SplideSlide key={tv.id}>
+              <SliderItem>
+                <Link to={`/tv/${tv.id}`}>
+                  <img src={`${POSTER_URL}${tv.poster_path}`} alt={tv.title} />
+                </Link>
                 <h3>{tv.name}</h3>
-                <p>평점 - <span>{tv.vote_average}</span></p>
+                <p>
+                  평점 - <span>{tv.vote_average}</span>
+                </p>
                 <p>{tv.first_air_date}</p>
               </SliderItem>
-            ))}
-        </SliderWrapper>
-      </SliderContainer>
+            </SplideSlide>
+          ))}
+      </Splide>
     </Container>
   );
 };

@@ -17,7 +17,8 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 const Movies = () => {
   const currentPage = useSelector(selectCurrentPage);
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
+  const like = useSelector((state) => state.like.setLikeCountFromLocalStorage)
+  console.log(like);
   const dispatch = useDispatch();
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
     .env;

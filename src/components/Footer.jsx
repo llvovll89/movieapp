@@ -1,17 +1,8 @@
 import React from 'react';
 import { FooterContainer } from '../styles/GlobalStyle';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { mobileSizeOn } from '../redux/mobileSlice';
 
 const Footer = () => {
-  const mobile = useSelector((state) => state.mobileApp.isMobile);
-  const dispatch = useDispatch();
-
-  const mobileHandler = () => {
-    dispatch(mobileSizeOn());
-  }
-  
   return (
     <FooterContainer>
       <div className="top">
@@ -28,7 +19,6 @@ const Footer = () => {
         <a href="#" target="_blank">
           저작권보호
         </a>
-        <button title="mobile버전" onClick={mobileHandler}>{mobile ? "PC버전" : "모바일버전"}</button>
       </div>
       <div className="contents">
         <p>
