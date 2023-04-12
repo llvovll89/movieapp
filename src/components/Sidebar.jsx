@@ -8,14 +8,11 @@ import {
   AiOutlineClose
 } from 'react-icons/ai';
 import { toggleSidebar } from '../redux/sideSlice';
-import {          RxHamburgerMenu} from 'react-icons/rx'
+import { RxHamburgerMenu } from 'react-icons/rx'
 
 const Sidebar = () => {
   const { sidebarWidth, isOpen } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
-  const toggleBtn = () => {
-    dispatch(toggleSidebar());
-  }
 
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -44,17 +41,17 @@ const Sidebar = () => {
     };
   }, [toggleHandler, isOpen]);
 
+  const toggleBtn = () => {
+    dispatch(toggleSidebar());
+  }
+
   return (
     <SideContainer
       style={{ width: `${sidebarWidth}px` }}
     >
       <div className={`sidebar_contents${isOpen ? ' close' : ' '}`}>
 
-      <div className={`toggle${isOpen ? '' : ' active' }`} onClick={toggleBtn}>
-      {isOpen ? <RxHamburgerMenu /> : <AiOutlineClose />}
-      </div>
-
-        {!isOpen ? (
+        {/* {!isOpen ? (
           <>
             <div className="side_content">
               <div className="side_bot">
@@ -111,8 +108,8 @@ const Sidebar = () => {
           </>
         ) : (
           ""
-        )}
-      </div>
+        )} */}
+        </div> 
     </SideContainer>
   );
 };

@@ -20,7 +20,9 @@ import { ResetStyle } from './styles/ResetStyle';
 import { GlobalWrap } from './styles/GlobalStyle';
 
 
+
 function App() {
+//           <Sidebar />
 
   return (
     <Provider store={store}>
@@ -28,7 +30,6 @@ function App() {
         <GlobalWrap >
           <ResetStyle />
           <Header />
-          <Sidebar />
           <Top />
           <Routes>
             <Route path="/">

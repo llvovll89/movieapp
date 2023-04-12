@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const LogoAnimation = keyframes`
@@ -20,6 +20,7 @@ const GlobalWrap = styled.div`
   );
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 const ErrorBox = styled.div`
@@ -351,21 +352,19 @@ const Content = styled.div`
 `;
 
 const HeaderContainer = styled.header`
-  position: fixed;
+  position: sticky;
   width: 100%;
   height: 76px;
-  background: #2c3e50;
+  background: #181818;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  top: 0;
+  left: 0;
   z-index: 1000;
-  box-shadow: 0 1px 12px rgba(255, 255, 255, 0.12);
-  .logo {
-    display: flex;
-    gap: 12px;
-    align-items: center;
 
+  .logo {
     a {
       font-size: 26px;
       color: skyblue;
@@ -374,25 +373,94 @@ const HeaderContainer = styled.header`
       cursor: pointer;
       animation: ${LogoAnimation} 3s linear infinite;
     }
+  }
+
+  .search {
+    width: 400px;
+  }
+
+  .navbar {
+    padding: 0 12px;
+    height: 100%;
+    display: flex;
+    align-items: center;
 
     .toggle {
-      width: 26px;
-      display: flex;
-      justify-content: center;
       position: relative;
+      display: none;
+      width: 36px;
+      height: 36px;
       cursor: pointer;
-      color: #fff;
+      overflow: hidden;
 
-      svg {
-        width: 100%;
-        height: 100%;
-      }
+      span {
+        position: absolute;
+        width: 26px;
+        height: 3px;
+        background: #FFF;
 
-      &:focus,
-      &:active {
-        color: #1de9b6;
+        &:nth-child(1) {
+          top: 25%;
+        }
+
+        &:nth-child(3) {
+          bottom: 25%;
+        }
       }
     }
+  .contents{
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    height: 100%;
+
+    .dropdown {
+    position: relative;
+    display: inline-block;
+
+    &.off {
+      display: none;
+    }
+
+    &:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-btn , a {
+      display: block;
+      width: 100%;
+      padding: 12px 20px;
+      color: #FFF;
+    }
+
+  .dropdown-content {
+  padding: 12px;
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  background: #181818;
+  transform: translateX(-50%);
+  min-width: 180px;
+  z-index: 1;
+
+  a , span{
+    color: #FFF;
+    padding: 9px;
+    text-decoration: none;
+    display: block;
+  }
+
+  a:hover,
+  span:hover,
+  a:focus,
+  span:focus {
+    background: rgba(255,255,255,0.1);
+    /* color: ; */
+  }
+}
+    }
+  }
   }
 
   @media screen and (max-width: 768px) {
@@ -404,20 +472,78 @@ const HeaderContainer = styled.header`
         letter-spacing: 0.15rem;
       }
     }
-  }
 
-  @media screen and (max-width: 564px) {
-    .logo {
-      gap: 9px;
+    .navbar {
       .toggle {
-        width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
       }
 
-      a {
-        font-size: 26px;
+      .contents {
+        position: absolute;
+        right: -50%;
+        opacity: 0;
+
+        &.open {
+          min-width: 260px;
+          min-height: 100vh;
+          top: 76px;
+          right: 0;
+          opacity: 1;
+          z-index: 1000;
+          flex-direction: column;
+          background: #181818;
+          transition: all 0.35s linear;
+
+          .dropdown {
+            width: 100%;
+            text-align: center;
+            .dropdown-content {
+  flex-direction: column;
+  top: 50%;
+  left: -20px;
+  min-width: 160px;
+
+  a {
+    padding: 12px;
+    text-decoration: none;
+    display: block;
+  }
+}
+
+          }
+
+          .dropdown.on {
+            display: block;
+          }
+        }
       }
     }
   }
+
+  @media screen and (max-width: 564px) {
+    height: 66px;
+    .logo a {
+      font-size: 22px;
+    }
+
+    .navbar {
+      .toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .contents {
+        &.open {
+          min-width: 220px;
+          top: 66px;
+        }
+      }
+    }
 `;
 
 const SideContainer = styled.div`
@@ -441,34 +567,34 @@ const SideContainer = styled.div`
     gap: 26px;
     padding: 0 12px;
 
-  .toggle {
-  position: absolute;
-  top: 6px;
-  left: 10px;
-  color: #fff;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+    .toggle {
+      position: absolute;
+      top: 6px;
+      left: 10px;
+      color: #fff;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
 
-  transition: color 0.15s linear;
+      transition: color 0.15s linear;
 
-  &:hover ,
-  &:active {
-    color: rgba(255, 255, 255, 0.16);
-  }
+      &:hover,
+      &:active {
+        color: rgba(255, 255, 255, 0.16);
+      }
 
-  &.active {
-    left: calc(100% - 36px);
-  }
+      &.active {
+        left: calc(100% - 36px);
+      }
 
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-}
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
 
     .side_content {
       display: flex;
@@ -618,20 +744,20 @@ const ToggleSection = styled.div`
   width: 30px;
   height: 30px;
   z-index: 1500;
-      display: flex;
-      justify-content: center;
-      position: relative;
-      cursor: pointer;
-      svg {
-        width: 100%;
-        height: 100%;
-        color: #fff;
-      }
-`
+  display: flex;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  svg {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+  }
+`;
 
 const Section = styled.section`
   position: relative;
-  padding: 76px 0px 0px 0px;
+  padding: 36px 0px 0px 0px;
   min-height: 100vh;
   transition: padding-left 0.15s ease;
   #page-numbers {
@@ -649,10 +775,13 @@ const Section = styled.section`
       cursor: pointer;
     }
   }
+
+  @media screen and (max-width: 564px) {
+    padding: 26px 0px 0px 0px;
+  }
 `;
 
 const SearchForm = styled.form`
-  width: 400px;
   max-width: 100%;
   padding: 6px;
   display: flex;
@@ -1104,5 +1233,5 @@ export {
   SearchContainer,
   LoginForm,
   Auth,
-  ToggleSection
+  ToggleSection,
 };
