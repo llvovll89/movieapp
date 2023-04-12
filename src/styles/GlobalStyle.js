@@ -352,7 +352,7 @@ const Content = styled.div`
 `;
 
 const HeaderContainer = styled.header`
-  position: sticky;
+  position: fixed;
   width: 100%;
   height: 76px;
   background: #181818;
@@ -363,6 +363,48 @@ const HeaderContainer = styled.header`
   top: 0;
   left: 0;
   z-index: 1000;
+
+  .search_bar {
+    position: absolute;
+    height: 56px;
+    top: -100%;
+    left: 0;
+
+    &.open {
+    display: flex;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    background: #F0F0F0;
+    z-index: 10;
+    align-items: center;
+
+      form {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+
+        input {
+          width: 100%;
+          height: 100%;
+          padding: 0 20px;
+          font-size: 18px;
+        }
+      }
+
+      @media screen and (max-width: 564px) {
+          & {
+            form {
+              input {
+                font-size: 16px;
+              }
+            }
+          }
+      }
+    }
+  }
 
   .logo {
     a {
@@ -375,39 +417,40 @@ const HeaderContainer = styled.header`
     }
   }
 
-  .search {
-    width: 400px;
-  }
 
   .navbar {
     padding: 0 12px;
-    height: 100%;
     display: flex;
     align-items: center;
+    gap: 12px;
+
+    .search {
+    color: #FFF;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
 
     .toggle {
       position: relative;
       display: none;
-      width: 36px;
-      height: 36px;
+      width: 26px;
+      height: 26px;
       cursor: pointer;
       overflow: hidden;
 
-      span {
-        position: absolute;
-        width: 26px;
-        height: 3px;
-        background: #FFF;
-
-        &:nth-child(1) {
-          top: 25%;
-        }
-
-        &:nth-child(3) {
-          bottom: 25%;
-        }
+      svg {
+        width: 100%;
+        height: 100%;
+        color: #FFF;
       }
     }
+
   .contents{
     display: flex;
     gap: 16px;
@@ -442,7 +485,7 @@ const HeaderContainer = styled.header`
   background: #181818;
   transform: translateX(-50%);
   min-width: 180px;
-  z-index: 1;
+  z-index: 100;
 
   a , span{
     color: #FFF;
@@ -474,6 +517,9 @@ const HeaderContainer = styled.header`
     }
 
     .navbar {
+      flex-direction: row-reverse;
+      gap: 22px;
+
       .toggle {
         display: flex;
         align-items: center;
@@ -481,9 +527,16 @@ const HeaderContainer = styled.header`
         flex-direction: column;
       }
 
+      .search {
+    color: #FFF;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+      }
+
       .contents {
         position: absolute;
-        right: -50%;
+        right: -70%;
         opacity: 0;
 
         &.open {
@@ -757,7 +810,7 @@ const ToggleSection = styled.div`
 
 const Section = styled.section`
   position: relative;
-  padding: 36px 0px 0px 0px;
+  padding: 46px 0px 0px 0px;
   min-height: 100vh;
   transition: padding-left 0.15s ease;
   #page-numbers {
@@ -777,7 +830,7 @@ const Section = styled.section`
   }
 
   @media screen and (max-width: 564px) {
-    padding: 26px 0px 0px 0px;
+    padding: 36px 0px 0px 0px;
   }
 `;
 
@@ -1044,7 +1097,7 @@ const SearchContainer = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    padding: 24px 12px;
+    padding: 36px 12px;
     gap: 16px;
 
     .items {

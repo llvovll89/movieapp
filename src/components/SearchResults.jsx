@@ -23,6 +23,7 @@ function SearchResults() {
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
+  const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
 
   const { data, isLoading, error } = useAxios(
     `${API_BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=ko&page=${currentPage}`
@@ -88,7 +89,14 @@ function SearchResults() {
                   <div className="contents">
                     <div className="top">
                       <Link to={`/movies/${movie.id}`}>
-                        <img src={`${POSTER_URL}${movie.poster_path}`} alt="" />
+                        <img
+                          src={
+                            movie.poster_path
+                              ? `${POSTER_URL}${movie.poster_path}`
+                              : NO_IMAGE_URL
+                          }
+                          alt=""
+                        />
                       </Link>
                     </div>
                     <div className="bot">
@@ -96,7 +104,7 @@ function SearchResults() {
                       <p className="aver">
                         평점 - <span>{movie.vote_average.toFixed(2)}</span>
                       </p>
-                      <p className="date">{movie.release_date}</p>
+                      <p className="date">{movie.release_date ? movie.release_date : "정보없음"}</p>
                     </div>
                   </div>
                 </Card>
