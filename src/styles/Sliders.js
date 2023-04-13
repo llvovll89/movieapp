@@ -40,11 +40,13 @@ const SliderItem = styled.div`
   min-width: 200px;
   display: flex;
   flex-flow: column wrap;
-  gap: 6px;
+  gap: 3px;
+
   h3 {
     padding: 6px 0;
     font-size: 16px;
     letter-spacing: 0.02rem;
+    font-weight: 700;
   }
   p {
     font-size: 14px;

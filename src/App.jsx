@@ -1,9 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
-import { Provider, useSelector , useDispatch } from 'react-redux';
+import { Provider} from 'react-redux';
 import Header from './components/Header';
 import Home from './home/Home';
-import MovieDetail from './components/MovieDetail';
+import MovieDetail from './pages/movie/MovieDetail';
 import Sidebar from './components/Sidebar';
 import Login from './components/auth/Login';
 import Top from './components/Top';
@@ -11,18 +10,15 @@ import store from './redux/store';
 import SearchResults from './components/SearchResults';
 import Board from './components/board/Board';
 import Footer from './components/Footer';
-import TvDetail from './components/TvDetail';
+import TvDetail from './pages/tv/TvDetail';
 import NotFound from './components/NotFound';
-import Category from './components/category/Category';
-
-// styled-components
+import Category from './pages/category/Category';
 import { ResetStyle } from './styles/ResetStyle';
 import { GlobalWrap } from './styles/GlobalStyle';
 
 
 
 function App() {
-//           <Sidebar />
 
   return (
     <Provider store={store}>

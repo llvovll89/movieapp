@@ -5,7 +5,6 @@ import { SliderItem } from '../styles/Sliders';
 import { Link } from 'react-router-dom';
 import { Loading, Spinner } from '../styles/Loading';
 
-// splide
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 

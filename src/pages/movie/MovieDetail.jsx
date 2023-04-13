@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Section, ErrorBox, DetailPage } from '../styles/GlobalStyle';
-import { Loading, Spinner } from '../styles/Loading';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { Section, ErrorBox, DetailPage } from '../../styles/GlobalStyle';
+import { Loading, Spinner } from '../../styles/Loading';
+import useAxios from '../../hooks/useAxios';
+import { useDispatch, useSelector } from 'react-redux';
+import { likeClick } from '../../redux/likeSlice';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
-import useAxios from '../hooks/useAxios';
-import { useDispatch, useSelector } from 'react-redux';
-import { likeClick } from '../redux/likeSlice';
 
 const MovieDetail = () => {
   const { id } = useParams();
   const [perPage, setPerPage] = useState(6);
+
   const like = useSelector((state) => state.like.likeCount);
   const dispatch = useDispatch();
 
-  console.log(like);
-
-  const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
+  const NO_IMAGE_URL = 'https://via.placeholder.com/500x500.png?text=No+Image';
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
@@ -35,8 +34,12 @@ const MovieDetail = () => {
     `${API_BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=ko-KR`
   );
 
+  const { data: recommendedMoviesData } = useAxios(
+    `${API_BASE_URL}/movie/${id}/recommendations?api_key=${API_KEY}&language=ko-KR`
+  );
+
   const handleClick = () => {
-    history(-1);
+    history('/');
   };
 
   const handleResize = () => {
@@ -47,13 +50,14 @@ const MovieDetail = () => {
     } else if (window.innerWidth >= 628) {
       setPerPage(3);
     } else {
-      setPerPage(1);
+      setPerPage(2);
     }
   };
 
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
+
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
 
@@ -102,23 +106,27 @@ const MovieDetail = () => {
             </div>
 
             <div className="net pro">
-              <span>
-                {data.production_companies.map((pro) => pro.name).join(' ')}
-              </span>
+              {data.production_companies && data.production_companies.length > 0
+                ? data.production_companies.slice(0, 4).map((pro) => (
+                    <div className="pro_name" key={pro.id}>
+                      <span>{pro.name}</span>
+                    </div>
+                  ))
+                : null}
             </div>
 
-            <Splide
-              options={{
-                perPage,
-                pagination: false,
-                gap: '12px',
-                drag: 'free',
-                focus: 'center',
-                arrows: true,
-              }}
-            >
-              {castData && castData.cast ? (
-                castData.cast.slice(0, 12).map((c) => (
+            {castData && castData.cast && (
+              <Splide
+                options={{
+                  perPage,
+                  pagination: false,
+                  gap: '6px',
+                  drag: 'free',
+                  focus: 'center',
+                  arrows: true,
+                }}
+              >
+                {castData.cast.slice(0, 12).map((c) => (
                   <SplideSlide key={c.id}>
                     <div className="cast_contents">
                       <img
@@ -129,35 +137,62 @@ const MovieDetail = () => {
                         }
                       />
                       <div className="cast_name">
-                        <p>
-                          배우 - <span>{c.name}</span>
-                        </p>
-                        <p>
-                          배역 - <span>{c.character}</span>
-                        </p>
+                        <p>{c.name}</p>
+                        {c.character ? <p>{c.character}</p> : null}
                       </div>
                     </div>
                   </SplideSlide>
-                ))
-              ) : (
-                <div className="cast_contents">
-                  <h1>{error}</h1>
-                </div>
-              )}
-            </Splide>
+                ))}
+              </Splide>
+            )}
+
             <div className="contents">
               <div className="top">
                 <p>개봉일 {data.release_date}</p>
-                <button onClick={() => dispatch(likeClick())}>♥️{like}</button>
+                <button onClick={() => dispatch(likeClick())}>♥️ {like}</button>
               </div>
+              <h3>개요</h3>
               <p>
                 {data.overview.length > 400
                   ? data.overview.slice(0, 400) + '...'
                   : data.overview}
               </p>
+
+              <h3>비슷한영화</h3>
+              {recommendedMoviesData && recommendedMoviesData.results && (
+                <Splide
+                  options={{
+                    perPage,
+                    pagination: false,
+                    gap: '6px',
+                    drag: 'free',
+                    focus: 'center',
+                    arrows: true,
+                  }}
+                >
+                  {recommendedMoviesData.results.slice(0, 12).map((c) => (
+                    <SplideSlide key={c.id}>
+                      <div className="recommended-movies">
+                        <Link to={`/movies/${c.id}`}>
+                          <img
+                            src={
+                              c.poster_path
+                                ? `${POSTER_URL}${c.poster_path}`
+                                : NO_IMAGE_URL
+                            }
+                            alt={c.title}
+                          />
+                        </Link>
+                      </div>
+                    </SplideSlide>
+                  ))}
+                </Splide>
+              )}
             </div>
           </div>
-          <button onClick={handleClick}>X</button>
+          <button onClick={handleClick} onTouchStart={handleClick}>
+            X
+          </button>
         </div>
       </DetailPage>
     </Section>

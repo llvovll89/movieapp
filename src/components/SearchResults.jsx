@@ -23,7 +23,7 @@ function SearchResults() {
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
-  const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
+  const NO_IMAGE_URL = 'https://via.placeholder.com/500x500.png?text=No+Image';
 
   const { data, isLoading, error } = useAxios(
     `${API_BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=ko&page=${currentPage}`
@@ -81,42 +81,44 @@ function SearchResults() {
             </select>
           </div>
         </div>
-        <Results>
-          {data &&
-            (filteredData.length > 0 ? (
-              filteredData.map((movie) => (
-                <Card key={movie.id}>
-                  <div className="contents">
-                    <div className="top">
-                      <Link to={`/movies/${movie.id}`}>
-                        <img
-                          src={
-                            movie.poster_path
-                              ? `${POSTER_URL}${movie.poster_path}`
-                              : NO_IMAGE_URL
-                          }
-                          alt=""
-                        />
-                      </Link>
-                    </div>
-                    <div className="bot">
-                      <p className="title">{movie.title}</p>
-                      <p className="aver">
-                        평점 - <span>{movie.vote_average.toFixed(2)}</span>
-                      </p>
-                      <p className="date">{movie.release_date ? movie.release_date : "정보없음"}</p>
-                    </div>
-                  </div>
-                </Card>
-              ))
-            ) : (
-              <div className="non_page">
-                <h1>404 NOT FOUND</h1>
-                <p>검색 결과가 없습니다.</p>
-                <p>다른 검색어로 다시 시도해주세요.</p>
+
+        {filteredData.length > 0 ? (
+          <Results>
+            {filteredData.map((movie) => (
+              <Card key={movie.id}>
+              <div className="contents">
+              <div className="top">
+                <Link to={`/movies/${movie.id}`}>
+                  <img
+                    src={
+                      movie.poster_path
+                        ? `${POSTER_URL}${movie.poster_path}`
+                        : NO_IMAGE_URL
+                    }
+                    alt=""
+                  />
+                </Link>
               </div>
+              <div className="bot">
+                <p className="title">{movie.title}</p>
+                <p className="aver">
+                  평점 - <span>{movie.vote_average.toFixed(2)}</span>
+                </p>
+                <p className="date">
+                  {movie.release_date ? movie.release_date : '정보없음'}
+                </p>
+              </div>
+            </div>
+              </Card>
             ))}
-        </Results>
+          </Results>
+        ) : (
+          <div className="non_page">
+            <h1>404 NOT FOUND</h1>
+            <p>검색 결과가 없습니다.</p>
+            <p>다른 검색어로 다시 시도해주세요.</p>
+          </div>
+        )}
 
         {data && (
           <PaginationContainer>
