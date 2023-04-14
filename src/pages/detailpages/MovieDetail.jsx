@@ -166,9 +166,9 @@ const MovieDetail = () => {
 
                 <div className="items_b">
                   <h3>
-                    {recommendedMoviesData.results.length > 0
-                      ? '비슷한영화'
-                      : null}
+                  {recommendedMoviesData && recommendedMoviesData.results && recommendedMoviesData.results.length > 0
+                    ? '비슷한영화'
+                    : null}
                   </h3>
                   {recommendedMoviesData &&
                     recommendedMoviesData.results &&

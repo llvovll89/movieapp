@@ -669,7 +669,7 @@ const HeaderContainer = styled.header`
 
       .contents {
         position: absolute;
-        right: -70%;
+        right: -100%;
         opacity: 0;
 
         &.open {
@@ -886,9 +886,10 @@ const Card = styled.div`
       }
       .aver,
       .date {
-        line-height: 1.5;
+        line-height: 1;
         font-size: 14px;
         color: rgba(255, 255, 255, 0.66);
+        
         span {
           font-size: 16px;
           color: salmon;
@@ -900,6 +901,51 @@ const Card = styled.div`
         color: #fff;
       }
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    .contents {
+    width: 100%;
+    height: 280px;
+    &:hover {
+      transform: translateY(-1.5%);
+    }
+
+    .bot {
+      padding: 4px 0;
+      p {
+        padding: 2px 6px;
+        font-size: 13px;
+      }
+      .title {
+        font-size: 15px;
+      }
+      span {
+        font-size: 14px;
+      }
+
+      .aver,
+      .date {
+        line-height: 1;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.66);
+        
+        span {
+          font-size: 14px;
+          color: salmon;
+        }
+      }
+
+      .date{
+          display: flex;
+          flex-direction: column;
+        span {
+        font-size: 13.5px;
+        color: #fff;
+      }
+      } 
+    }
+  }
   }
 `;
 

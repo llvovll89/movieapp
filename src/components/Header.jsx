@@ -31,7 +31,7 @@ const Header = () => {
   const debounceSearchQuery = useDebounce(searchQuery, 500);
 
   const { data, isLoading, error } = useAxios(
-    `${API_BASE_URL}/search/movie?api_key=${API_KEY}&query=${debounceSearchQuery}&language=ko`
+    `${API_BASE_URL}/search/multi?api_key=${API_KEY}&query=${debounceSearchQuery}&language=ko`
   );
 
   const handleSubmit = useCallback(
@@ -43,8 +43,18 @@ const Header = () => {
       }
 
       if (data && data.results) {
-        history(`/search/${searchQuery}`, { state: { results: data.results } });
+        const { results } = data;
+
+        const filteredResults = results.filter(
+          (result) =>
+            result.media_type === 'movie' || result.media_type === 'person'
+        );
+
+        history(`/search/${searchQuery}`, {
+          state: { results: filteredResults },
+        });
       }
+
       setIsSearchVisible(false);
       e.target.elements.searchInput &&
         (e.target.elements.searchInput.value = '');
@@ -53,11 +63,17 @@ const Header = () => {
   );
 
   const toggleNavbar = () => {
-    setIsNavbarVisible(true);
+    setIsNavbarVisible((prevState) => !prevState);
+  };
+
+  const toggleHandleClick = (event) => {
+    event.preventDefault();
+    toggleNavbar();
   };
 
   const searchHandler = () => {
-    setIsSearchVisible(true);
+    setIsSearchVisible((prevState) => !prevState);
+    searchInput.current.focus();
   };
 
   const handleClickOutside = useCallback(
@@ -100,8 +116,12 @@ const Header = () => {
       <div className="navbar">
         <div
           className="toggle"
-          onClick={toggleNavbar}
-          onTouchStart={toggleNavbar}
+          onClick={toggleHandleClick}
+          // onTouchStart={toggleHandleClick}
+          // onTouchEnd={(e) => {
+          //   e.preventDefault();
+          //   e.stopPropagation();
+          // }}
         >
           {isNavbarVisible ? <AiOutlineClose /> : <RxHamburgerMenu />}
         </div>
@@ -118,10 +138,10 @@ const Header = () => {
               영화
             </button>
             <div className="dropdown-content">
-              <Link onClick={toggleNavbar} to="/category/movies">
+              <Link onClick={toggleHandleClick} to="/category/movies">
                 전체영화
               </Link>
-              <Link onClick={toggleNavbar} to="/category/animation">
+              <Link onClick={toggleHandleClick} to="/category/animation">
                 애니메이션 (영화)
               </Link>
             </div>
@@ -131,10 +151,10 @@ const Header = () => {
               TV
             </button>
             <div className="dropdown-content">
-              <Link onClick={toggleNavbar} to="/category/drama">
+              <Link onClick={toggleHandleClick} to="/category/drama">
                 드라마
               </Link>
-              <Link onClick={toggleNavbar} to="/category/tv_enter">
+              <Link onClick={toggleHandleClick} to="/category/tv_enter">
                 예능프로그램
               </Link>
             </div>
@@ -144,10 +164,13 @@ const Header = () => {
               애니메이션
             </button>
             <div className="dropdown-content">
-              <Link onClick={toggleNavbar} to="/category/animation_jp">
+              <Link onClick={toggleHandleClick} to="/category/animation_jp">
                 전체 (일본원작)
               </Link>
-              <Link onClick={toggleNavbar} to="/category/animation_jp_theater">
+              <Link
+                onClick={toggleHandleClick}
+                to="/category/animation_jp_theater"
+              >
                 애니 (극장판)
               </Link>
             </div>
@@ -166,7 +189,7 @@ const Header = () => {
         <div
           className="search"
           onClick={searchHandler}
-          onTouchStart={searchHandler}
+          // onTouchStart={searchHandler}
         >
           {isSearchVisible ? <AiOutlineClose /> : <AiOutlineSearch />}
         </div>

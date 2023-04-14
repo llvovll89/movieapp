@@ -17,7 +17,7 @@ import useAxios from '../hooks/useAxios';
 
 function SearchResults() {
   const currentPage = useSelector(selectCurrentPage);
-  
+
   const { query } = useParams();
   const dispatch = useDispatch();
 
@@ -30,27 +30,30 @@ function SearchResults() {
   const NO_IMAGE_URL = 'https://via.placeholder.com/500x500.png?text=No+Image';
 
   const { data, isLoading, error } = useAxios(
-    `${API_BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&language=ko&page=${currentPage}`
+    `${API_BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}&language=ko&page=${currentPage}`
   );
+
+  console.log(data);
+
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
   };
 
   const filteredData =
-    filter === 'all'
-      ? data.results
-      : data.results.filter((movie) => {
-          if (!movie.production_countries) {
-            return false;
-          }
-          return filter === 'korean'
-            ? movie.production_countries.some(
-                (country) => country.iso_3166_1 === 'KR'
-              )
-            : movie.production_countries.every(
-                (country) => country.iso_3166_1 !== 'KR'
-              );
-        });
+  filter === 'all'
+    ? data.results || []
+    : (data.results || []).filter((movie) => {
+        if (!movie.production_countries) {
+          return false;
+        }
+        return filter === 'korean'
+          ? movie.production_countries.some(
+              (country) => country.iso_3166_1 === 'KR'
+            )
+          : movie.production_countries.every(
+              (country) => country.iso_3166_1 !== 'KR'
+            );
+      });
 
   const handlePageChange = (page) => {
     dispatch(setCurrentPage(page));
@@ -70,7 +73,7 @@ function SearchResults() {
   }
 
   return (
-    <Section className={dark ? "" : "dark"}>
+    <Section className={dark ? '' : 'dark'}>
       <SearchContainer>
         <div className="items">
           <p>
@@ -90,30 +93,53 @@ function SearchResults() {
           <Results>
             {filteredData.map((movie) => (
               <Card key={movie.id}>
-              <div className="contents">
-              <div className="top">
-                <Link to={`/movies/${movie.id}`}>
-                  <img
-                    src={
-                      movie.poster_path
+                <div className="contents">
+                  <div className="top">
+                    <Link to={`/movies/${movie.id}`}>
+                      <img
+                      src={
+                        movie.poster_path
                         ? `${POSTER_URL}${movie.poster_path}`
-                        : NO_IMAGE_URL
-                    }
-                    alt={movie.title}
-                    loading='lazy'
-                  />
-                </Link>
-              </div>
-              <div className="bot">
-                <p className="title">{movie.title}</p>
-                <p className="aver">
-                  평점 - <span>{movie.vote_average.toFixed(2)}</span>
-                </p>
-                <p className="date">
-                  {movie.release_date ? movie.release_date : '정보없음'}
-                </p>
-              </div>
-            </div>
+                        : movie.profile_path
+                          ? `${POSTER_URL}${movie.profile_path}`
+                          : movie.known_for && movie.known_for[0].backdrop_path
+                            ? `${POSTER_URL}${movie.known_for[0].backdrop_path}`
+                            : NO_IMAGE_URL
+                      }
+                        alt={movie.title}
+                        loading="lazy"
+                      />
+                    </Link>
+                  </div>
+                  <div className="bot">
+                    <p className="title">
+                      {movie.title ? movie.title : movie.name}
+                    </p>
+                    <div className="aver">
+                    {movie.vote_average ? (
+                      <p>
+                        평점 - <span>{movie.vote_average.toFixed(2)}</span>
+                      </p>
+                    ) : movie.popularity ? (
+                      <p>
+                        인기 - <span>{movie.popularity.toFixed(2)}</span>
+                      </p>
+                    ) : (
+                      <p>
+                        값 없음
+                      </p>
+                    )}
+                  </div>
+                    <p className="date">
+                    {movie.release_date
+                      ? movie.release_date
+                      : (movie.known_for || []).map((item) => (
+                          <span key={item.id}>{item.name || item.title}</span>
+                        ))}
+                  </p>
+                  
+                  </div>
+                </div>
               </Card>
             ))}
           </Results>
