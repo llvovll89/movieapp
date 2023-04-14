@@ -31,18 +31,16 @@ img {
 
 // 커스텀 스크롤바
 body::-webkit-scrollbar {
-  width: 8px;  /* 스크롤바의 너비 */
+  width: 8px;
 }
 
 body::-webkit-scrollbar-thumb {
-  height: 30%; /* 스크롤바의 길이 */
-  background: rgba(255,255,255,.46); /* 스크롤바의 색상 */
-  
+  background: rgba(255,255,255,.46);
   border-radius: 10px;
 }
 
 body::-webkit-scrollbar-track {
-  background: rgb(34,34,35);  /*스크롤바 뒷 배경 색상*/
+  background: rgb(34,34,35);
 }
 
 `;

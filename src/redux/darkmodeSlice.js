@@ -1,21 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-    dark: false,
-    bgColor: "#202123",
-    color: "#FFF",
-
-}
+import { createSlice } from '@reduxjs/toolkit';
 
 export const darkModeSlice = createSlice({
-    name: "darkMode",
-    initialState,
-    reducers: {
-        darkOn : (state, action) => {
-            state.dark = !state.dark;
-        }
-    }
-})
+  name: 'darkMode',
+  initialState: {
+    dark: false,
+    bgColor: '#000',
+    color: '#FFF',
+  },
+  reducers: {
+    darkOn: (state, action) => {
+      state.dark = !state.dark;
+      state.bgColor = state.dark ? '#ffffff' : '#000';
+      state.color = state.dark ? '#000' : '#FFF';
+    },
+  },
+});
 
 export const { darkOn } = darkModeSlice.actions;
 export default darkModeSlice.reducer;

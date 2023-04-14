@@ -5,9 +5,11 @@ import useDebounce from '../hooks/useDebounce';
 import { HeaderContainer } from '../styles/GlobalStyle';
 import { Loading, Spinner } from '../styles/Loading';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
+import { MdDarkMode, MdSunny } from 'react-icons/md';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { updateSearch } from '../redux/searchSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { darkOn } from '../redux/darkmodeSlice';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -19,6 +21,8 @@ const Header = () => {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
 
   const searchQuery = useSelector((state) => String(state.search.query));
+  const { dark, bgColor, color } = useSelector((state) => state.darkMode);
+
   const history = useNavigate();
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
@@ -42,7 +46,8 @@ const Header = () => {
         history(`/search/${searchQuery}`, { state: { results: data.results } });
       }
       setIsSearchVisible(false);
-      e.target.elements.searchInput && (e.target.elements.searchInput.value = '');
+      e.target.elements.searchInput &&
+        (e.target.elements.searchInput.value = '');
     },
     [data, dispatch, history, searchQuery]
   );
@@ -55,21 +60,28 @@ const Header = () => {
     setIsSearchVisible(true);
   };
 
-  const handleClickOutside = useCallback((e) => {
-    if (
-      !searchRef?.current?.contains(e.target) &&
-      !toggleRef?.current?.contains(e.target)
-    ) {
-      setIsSearchVisible(false);
-    }
-  
-    if (!toggleRef?.current?.contains(e.target)) {
-      setIsNavbarVisible(false);
-    }
-  }, [setIsSearchVisible, setIsNavbarVisible]);
+  const handleClickOutside = useCallback(
+    (e) => {
+      if (
+        !searchRef?.current?.contains(e.target) &&
+        !toggleRef?.current?.contains(e.target)
+      ) {
+        setIsSearchVisible(false);
+      }
+
+      if (!toggleRef?.current?.contains(e.target)) {
+        setIsNavbarVisible(false);
+      }
+    },
+    [setIsSearchVisible, setIsNavbarVisible]
+  );
 
   const closeClickHandler = () => {
     setIsSearchVisible(false);
+  };
+
+  const darkClickHandler = () => {
+    dispatch(darkOn());
   };
 
   useEffect(() => {
@@ -81,7 +93,7 @@ const Header = () => {
   }, [dispatch, searchQuery]);
 
   return (
-    <HeaderContainer>
+    <HeaderContainer className={dark ? '' : 'dark'}>
       <div className="logo">
         <Link to="/">GHMovies</Link>
       </div>
@@ -96,12 +108,15 @@ const Header = () => {
         <div
           className={`contents ${isNavbarVisible ? 'open' : ''}`}
           ref={toggleRef}
+          style={{
+            background: isNavbarVisible ? bgColor : undefined,
+            color: isNavbarVisible ? color : undefined,
+          }}
         >
           <div className="dropdown">
-            <Link to="/">홈</Link>
-          </div>
-          <div className="dropdown">
-            <button className="dropdown-btn">카테고리</button>
+            <button className="dropdown-btn" style={{ color: color }}>
+              영화
+            </button>
             <div className="dropdown-content">
               <Link onClick={toggleNavbar} to="/category/movies">
                 전체영화
@@ -109,27 +124,42 @@ const Header = () => {
               <Link onClick={toggleNavbar} to="/category/animation">
                 애니메이션 (영화)
               </Link>
+            </div>
+          </div>
+          <div className="dropdown">
+            <button className="dropdown-btn" style={{ color: color }}>
+              TV
+            </button>
+            <div className="dropdown-content">
               <Link onClick={toggleNavbar} to="/category/drama">
                 드라마
               </Link>
               <Link onClick={toggleNavbar} to="/category/tv_enter">
                 예능프로그램
               </Link>
-              <Link onClick={toggleNavbar} to="/category/jp_ani">
-                에니메이션
+            </div>
+          </div>
+          <div className="dropdown">
+            <button className="dropdown-btn" style={{ color: color }}>
+              애니메이션
+            </button>
+            <div className="dropdown-content">
+              <Link onClick={toggleNavbar} to="/category/animation_jp">
+                전체 (일본원작)
+              </Link>
+              <Link onClick={toggleNavbar} to="/category/animation_jp_theater">
+                애니 (극장판)
               </Link>
             </div>
           </div>
           <div className="dropdown">
-            <button className="dropdown-btn">게시판</button>
+            <button className="dropdown-btn" style={{ color: color }}>
+              인물
+            </button>
             <div className="dropdown-content">
-              <Link to="/board">자유게시판</Link>
-              <span>영화추천</span>
-              <span>영화기록</span>
+              <Link to="/person/actor">영화배우</Link>
+              <Link to="/person/entertainer">예능인</Link>
             </div>
-          </div>
-          <div className={`dropdown ${isNavbarVisible ? 'on' : 'off'}`}>
-            <button className="dropdown-btn">로그인</button>
           </div>
         </div>
 
@@ -138,7 +168,11 @@ const Header = () => {
           onClick={searchHandler}
           onTouchStart={searchHandler}
         >
-          <AiOutlineSearch />
+          {isSearchVisible ? <AiOutlineClose /> : <AiOutlineSearch />}
+        </div>
+
+        <div className="dark_btn" onClick={darkClickHandler}>
+          {dark ? <MdDarkMode /> : <MdSunny />}
         </div>
       </div>
 
@@ -153,7 +187,11 @@ const Header = () => {
             onChange={(e) => dispatch(updateSearch(e.target.value))}
             ref={searchInput}
           />
-          <button className="close_btn" onClick={closeClickHandler} onTouchStart={closeClickHandler} >
+          <button
+            className="close_btn"
+            onClick={closeClickHandler}
+            onTouchStart={closeClickHandler}
+          >
             <AiOutlineClose />
           </button>
         </form>

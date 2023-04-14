@@ -1,46 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
-import { Section, ErrorBox, DetailPage } from '../../styles/GlobalStyle';
-import { Loading, Spinner } from '../../styles/Loading';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import useAxios from '../../hooks/useAxios';
-import { useDispatch, useSelector } from 'react-redux';
-import { likeClick } from '../../redux/likeSlice';
+import { Section, ErrorBox, DetailPage } from '../../styles/GlobalStyle';
+import { Loading } from '../../styles/Loading';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import { AiOutlineClose } from 'react-icons/ai';
 
-const MovieDetail = () => {
+const TvDetail = () => {
   const { id } = useParams();
   const [perPage, setPerPage] = useState(6);
-
-  const like = useSelector((state) => state.like.likeCount);
-  const dispatch = useDispatch();
-
-  const NO_IMAGE_URL = 'https://via.placeholder.com/500x500.png?text=No+Image';
-  const API_KEY = import.meta.env.VITE_API_KEY;
-  const API_BASE_URL = import.meta.env.VITE_BASE_URL;
-  const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
-  const BACKDROP_URL = 'https://image.tmdb.org/t/p/w1280/';
-
   const history = useNavigate();
 
+  const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  const API_BASE_URL = import.meta.env.VITE_BASE_URL;
+  const POSTER_URL = 'https://image.tmdb.org/t/p/w300/';
+  const BACKDROP_URL = 'https://image.tmdb.org/t/p/w1280/';
+
   const { data, isLoading, error } = useAxios(
-    `${API_BASE_URL}/movie/${id}?api_key=${API_KEY}&language=ko-KR`
+    `${API_BASE_URL}/tv/${id}?api_key=${API_KEY}&language=ko`
   );
 
   const { data: trailerData } = useAxios(
-    `${API_BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=ko-KR`
+    `${API_BASE_URL}/tv/${id}/videos?api_key=${API_KEY}&language=ko`
   );
   const { data: castData } = useAxios(
-    `${API_BASE_URL}/movie/${id}/credits?api_key=${API_KEY}&language=ko-KR`
+    `${API_BASE_URL}/tv/${id}/credits?api_key=${API_KEY}&language=ko-KR`
   );
 
-  const { data: recommendedMoviesData } = useAxios(
-    `${API_BASE_URL}/movie/${id}/recommendations?api_key=${API_KEY}&language=ko-KR`
+  const { data: recommendedTVData } = useAxios(
+    `${API_BASE_URL}/tv/${id}/recommendations?api_key=${API_KEY}&language=ko-KR`
   );
-
-  const handleClick = () => {
-    history('/');
-  };
 
   const handleResize = () => {
     if (window.innerWidth >= 1280) {
@@ -54,23 +45,28 @@ const MovieDetail = () => {
     }
   };
 
+  console.log(data);
+
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
   }, [handleResize]);
+
+  const handleClick = () => {
+    history('/');
+  };
 
   if (isLoading)
     return (
       <Loading>
-        <Spinner />
+        <h1>Loading...</h1>
       </Loading>
     );
   if (error)
     return (
       <ErrorBox>
-        <h1>{error}</h1>
+        <h1>Error : {error.message}</h1>
       </ErrorBox>
     );
 
@@ -101,18 +97,18 @@ const MovieDetail = () => {
           </div>
           <div className="bot">
             <div className="title">
-              <h1>{data.title}</h1>
+              <h1>{data.name}</h1>
+              <div className="sub">
+              <span>{data.first_air_date}</span>
               <span>{data.genres.map((genre) => genre.name).join(' ')}</span>
+              <span>총 {data.episode_run_time} (화)</span>
+              </div>
             </div>
 
-            <div className="net pro">
-              {data.production_companies && data.production_companies.length > 0
-                ? data.production_companies.slice(0, 4).map((pro) => (
-                    <div className="pro_name" key={pro.id}>
-                      <span>{pro.name}</span>
-                    </div>
-                  ))
-                : null}
+            <div className="net">
+              <div className="pro_name">
+                <span>{data.networks[0].name}</span>
+              </div>
             </div>
 
             {castData && castData.cast && (
@@ -146,20 +142,19 @@ const MovieDetail = () => {
               </Splide>
             )}
 
-            <div className="contents">
-              <div className="top">
-                <p>개봉일 {data.release_date}</p>
-                <button onClick={() => dispatch(likeClick())}>♥️ {like}</button>
-              </div>
+            <div className="items">
+            <div className="items_t">
               <h3>개요</h3>
               <p>
                 {data.overview.length > 400
                   ? data.overview.slice(0, 400) + '...'
                   : data.overview}
               </p>
+            </div>
 
-              <h3>비슷한영화</h3>
-              {recommendedMoviesData && recommendedMoviesData.results && (
+            <div className="items_b">
+              <h3>비슷한방송</h3>
+              {recommendedTVData && recommendedTVData.results && recommendedTVData.results.length > 0 && (
                 <Splide
                   options={{
                     perPage,
@@ -170,10 +165,10 @@ const MovieDetail = () => {
                     arrows: true,
                   }}
                 >
-                  {recommendedMoviesData.results.slice(0, 12).map((c) => (
+                  {recommendedTVData.results.slice(0, 12).map((c) => (
                     <SplideSlide key={c.id}>
                       <div className="recommended-movies">
-                        <Link to={`/movies/${c.id}`}>
+                        <Link to={`/tv/${c.id}`}>
                           <img
                             src={
                               c.poster_path
@@ -189,9 +184,11 @@ const MovieDetail = () => {
                 </Splide>
               )}
             </div>
+            </div>
           </div>
+          
           <button onClick={handleClick} onTouchStart={handleClick}>
-            X
+            <AiOutlineClose />
           </button>
         </div>
       </DetailPage>
@@ -199,4 +196,4 @@ const MovieDetail = () => {
   );
 };
 
-export default MovieDetail;
+export default TvDetail;

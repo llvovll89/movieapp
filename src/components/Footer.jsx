@@ -1,13 +1,16 @@
 import React from 'react';
 import { FooterContainer } from '../styles/GlobalStyle';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Footer = () => {
+  const darkModeOn = useSelector((state) => state.darkMode.dark);
+
   return (
-    <FooterContainer>
+    <FooterContainer className={darkModeOn ? "" : "dark"}>
       <div className="top">
         <Link to="/">공지사항</Link>
-        <Link to="/board">게시판 가기</Link>
+        <Link to="/">게시판 가기</Link>
       </div>
       <div className="links">
         <a href="#" target="_blank">

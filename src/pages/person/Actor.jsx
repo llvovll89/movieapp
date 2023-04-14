@@ -8,17 +8,19 @@ import {
 } from '../../styles/GlobalStyle';
 import { Loading } from '../../styles/Loading';
 import useAxios from '../../hooks/useAxios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentPage, setCurrentPage } from '../../redux/paginationSlice';
 
 // react-icons
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-
-const JapanAni = () => {
+const Actor = () => {
   const currentPage = useSelector(selectCurrentPage);
   const dispatch = useDispatch();
+  const history = useNavigate();
+
+  const dark = useSelector((state) => state.darkMode.dark);
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
     .env;
@@ -26,53 +28,51 @@ const JapanAni = () => {
   const NO_IMAGE_URL = 'https://via.placeholder.com/500x750.png?text=No+Image';
 
   const { data, error, isLoading } = useAxios(
-    `${API_BASE_URL}/discover/tv?api_key=${API_KEY}&language=ko&sort_by=release_date.desc&with_genres=16&with_original_language=ja&air_date.lte=${new Date()
-      .toISOString()
-      .slice(0, 10)}&page=${currentPage}`
+    `${API_BASE_URL}/person/popular?api_key=${API_KEY}&language=ko&page=${currentPage}`
   );
+
+  console.log(data);
 
   const handlePageChange = (page) => {
     dispatch(setCurrentPage(page));
   };
 
+  const handleLinkClick = (ani) => {
+    history(`/tv/${ani.id}`);
+  };
+
   return (
-    <Section>
+    <Section className={dark ? '' : 'dark'}>
       <Results>
-        {isLoading && (
-          <Loading>
-          </Loading>
-        )}
+            {isLoading && <Loading></Loading>}
         {error && <p>Error: {error.message}</p>}
         {data &&
           data.results &&
-          data.results.map((ani) => (
-            <Card key={ani.id}>
-              <div className="contents">
+          data.results.map((person) => (
+            <Card key={person.id}>
+              <div className="contents" onClick={() => handleLinkClick(person)}>
                 <div className="top">
-                  {ani.poster_path ? (
-                    <Link to={`/tv/${ani.id}`}>
+                  {person.profile_path ? (
+                    // actor detailpage 만들어야댐
+                    <Link to={`/actor/${person.id}`}>
                       <img
-                        src={`${POSTER_URL}${ani.poster_path}`}
-                        alt={ani.name}
+                        src={`${POSTER_URL}${person.profile_path
+                        }`}
+                        alt={person.name}
+                        loading="lazy"
                       />
                     </Link>
                   ) : (
-                    <Link to={`/tv/${ani.id}`}>
+                    <Link to={`/tv/${person.id}`}>
                       <img src={NO_IMAGE_URL} alt="No image available" />
                     </Link>
                   )}
                 </div>
                 <div className="bot">
                   <p className="title">
-                    {ani.name.length > 20
-                      ? ani.name.slice(0, 20) + '...'
-                      : ani.name}
-                  </p>
-                  <p className="aver">
-                    평점 - <span>{ani.vote_average}</span>
-                  </p>
-                  <p className="date">
-                    개봉일 - <span>{ani.first_air_date}</span>
+                    {person.name.length > 20
+                      ? person.name.slice(0, 20) + '...'
+                      : person.name}
                   </p>
                 </div>
               </div>
@@ -96,4 +96,4 @@ const JapanAni = () => {
   );
 };
 
-export default JapanAni;
+export default Actor;

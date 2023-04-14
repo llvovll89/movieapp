@@ -17,8 +17,12 @@ import useAxios from '../hooks/useAxios';
 
 function SearchResults() {
   const currentPage = useSelector(selectCurrentPage);
+  
   const { query } = useParams();
   const dispatch = useDispatch();
+
+  const dark = useSelector((state) => state.darkMode.dark);
+
   const [filter, setFilter] = useState('all');
   const API_KEY = import.meta.env.VITE_API_KEY;
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -66,7 +70,7 @@ function SearchResults() {
   }
 
   return (
-    <Section>
+    <Section className={dark ? "" : "dark"}>
       <SearchContainer>
         <div className="items">
           <p>
@@ -95,7 +99,8 @@ function SearchResults() {
                         ? `${POSTER_URL}${movie.poster_path}`
                         : NO_IMAGE_URL
                     }
-                    alt=""
+                    alt={movie.title}
+                    loading='lazy'
                   />
                 </Link>
               </div>

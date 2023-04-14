@@ -60,7 +60,7 @@ const Container = styled.div`
 
   .splide__arrow--prev {
     left: 4px;
-  } 
+  }
 
   .splide__slide {
     min-width: 200px;
@@ -179,9 +179,13 @@ const DetailPage = styled.div`
       width: 36px;
       height: 36px;
       border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: #181818;
       color: #fff;
       transition: 0.25s all ease;
+      font-size: 20px;
 
       &:hover {
         background: #fff;
@@ -201,14 +205,14 @@ const DetailPage = styled.div`
       img {
         /* padding: 24px 0; */
         width: 100%;
-        max-width: 100%;
-        max-height: 100%;
+        height: 100%;
+        max-height: 500px;
         object-fit: fill;
       }
     }
 
     .bot {
-      padding: 36px 20px;
+      padding: 20px;
       display: flex;
       flex-flow: column;
       gap: 12px;
@@ -216,15 +220,24 @@ const DetailPage = styled.div`
       .title {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding-bottom: 6px;
+        flex-direction: column;
+        gap: 3px;
 
         h1 {
-          font-size: 22px;
+          font-size: 20px;
           font-weight: bold;
         }
-        span {
-          font-size: 16px;
+
+        .sub {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+
+          span {
+            font-size: 16px;
+            padding-right: 6px;
+            border-right: 1px solid rgba(255,255,255,0.11);
+          }
         }
       }
 
@@ -249,42 +262,25 @@ const DetailPage = styled.div`
         }
       }
 
-      .contents {
+      .items {
         display: flex;
-        flex-wrap: wrap;
         justify-content: space-between;
+        flex-direction: column;
         margin-top: 16px;
         gap: 12px;
 
-        .over {
-          h3 {
-            font-weight: 700;
-          }
-        }
-
-        p {
-          font-size: 16px;
-          line-height: 1.5;
-          padding: 6px 0;
-          color: #d2d2d2;
-        }
-
-        .recommended-movies {
+        .items_t {
           display: flex;
-          flex-flow: column;
-          -webkit-box-align: center;
-          align-items: center;
-          gap: 6px;
+          gap: 12px;
+          align-items: flex-start;
+          flex-direction: column;
+        }
 
-          a {
-            width: 100%;
-            height: 100%;
-
-            img {
-              width: 100%;
-              height: 200px;
-            }
-          }
+        .items_b {
+              display: flex;
+    flex-flow: column;
+    gap: 12px;
+          padding: 0;
         }
       }
     }
@@ -297,8 +293,8 @@ const DetailPage = styled.div`
       gap: 6px;
 
       button {
-        right: 4px;
-        top: 4px;
+        right: 6px;
+        top: 6px;
       }
 
       .bot {
@@ -337,6 +333,7 @@ const DetailPage = styled.div`
           display: flex;
           flex-flow: column;
           align-items: center;
+          width: 100%;
           gap: 12px;
 
           img {
@@ -347,6 +344,7 @@ const DetailPage = styled.div`
           }
 
           .cast_name {
+            width: 100%;
             display: flex;
             flex-flow: column;
 
@@ -389,14 +387,23 @@ const HeaderContainer = styled.header`
   position: fixed;
   width: 100%;
   height: 76px;
-  background: #032541;
   display: flex;
+  background: #ffffff;
+  color: #000;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   top: 0;
   left: 0;
   z-index: 1000;
+  transition: background-color 0.15s linear;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.045);
+
+  &.dark {
+    background: #000;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.045);
+  }
 
   .search_bar {
     position: absolute;
@@ -410,24 +417,26 @@ const HeaderContainer = styled.header`
 
     &.open {
       display: flex;
-      padding: 0 120px;
+      padding: 0 16px;
       width: 100%;
       top: 100%;
       left: 0;
       opacity: 1;
-      background: #FFF;
-      z-index: 10;
+      z-index: 100;
       align-items: center;
+      justify-content: center;
       transition: all 0.1s ease-in;
-      border-bottom: 1px solid rgba(227,227,227, 1);
+      background: transparent;
+      background: #4fd2b2;
+
 
       form {
         display: flex;
         width: 100%;
         height: 100%;
         max-width: 1400px;
-        padding: 0 40px;
         margin: 0 auto;
+
 
         input {
           width: 100%;
@@ -435,21 +444,22 @@ const HeaderContainer = styled.header`
           padding: 0 20px;
           font-size: 18px;
           flex: 1 1 80%;
+          color: #fff;
 
+          &::placeholder {
+            color: #fff;
+          }
         }
 
         .close_btn {
+          color: #fff;
           flex: 1 1 20%;
           font-size: 20px;
-          color: #192919;
         }
       }
 
       @media screen and (max-width: 564px) {
         & {
-
-          padding: 0 30px;
-
           form {
             input {
               font-size: 16px;
@@ -477,31 +487,23 @@ const HeaderContainer = styled.header`
     align-items: center;
     gap: 12px;
 
-    .search {
-      color: #fff;
-      width: 26px;
-      height: 26px;
+    .search,
+    .dark_btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
       cursor: pointer;
-
-      svg {
-        width: 100%;
-        height: 100%;
-      }
+      padding: 0 6px;
     }
 
     .toggle {
       position: relative;
       display: none;
-      width: 26px;
-      height: 26px;
-      cursor: pointer;
+      font-size: 20px;
       overflow: hidden;
-
-      svg {
-        width: 100%;
-        height: 100%;
-        color: #fff;
-      }
+      cursor: pointer;
+      padding: 0 6px;
     }
 
     .contents {
@@ -527,7 +529,6 @@ const HeaderContainer = styled.header`
           display: block;
           width: 100%;
           padding: 9px 18px;
-          color: #fff;
         }
 
         .dropdown-content {
@@ -542,7 +543,8 @@ const HeaderContainer = styled.header`
           min-width: 180px;
           z-index: 100;
           border-radius: 6px;
-          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.03), 0 4px 5px 0 rgba(0,0,0,0.04);
+          box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.03),
+            0 4px 5px 0 rgba(0, 0, 0, 0.04);
 
           a,
           span {
@@ -566,7 +568,6 @@ const HeaderContainer = styled.header`
   @media screen and (max-width: 768px) {
     padding: 0 12px;
     .logo {
-      gap: 7.5px;
       a {
         font-size: 22px;
         letter-spacing: 0.15rem;
@@ -584,13 +585,6 @@ const HeaderContainer = styled.header`
         flex-direction: column;
       }
 
-      .search {
-        color: #fff;
-        width: 26px;
-        height: 26px;
-        cursor: pointer;
-      }
-
       .contents {
         position: absolute;
         right: -70%;
@@ -598,16 +592,20 @@ const HeaderContainer = styled.header`
 
         &.open {
           min-width: 200px;
-          min-height: 100vh;
+          height: max-content;
           top: 76px;
           right: 0;
           opacity: 1;
           z-index: 1000;
           flex-direction: column;
-          background: #032541;
-          transition: all 0.35s linear;
-
-          .dropdown {
+          transition: all 0.35s linear; 
+          padding: 16px;
+          border-bottom-left-radius: 3px;
+          border-bottom-right-radius: 3px;
+          box-shadow: rgba(167, 168, 168, 0.3) 0px 1px 0px 1px;
+          
+          
+           .dropdown {
             width: 100%;
             text-align: center;
 
@@ -623,7 +621,8 @@ const HeaderContainer = styled.header`
               left: -20px;
               min-width: 160px;
 
-              a, span {
+              a,
+              span {
                 padding: 6px;
                 text-decoration: none;
                 display: block;
@@ -878,7 +877,15 @@ const Section = styled.section`
   padding: 46px 0px 0px 0px;
   min-height: 100vh;
   transition: padding-left 0.15s ease;
-  
+  background: #ffffff;
+  color: #000;
+  transition: background-color 0.15s linear;
+
+  &.dark {
+    background: #000;
+    color: #ffffff;
+  }
+
   #page-numbers {
     display: flex;
     align-items: center;
@@ -893,10 +900,6 @@ const Section = styled.section`
       background: #08f;
       cursor: pointer;
     }
-  }
-
-  @media screen and (max-width: 564px) {
-    padding: 36px 0px 0px 0px;
   }
 `;
 
@@ -1013,17 +1016,21 @@ const Card = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
+  height: 100%;
   justify-content: center;
   flex-flow: column wrap;
   color: #fff;
   background: rgb(29, 29, 29);
   overflow: hidden;
+  cursor: pointer;
 
   .contents {
+    position: relative;
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
     width: 100%;
+    height: 300px;
     transition: 0.15s transform linear;
     overflow: hidden;
     &:hover {
@@ -1031,8 +1038,10 @@ const Card = styled.div`
     }
 
     .top {
+      position: absolute;
+      top: 0;
       width: 100%;
-      height: 300px;
+      height: 100%;
 
       img {
         width: 100%;
@@ -1041,7 +1050,11 @@ const Card = styled.div`
     }
 
     .bot {
-      padding: 12px 0;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 6px 0;
+      background: rgba(0, 0, 0, 0.56);
       p {
         padding: 2px 6px;
       }
@@ -1084,7 +1097,6 @@ const SearchContainer = styled.div`
     justify-content: space-between;
     p {
       font-size: 20px;
-      color: #fff;
     }
     span {
       font-weight: 600;
@@ -1154,7 +1166,6 @@ const SearchContainer = styled.div`
     p {
       font-size: 20px;
       padding: 3px 0;
-      color: #fff;
     }
   }
 
@@ -1200,7 +1211,6 @@ const SearchContainer = styled.div`
       p {
         font-size: 14px;
         padding: 3px 0;
-        color: #fff;
       }
     }
   }
@@ -1215,15 +1225,15 @@ const Results = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
+  @media screen  and (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
   @media screen and (max-width: 768px) {
     padding: 20px 12px;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  @media screen and (max-width: 501px) {
-    padding: 20px 18px;
-    grid-template-columns: 1fr;
+    gap: 9px;
   }
 `;
 
@@ -1232,12 +1242,16 @@ const FooterContainer = styled.footer`
   display: flex;
   padding: 0px 0px 12px 0px;
   gap: 12px;
-  background: #032541;
-  color: #fff;
   flex-flow: column wrap;
   align-items: center;
   justify-content: center;
   border-top: 1px solid rgba(255, 255, 255, 0.16);
+  transition: background-color 0.15s linear;
+
+  &.dark {
+    background: #000;
+    color: #fff;
+  }
 
   .top {
     padding: 16px;
