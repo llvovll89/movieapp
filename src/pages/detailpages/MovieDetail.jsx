@@ -96,7 +96,7 @@ const MovieDetail = () => {
                 src={
                   data.backdrop_path
                     ? `${BACKDROP_URL}${data.backdrop_path}`
-                    : NO_IMAGE_URL
+                    : `${POSTER_URL}${data.poster_path}`
                 }
                 alt={data.name}
               />
@@ -122,7 +122,7 @@ const MovieDetail = () => {
                 : null}
             </div>
 
-            {castData && castData.cast && (
+            {castData && castData.cast && castData.cast.length > 0 ? (
               <Splide
                 options={{
                   perPage,
@@ -151,55 +151,63 @@ const MovieDetail = () => {
                   </SplideSlide>
                 ))}
               </Splide>
-            )}
+            ) : null}
 
-            <div className="items">
-              <div className="items_t">
-                <h3>개요</h3>
-                <p>
-                  {data.overview.length > 400
-                    ? data.overview.slice(0, 400) + '...'
-                    : data.overview}
-                </p>
-              </div>
+            {data.overview || recommendedMoviesData.results > 0 ? (
+              <div className="items">
+                <div className="items_t">
+                  <h3>{data.overview ? '개요' : null}</h3>
+                  <p>
+                    {data.overview.length > 400
+                      ? data.overview.slice(0, 400) + '...'
+                      : data.overview}
+                  </p>
+                </div>
 
-              <div className="items_b">
-                <h3>비슷한영화</h3>
-                {recommendedMoviesData &&
-                  recommendedMoviesData.results &&
-                  recommendedMoviesData.results.length > 0 && (
-                    <Splide
-                      options={{
-                        perPage,
-                        pagination: false,
-                        gap: '6px',
-                        drag: 'free',
-                        focus: 'center',
-                        arrows: true,
-                      }}
-                    >
-                      {recommendedMoviesData.results.slice(0, 12).map((c) => (
-                        <SplideSlide key={c.id}>
-                          <div className="recommended-movies">
-                            <Link to={`/movies/${c.id}`}>
-                              <img
-                                src={
-                                  c.poster_path
-                                    ? `${POSTER_URL}${c.poster_path}`
-                                    : NO_IMAGE_URL
-                                }
-                                alt={c.title}
-                              />
-                            </Link>
-                          </div>
-                        </SplideSlide>
-                      ))}
-                    </Splide>
-                  )}
+                <div className="items_b">
+                  <h3>
+                    {recommendedMoviesData.results.length > 0
+                      ? '비슷한영화'
+                      : null}
+                  </h3>
+                  {recommendedMoviesData &&
+                    recommendedMoviesData.results &&
+                    recommendedMoviesData.results.length > 0 && (
+                      <Splide
+                        options={{
+                          perPage,
+                          pagination: false,
+                          gap: '6px',
+                          drag: 'free',
+                          focus: 'center',
+                          arrows: true,
+                        }}
+                      >
+                        {recommendedMoviesData.results.slice(0, 12).map((c) => (
+                          <SplideSlide key={c.id}>
+                            <div className="recommended-movies">
+                              <Link to={`/movies/${c.id}`}>
+                                <img
+                                  src={
+                                    c.poster_path
+                                      ? `${POSTER_URL}${c.poster_path}`
+                                      : NO_IMAGE_URL
+                                  }
+                                  alt={c.title}
+                                />
+                              </Link>
+                            </div>
+                          </SplideSlide>
+                        ))}
+                      </Splide>
+                    )}
+                </div>
               </div>
-            </div>
+            ) : <div className='non'>
+                                  <p>아직 정보가없습니다.</p>
+            </div>}
           </div>
-          <button onClick={handleClick} onTouchStart={handleClick}>
+          <button className="close_btn" onClick={handleClick} onTouchStart={handleClick}>
             <AiOutlineClose />
           </button>
         </div>

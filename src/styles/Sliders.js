@@ -67,7 +67,7 @@ const SliderItem = styled.div`
     font-size: 16px;
     letter-spacing: 0.02rem;
     font-weight: 700;
-    padding: 2px 6px;
+    padding: 2px 6px; 
     }
   
     p {
@@ -111,7 +111,7 @@ const SliderItem = styled.div`
     height: 220px;
 
     .slider_contents {
-    padding: 2.5px;
+    padding: 6px 2.5px;
     
     h3 {
     font-size: 13px;
@@ -120,6 +120,7 @@ const SliderItem = styled.div`
     p {
     width: 100%;
     font-size: 12.5px;
+    padding: 1.5px 6px;
     span {
       font-size: 13px;
     }

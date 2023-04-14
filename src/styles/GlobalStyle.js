@@ -37,7 +37,6 @@ const Container = styled.div`
   padding: 40px 12px;
   width: 100%;
   height: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 
   .slick-slide {
     margin-right: 20px;
@@ -142,10 +141,6 @@ const DetailPage = styled.div`
       top: 50%;
       transform: translateY(-50%);
 
-      .splide__arrow.splide__arrow--prev {
-        left: 0.5em;
-      }
-
       svg {
         width: 1em;
         height: 1em;
@@ -208,6 +203,10 @@ const DetailPage = styled.div`
         height: 100%;
         max-height: 500px;
         object-fit: fill;
+
+        @media screen and (max-width: 564px) {
+          max-height: 400px;
+        }
       }
     }
 
@@ -236,7 +235,7 @@ const DetailPage = styled.div`
           span {
             font-size: 16px;
             padding-right: 6px;
-            border-right: 1px solid rgba(255,255,255,0.11);
+            border-right: 1px solid rgba(255, 255, 255, 0.11);
           }
         }
       }
@@ -269,6 +268,33 @@ const DetailPage = styled.div`
         margin-top: 16px;
         gap: 12px;
 
+        @media screen and (max-width: 564px) {
+          gap: 8px;
+          .items_t {
+            h3 {
+              font-size: 16px;
+            }
+
+            p {
+              font-size: 14.5px;
+            }
+          }
+
+          .items_b {
+            gap: 9px;
+            .recommended-movies {
+              height: 220px;
+              img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            h3 {
+              font-size: 16px;
+            }
+          }
+        }
+
         .items_t {
           display: flex;
           gap: 12px;
@@ -277,10 +303,65 @@ const DetailPage = styled.div`
         }
 
         .items_b {
-              display: flex;
-    flex-flow: column;
-    gap: 12px;
+          display: flex;
+          flex-flow: column;
+          gap: 12px;
           padding: 0;
+        }
+      }
+
+      .non {
+        width: 100%;
+        padding-top: 12px;
+        text-align: center;
+      }
+
+      .sub_data {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+
+        .sub_item {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          align-items: center;
+
+          @media screen and (max-width: 564px){
+              h3 {
+                font-size: 16px;
+
+              }
+
+              span {
+                font-size: 13px;
+              }
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 564px) {
+      .splide__arrow {
+        height: 1.75em;
+        width: 1.75em;
+        background: #181818;
+        opacity: 1;
+        top: 50%;
+        transform: translateY(-50%);
+
+        &.splide__arrow--prev {
+          left: 2px;
+        }
+
+        &.splide__arrow--next {
+          right: 2px;
+        }
+
+        svg {
+          width: 0.8em;
+          height: 0.8em;
+          fill: #fff;
         }
       }
     }
@@ -292,40 +373,42 @@ const DetailPage = styled.div`
       padding: 0;
       gap: 6px;
 
-      button {
+      .close_btn {
         right: 6px;
         top: 6px;
       }
 
       .bot {
-        padding: 20px 9px;
-        gap: 6px;
+        padding: 12px;
+        gap: 9px;
+
         .title {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          gap: 3px;
+
           h1 {
-            font-size: 18px;
+            font-size: 16px;
+            font-weight: bold;
           }
-          span {
-            font-size: 13.5px;
+
+          .sub {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+
+            span {
+              font-size: 13px;
+              padding-right: 3.5px;
+              border-right: 1px solid rgba(255, 255, 255, 0.11);
+            }
           }
         }
 
         .net {
-          font-size: 14px;
-        }
-
-        p {
-          font-size: 16px;
-          line-height: 1.5;
-        }
-
-        .contents {
-          flex-direction: column;
-          justify-content: flex-start;
-          align-items: flex-start;
-          margin-top: 12px;
-
-          p {
-            font-size: 15px;
+          .pro_name span {
+            font-size: 13px;
           }
         }
 
@@ -334,7 +417,7 @@ const DetailPage = styled.div`
           flex-flow: column;
           align-items: center;
           width: 100%;
-          gap: 12px;
+          gap: 9px;
 
           img {
             width: 100%;
@@ -347,9 +430,10 @@ const DetailPage = styled.div`
             width: 100%;
             display: flex;
             flex-flow: column;
+            align-items: center;
 
             p {
-              font-size: 14px;
+              font-size: 13.5px;
               border-bottom: 0;
               line-height: inherit;
               margin-top: 0;
@@ -429,14 +513,12 @@ const HeaderContainer = styled.header`
       background: transparent;
       background: #4fd2b2;
 
-
       form {
         display: flex;
         width: 100%;
         height: 100%;
         max-width: 1400px;
         margin: 0 auto;
-
 
         input {
           width: 100%;
@@ -462,7 +544,7 @@ const HeaderContainer = styled.header`
         & {
           form {
             input {
-              font-size: 16px;
+              font-size: 14px;
             }
           }
         }
@@ -494,7 +576,7 @@ const HeaderContainer = styled.header`
       justify-content: center;
       font-size: 20px;
       cursor: pointer;
-      padding: 0 6px;
+      margin: 0 3px;
     }
 
     .toggle {
@@ -503,7 +585,7 @@ const HeaderContainer = styled.header`
       font-size: 20px;
       overflow: hidden;
       cursor: pointer;
-      padding: 0 6px;
+      margin: 0 3px;
     }
 
     .contents {
@@ -598,14 +680,13 @@ const HeaderContainer = styled.header`
           opacity: 1;
           z-index: 1000;
           flex-direction: column;
-          transition: all 0.35s linear; 
+          transition: all 0.35s linear;
           padding: 16px;
           border-bottom-left-radius: 3px;
           border-bottom-right-radius: 3px;
           box-shadow: rgba(167, 168, 168, 0.3) 0px 1px 0px 1px;
-          
-          
-           .dropdown {
+
+          .dropdown {
             width: 100%;
             text-align: center;
 
@@ -663,219 +744,11 @@ const HeaderContainer = styled.header`
   }
 `;
 
-const SideContainer = styled.div`
-  position: fixed;
-  display: flex;
-  flex-flow: column wrap;
-  align-items: center;
-  padding: 60px 0px;
-  height: calc(100% - 76px);
-  top: 76px;
-  left: 0;
-  z-index: 1200;
-  background: #2c3e50;
-
-  .sidebar_contents {
-    display: flex;
-    flex-flow: column;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: 26px;
-    padding: 0 12px;
-
-    .toggle {
-      position: absolute;
-      top: 6px;
-      left: 10px;
-      color: #fff;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-
-      transition: color 0.15s linear;
-
-      &:hover,
-      &:active {
-        color: rgba(255, 255, 255, 0.16);
-      }
-
-      &.active {
-        left: calc(100% - 36px);
-      }
-
-      svg {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .side_content {
-      display: flex;
-      flex-flow: column wrap;
-      width: 100%;
-      gap: 12px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      &:hover {
-        background: rgba(255, 255, 255, 0.12);
-      }
-
-      .side_top {
-        color: #fff;
-        p {
-          padding-left: 20px;
-          font-size: 17px;
-        }
-      }
-
-      .side_bot {
-        display: flex;
-        flex-flow: column wrap;
-        gap: 3px;
-
-        .link_items {
-          padding: 6px;
-          padding-left: 12px;
-          span {
-            font-size: 17px;
-            color: #fff;
-            padding: 0;
-          }
-          a {
-            display: flex;
-            padding: 0;
-            align-items: center;
-            gap: 16px;
-          }
-        }
-
-        a,
-        span {
-          color: #b1aab1;
-          display: block;
-          padding: 4px 0px 4px 22px;
-          font-size: 13px;
-        }
-
-        a:hover,
-        a:focus,
-        span:hover {
-          color: #09fe;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .sidebar_contents {
-      gap: 26px;
-    }
-
-    .side_content {
-      display: flex;
-      flex-flow: column wrap;
-      width: 100%;
-      gap: 12px;
-      padding: 12px 0px 10px 0px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-      &:hover {
-        background: rgba(255, 255, 255, 0.12);
-      }
-
-      .side_top {
-        color: #fff;
-        p {
-          padding-left: 20px;
-          font-size: 17px;
-        }
-      }
-
-      .side_bot {
-        display: flex;
-        flex-flow: column wrap;
-        gap: 3px;
-
-        .link_items {
-          padding: 6px;
-          padding-left: 12px;
-          span {
-            font-size: 17px;
-            color: #fff;
-            padding: 0;
-          }
-          a {
-            display: flex;
-            padding: 0;
-            align-items: center;
-            gap: 16px;
-          }
-        }
-
-        a,
-        span {
-          color: #b1aab1;
-          display: block;
-          padding: 2px 0px 2px 22px;
-          font-size: 13px;
-        }
-
-        a:hover,
-        a:focus,
-        span:hover {
-          color: #09fe;
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: 564px) {
-    padding: 30px 0px 0px 0px;
-
-    .sidebar_contents {
-      padding: 0 6px;
-
-      .toggle {
-        width: 26px;
-        height: 26px;
-      }
-
-      .side_content .side_bot .link_items {
-        padding: 4px 4px 4px 10px;
-
-        span {
-          font-size: 16px;
-        }
-      }
-    }
-  }
-`;
-
-const ToggleSection = styled.div`
-  position: fixed;
-  top: 76px;
-  left: 12px;
-  width: 30px;
-  height: 30px;
-  z-index: 1500;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  cursor: pointer;
-  svg {
-    width: 100%;
-    height: 100%;
-    color: #fff;
-  }
-`;
-
 const Section = styled.section`
   position: relative;
-  padding: 46px 0px 0px 0px;
+  padding: 46px 0;
   min-height: 100vh;
+  height: auto;
   transition: padding-left 0.15s ease;
   background: #ffffff;
   color: #000;
@@ -939,56 +812,6 @@ const SearchForm = styled.form`
       font-size: 16px;
     }
   }
-`;
-
-const LoginLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 36px;
-  border-radius: 3px;
-  font-size: 16px;
-  font-weight: 600;
-  background: #1de9b6;
-  color: #fff;
-  padding: 12px 26px;
-
-  @media screen and (max-width: 768px) {
-    padding: 6px 12px;
-    font-size: 14px;
-  }
-`;
-
-const LoginForm = styled.form`
-  width: 100%;
-  padding: 20px;
-  background: #f0fcfc;
-  color: #000;
-
-  display: flex;
-  gap: 12px;
-  flex-flow: column wrap;
-  justify-content: center;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.33);
-
-  input {
-    height: 46px;
-    border: 1px solid #ccc;
-    padding: 12px 20px;
-  }
-`;
-
-const Auth = styled.div`
-  padding: 42px 22px;
-  margin: auto;
-  width: 100%;
-  max-width: 768px;
-  height: 100%;
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: center;
 `;
 
 const TopArrow = styled.div`
@@ -1225,7 +1048,7 @@ const Results = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
 
-  @media screen  and (max-width: 1024px) {
+  @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
@@ -1332,15 +1155,6 @@ const PaginationButton = styled.button`
   }
 `;
 
-const Board = styled.div`
-  /* table 형식으로 만들어야댐 */
-  display: block;
-  max-width: 1024px;
-
-  /* thead */
-  /* tbody */
-  /*  */
-`;
 
 export {
   Section,
@@ -1349,9 +1163,7 @@ export {
   Content,
   ErrorBox,
   HeaderContainer,
-  SideContainer,
   SearchForm,
-  LoginLink,
   TopArrow,
   DetailPage,
   Card,
@@ -1360,7 +1172,4 @@ export {
   PaginationContainer,
   PaginationButton,
   SearchContainer,
-  LoginForm,
-  Auth,
-  ToggleSection,
 };

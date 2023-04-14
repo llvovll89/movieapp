@@ -89,7 +89,7 @@ const TvDetail = () => {
                 src={
                   data.backdrop_path
                     ? `${BACKDROP_URL}${data.backdrop_path}`
-                    : NO_IMAGE_URL
+                    : `${POSTER_URL}${data.poster_path}`
                 }
                 alt={data.name}
               />
@@ -99,9 +99,9 @@ const TvDetail = () => {
             <div className="title">
               <h1>{data.name}</h1>
               <div className="sub">
-              <span>{data.first_air_date}</span>
-              <span>{data.genres.map((genre) => genre.name).join(' ')}</span>
-              <span>총 {data.episode_run_time} (화)</span>
+                <span>{data.first_air_date}</span>
+                <span>{data.genres.map((genre) => genre.name).join(' ')}</span>
+                <span>총 {data.episode_run_time} (화)</span>
               </div>
             </div>
 
@@ -142,51 +142,82 @@ const TvDetail = () => {
               </Splide>
             )}
 
-            <div className="items">
-            <div className="items_t">
-              <h3>개요</h3>
-              <p>
-                {data.overview.length > 400
-                  ? data.overview.slice(0, 400) + '...'
-                  : data.overview}
-              </p>
-            </div>
+            {data.overview || recommendedTVData.results > 0 ? (
+              <div className="items">
+                <div className="items_t">
+                  <h3>개요</h3>
+                  <p>
+                    {data.overview.length > 400
+                      ? data.overview.slice(0, 400) + '...'
+                      : data.overview}
+                  </p>
+                </div>
 
-            <div className="items_b">
-              <h3>비슷한방송</h3>
-              {recommendedTVData && recommendedTVData.results && recommendedTVData.results.length > 0 && (
-                <Splide
-                  options={{
-                    perPage,
-                    pagination: false,
-                    gap: '6px',
-                    drag: 'free',
-                    focus: 'center',
-                    arrows: true,
-                  }}
-                >
-                  {recommendedTVData.results.slice(0, 12).map((c) => (
-                    <SplideSlide key={c.id}>
-                      <div className="recommended-movies">
-                        <Link to={`/tv/${c.id}`}>
-                          <img
-                            src={
-                              c.poster_path
-                                ? `${POSTER_URL}${c.poster_path}`
-                                : NO_IMAGE_URL
-                            }
-                            alt={c.title}
-                          />
-                        </Link>
-                      </div>
-                    </SplideSlide>
-                  ))}
-                </Splide>
-              )}
-            </div>
-            </div>
+                <div className="items_b">
+                  <h3>비슷한방송</h3>
+                  {recommendedTVData &&
+                    recommendedTVData.results &&
+                    recommendedTVData.results.length > 0 && (
+                      <Splide
+                        options={{
+                          perPage,
+                          pagination: false,
+                          gap: '6px',
+                          drag: 'free',
+                          focus: 'center',
+                          arrows: true,
+                        }}
+                      >
+                        {recommendedTVData.results.slice(0, 12).map((c) => (
+                          <SplideSlide key={c.id}>
+                            <div className="recommended-movies">
+                              <Link to={`/tv/${c.id}`}>
+                                <img
+                                  src={
+                                    c.poster_path
+                                      ? `${POSTER_URL}${c.poster_path}`
+                                      : NO_IMAGE_URL
+                                  }
+                                  alt={c.title}
+                                />
+                              </Link>
+                            </div>
+                          </SplideSlide>
+                        ))}
+                      </Splide>
+                    )}
+                </div>
+              </div>
+            ) : (
+              <div className="sub_data">
+                <div className="sub_item">
+                  <h3>{data.last_episode_to_air.name}</h3>
+                  <span>{data.last_episode_to_air.air_date}</span>
+                  <img
+                    src={
+                      data.last_episode_to_air.still_path
+                        ? `${POSTER_URL}${data.last_episode_to_air.still_path}`
+                        : null
+                    }
+                    alt=""
+                  />
+                </div>
+                <div className="sub_item">
+                  <h3>{data.next_episode_to_air.name}</h3>
+                  <span>{data.next_episode_to_air.air_date}</span>
+                  <img
+                    src={
+                      data.next_episode_to_air.still_path
+                        ? `${POSTER_URL}${data.next_episode_to_air.still_path}`
+                        : null
+                    }
+                    alt=""
+                  />
+                </div>
+              </div>
+            )}
           </div>
-          
+
           <button onClick={handleClick} onTouchStart={handleClick}>
             <AiOutlineClose />
           </button>
