@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 const PersonDetail = () => {
   const { id } = useParams();
   const dark = useSelector((state) => state.darkMode.dark);
-  const dark = useSelector((state) => state.darkMode.dark);
   const [perPage, setPerPage] = useState(6);
   const history = useNavigate();
 
