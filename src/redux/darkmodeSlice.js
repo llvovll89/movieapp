@@ -4,14 +4,14 @@ export const darkModeSlice = createSlice({
   name: 'darkMode',
   initialState: {
     dark: false,
-    bgColor: '#000',
+    bgColor: '#292A2D',
     color: '#FFF',
   },
   reducers: {
     darkOn: (state, action) => {
       state.dark = !state.dark;
-      state.bgColor = state.dark ? '#ffffff' : '#000';
-      state.color = state.dark ? '#000' : '#FFF';
+      state.bgColor = state.dark ? '#FFF' : '#292A2D';
+      state.color = state.dark ? '#292A2D' : '#FFF';
     },
   },
 });

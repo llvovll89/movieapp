@@ -123,7 +123,7 @@ const Container = styled.div`
 const DetailPage = styled.div`
   margin: 0 auto;
   max-width: 964px;
-  padding: 60px 12px;
+  padding: 42px 12px;
   color: #b1b1b1;
 
   .content {
@@ -272,11 +272,11 @@ const DetailPage = styled.div`
           gap: 8px;
           .items_t {
             h3 {
-              font-size: 16px;
+              font-size: 14.5px;
             }
 
             p {
-              font-size: 14.5px;
+              font-size: 13px;
             }
           }
 
@@ -284,13 +284,14 @@ const DetailPage = styled.div`
             gap: 9px;
             .recommended-movies {
               height: 220px;
+
               img {
                 width: 100%;
                 height: 100%;
               }
             }
             h3 {
-              font-size: 16px;
+              font-size: 14.5px;
             }
           }
         }
@@ -329,7 +330,7 @@ const DetailPage = styled.div`
 
           @media screen and (max-width: 564px){
               h3 {
-                font-size: 16px;
+                font-size: 15px;
 
               }
 
@@ -368,7 +369,7 @@ const DetailPage = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    padding: 40px 16px;
+    padding: 28px 12px;
     .content {
       padding: 0;
       gap: 6px;
@@ -379,8 +380,8 @@ const DetailPage = styled.div`
       }
 
       .bot {
-        padding: 12px;
-        gap: 9px;
+        padding: 9px;
+        gap: 6px;
 
         .title {
           display: flex;
@@ -389,7 +390,7 @@ const DetailPage = styled.div`
           gap: 3px;
 
           h1 {
-            font-size: 16px;
+            font-size: 14.5px;
             font-weight: bold;
           }
 
@@ -399,7 +400,7 @@ const DetailPage = styled.div`
             gap: 3px;
 
             span {
-              font-size: 13px;
+              font-size: 12.5px;
               padding-right: 3.5px;
               border-right: 1px solid rgba(255, 255, 255, 0.11);
             }
@@ -408,7 +409,7 @@ const DetailPage = styled.div`
 
         .net {
           .pro_name span {
-            font-size: 13px;
+            font-size: 12px;
           }
         }
 
@@ -484,7 +485,7 @@ const HeaderContainer = styled.header`
   border-bottom: 1px solid rgba(0, 0, 0, 0.045);
 
   &.dark {
-    background: #000;
+    background: #292A2D;
     color: #ffffff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.045);
   }
@@ -682,9 +683,8 @@ const HeaderContainer = styled.header`
           flex-direction: column;
           transition: all 0.35s linear;
           padding: 16px;
-          border-bottom-left-radius: 3px;
-          border-bottom-right-radius: 3px;
-          box-shadow: rgba(167, 168, 168, 0.3) 0px 1px 0px 1px;
+          border-bottom-left-radius: 12px;
+          box-shadow: rgba(229, 237, 237, 0.088) 0px 1px 0px 1px;
 
           .dropdown {
             width: 100%;
@@ -694,7 +694,11 @@ const HeaderContainer = styled.header`
             a {
               display: block;
               width: 100%;
-              padding: 6px;
+              padding: 20px 16px;
+
+            &:hover {
+              background: rgba(0, 0, 0, 0.03);
+            }
             }
             .dropdown-content {
               flex-direction: column;
@@ -755,7 +759,7 @@ const Section = styled.section`
   transition: background-color 0.15s linear;
 
   &.dark {
-    background: #000;
+    background: #1E1F21;
     color: #ffffff;
   }
 
@@ -773,6 +777,10 @@ const Section = styled.section`
       background: #08f;
       cursor: pointer;
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 56px 0;
   }
 `;
 
@@ -847,6 +855,9 @@ const Card = styled.div`
   overflow: hidden;
   cursor: pointer;
 
+  border-radius: 12px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+
   .contents {
     position: relative;
     display: flex;
@@ -879,7 +890,7 @@ const Card = styled.div`
       padding: 6px 0;
       background: rgba(0, 0, 0, 0.56);
       p {
-        padding: 2px 6px;
+        padding: 2.5px 6px;
       }
       .title {
         font-weight: 600;
@@ -914,7 +925,7 @@ const Card = styled.div`
     .bot {
       padding: 4px 0;
       p {
-        padding: 2px 6px;
+        padding: 3px 6px;
         font-size: 13px;
       }
       .title {
@@ -928,6 +939,51 @@ const Card = styled.div`
       .date {
         line-height: 1;
         font-size: 14px;
+        color: rgba(255, 255, 255, 0.66);
+        
+        span {
+          font-size: 14px;
+          color: salmon;
+        }
+      }
+
+      .date{
+          display: flex;
+          flex-direction: column;
+        span {
+        font-size: 13.5px;
+        color: #fff;
+      }
+      } 
+    }
+  }
+  }
+
+  @media screen and (max-width: 564px) {
+    .contents {
+    width: 100%;
+    height: 250px;
+    &:hover {
+      transform: translateY(-1.2%);
+    }
+
+    .bot {
+      padding: 3.5px 0px 3.5px 4px;
+      p {
+        padding: 2.5px 4px;
+        font-size: 12.5px;
+      }
+      .title {
+        font-size: 14px;
+      }
+      span {
+        font-size: 13px;
+      }
+
+      .aver,
+      .date {
+        line-height: 1;
+        font-size: 13px;
         color: rgba(255, 255, 255, 0.66);
         
         span {
@@ -1118,7 +1174,7 @@ const FooterContainer = styled.footer`
   transition: background-color 0.15s linear;
 
   &.dark {
-    background: #000;
+    background: #1E1F21;
     color: #fff;
   }
 

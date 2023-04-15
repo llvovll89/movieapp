@@ -20,6 +20,7 @@ const JapanAni = () => {
   const currentPage = useSelector(selectCurrentPage);
   const dispatch = useDispatch();
   const history = useNavigate();
+  const dark = useSelector((state) => state.darkMode.dark);
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta.env;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
@@ -42,7 +43,7 @@ const JapanAni = () => {
 
 
   return (
-    <Section>
+    <Section className={dark ? '' : 'dark'}>
       <Results>
         {isLoading && (
           <Loading>
@@ -79,7 +80,7 @@ const JapanAni = () => {
                     평점 - <span>{ani.vote_average}</span>
                   </p>
                   <p className="date">
-                    개봉일 - <span>{ani.release_date}</span>
+                    <span>{ani.release_date}</span>
                   </p>
                 </div>
               </div>

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import EnterTainer from './person/EnterTainer';
-import FrActor from './person/FrActor'
-import Actor from './person/Actor';
+import Popular from './person/Popular';
+import PersonDetail from './person/PersonDetail';
 
+// <Route path="/person/:id" element={<PersonDetail />} />
 const Person = () => {
   return (
     <Routes>
-      <Route path="/actor" element={<Actor />} />
-      <Route path="/fr_actor" element={<FrActor />} />
+      <Route path="/popular" element={<Popular />} />
       <Route path="/entertainer" element={<EnterTainer />} />
     </Routes>
   );

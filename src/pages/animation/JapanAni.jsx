@@ -81,7 +81,7 @@ const JapanAni = () => {
                     평점 - <span>{ani.vote_average}</span>
                   </p>
                   <p className="date">
-                    개봉일 - <span>{ani.first_air_date}</span>
+                    <span>{ani.first_air_date}</span>
                   </p>
                 </div>
               </div>

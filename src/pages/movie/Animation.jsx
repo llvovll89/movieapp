@@ -15,10 +15,9 @@ import { selectCurrentPage, setCurrentPage } from '../../redux/paginationSlice';
 // react-icons
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-
 const Animation = () => {
   const currentPage = useSelector(selectCurrentPage);
-  const sidebarWidth = useSelector((state) => state.sidebar.sidebarWidth);
+  const dark = useSelector((state) => state.darkMode.dark);
   const dispatch = useDispatch();
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
@@ -37,7 +36,7 @@ const Animation = () => {
   };
 
   return (
-    <Section>
+    <Section className={dark ? '' : 'dark'}>
       <Results>
         {isLoading && (
           <Loading>
@@ -63,11 +62,9 @@ const Animation = () => {
                 <div className="bot">
                   <p className="title">{ani.title}</p>
                   <p className="aver">
-                  평점 -
-                    <span> {ani.vote_average}</span>
+                    평점 -<span> {ani.vote_average}</span>
                   </p>
                   <p className="date">
-                  개봉일 
                     <span> {ani.release_date}</span>
                   </p>
                 </div>

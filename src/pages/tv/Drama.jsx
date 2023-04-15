@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import useAxios from '../../hooks/useAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentPage, setCurrentPage } from '../../redux/paginationSlice';
@@ -17,11 +17,12 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { useRef } from 'react';
 
 const Drama = () => {
+  const dark = useSelector((state) => state.darkMode.dark);
   const currentPage = useSelector(selectCurrentPage);
   const dispatch = useDispatch();
 
   const resultsRef = useRef(null);
-  // const [resultsWidth, setResultsWidth] = useState(0); 
+  // const [resultsWidth, setResultsWidth] = useState(0);
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
     .env;
@@ -39,8 +40,7 @@ const Drama = () => {
   };
 
   return (
-    <>
-    <Section>
+      <Section className={dark ? '' : 'dark'}>
         <Results ref={resultsRef}>
           {isLoading && (
             <Loading>
@@ -69,7 +69,7 @@ const Drama = () => {
                       평점 - <span>{drama.vote_average}</span>
                     </p>
                     <p className="date">
-                      첫 방송 <span>{drama.first_air_date}</span>
+                      <span>{drama.first_air_date}</span>
                     </p>
                   </div>
                 </div>
@@ -79,19 +79,18 @@ const Drama = () => {
 
         {data && (
           <PaginationContainer>
-          <PaginationButton
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            <FaArrowLeft />
-          </PaginationButton>
-          <PaginationButton onClick={() => handlePageChange(currentPage + 1)}>
-            <FaArrowRight />
-          </PaginationButton>
-        </PaginationContainer>
+            <PaginationButton
+              disabled={currentPage === 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              <FaArrowLeft />
+            </PaginationButton>
+            <PaginationButton onClick={() => handlePageChange(currentPage + 1)}>
+              <FaArrowRight />
+            </PaginationButton>
+          </PaginationContainer>
         )}
       </Section>
-    </>
   );
 };
 

@@ -66,8 +66,7 @@ const Header = () => {
     setIsNavbarVisible((prevState) => !prevState);
   };
 
-  const toggleHandleClick = (event) => {
-    event.preventDefault();
+  const toggleHandleClick = () => {
     toggleNavbar();
   };
 
@@ -111,7 +110,7 @@ const Header = () => {
   return (
     <HeaderContainer className={dark ? '' : 'dark'}>
       <div className="logo">
-        <Link to="/">GHMovies</Link>
+        <Link to="/">블랙타이</Link>
       </div>
       <div className="navbar">
         <div
@@ -180,8 +179,8 @@ const Header = () => {
               인물
             </button>
             <div className="dropdown-content">
-              <Link to="/person/actor">영화배우</Link>
-              <Link to="/person/entertainer">예능인</Link>
+              <Link onClick={toggleHandleClick} to="/person/popular">유명인물</Link>
+              <Link onClick={toggleHandleClick} to="/person/entertainer">예능인</Link>
             </div>
           </div>
         </div>
@@ -206,7 +205,7 @@ const Header = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="영화제목, TV제목 검색"
+            placeholder="영화제목 & TV제목 & 출연진이름 검색"
             onChange={(e) => dispatch(updateSearch(e.target.value))}
             ref={searchInput}
           />

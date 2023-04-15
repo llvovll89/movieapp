@@ -13,6 +13,7 @@ import Category from './pages/Category';
 import { ResetStyle } from './styles/ResetStyle';
 import { GlobalWrap } from './styles/GlobalStyle';
 import Person from './pages/Person';
+import PersonDetail from './pages/person/PersonDetail';
 
 
 
@@ -30,6 +31,7 @@ function App() {
               <Route index exact element={<Home />} />
               <Route path="movies/:id" element={<MovieDetail />} />
               <Route path="tv/:id" element={<TvDetail />} />
+              <Route path="character/:id" element={<PersonDetail />} />
               <Route path="search/:query" element={<SearchResults />} />
               <Route path="category/*" element={<Category />} />
               <Route path="person/*" element={<Person />} />

@@ -15,7 +15,7 @@ import { selectCurrentPage, setCurrentPage } from '../../redux/paginationSlice';
 // react-icons
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
-const Actor = () => {
+const Popular = () => {
   const currentPage = useSelector(selectCurrentPage);
   const dispatch = useDispatch();
   const history = useNavigate();
@@ -31,20 +31,20 @@ const Actor = () => {
     `${API_BASE_URL}/person/popular?api_key=${API_KEY}&language=ko&page=${currentPage}`
   );
 
-  console.log(data);
-
   const handlePageChange = (page) => {
     dispatch(setCurrentPage(page));
   };
 
-  const handleLinkClick = (ani) => {
-    history(`/tv/${ani.id}`);
+  const handleLinkClick = (cha) => {
+    history(`/Character/${cha.id}`);
   };
+
+  console.log(data);
 
   return (
     <Section className={dark ? '' : 'dark'}>
       <Results>
-            {isLoading && <Loading></Loading>}
+        {isLoading && <Loading></Loading>}
         {error && <p>Error: {error.message}</p>}
         {data &&
           data.results &&
@@ -52,21 +52,17 @@ const Actor = () => {
             <Card key={person.id}>
               <div className="contents" onClick={() => handleLinkClick(person)}>
                 <div className="top">
-                  {person.profile_path ? (
-                    // actor detailpage 만들어야댐
-                    <Link to={`/actor/${person.id}`}>
-                      <img
-                        src={`${POSTER_URL}${person.profile_path
-                        }`}
-                        alt={person.name}
-                        loading="lazy"
-                      />
-                    </Link>
-                  ) : (
-                    <Link to={`/tv/${person.id}`}>
-                      <img src={NO_IMAGE_URL} alt="No image available" />
-                    </Link>
-                  )}
+                  <Link to={`/character/${person.id}`}>
+                    <img
+                      src={
+                        person.profile_path
+                          ? `${POSTER_URL}${person.profile_path}`
+                          : NO_IMAGE_URL
+                      }
+                      alt={person.name}
+                      loading="lazy"
+                    />
+                  </Link>
                 </div>
                 <div className="bot">
                   <p className="title">
@@ -96,4 +92,4 @@ const Actor = () => {
   );
 };
 
-export default Actor;
+export default Popular;

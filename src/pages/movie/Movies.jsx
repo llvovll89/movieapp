@@ -17,6 +17,7 @@ const Movies = () => {
   const currentPage = useSelector(selectCurrentPage);
   const dispatch = useDispatch();
   const history = useNavigate();
+  const dark = useSelector((state) => state.darkMode.dark);
 
   const { VITE_API_KEY: API_KEY, VITE_BASE_URL: API_BASE_URL } = import.meta
     .env;
@@ -37,7 +38,7 @@ const Movies = () => {
   };
 
   return (
-    <Section>
+    <Section className={dark ? '' : 'dark'}>
       <Results>
         {isLoading && (
           <Loading>
@@ -67,7 +68,6 @@ const Movies = () => {
                     평점 - <span>{movie.vote_average}</span>
                   </p>
                   <p className="date">
-                    개봉일
                     <span> {movie.release_date}</span>
                   </p>
                 </div>
