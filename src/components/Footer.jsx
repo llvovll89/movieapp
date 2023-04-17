@@ -10,7 +10,7 @@ const Footer = () => {
     <FooterContainer className={darkModeOn ? "" : "dark"}>
       <div className="top">
         <Link to="/">공지사항</Link>
-        <Link to="/">게시판 가기</Link>
+        <Link to="/">게시판가기</Link>
       </div>
       <div className="links">
         <a href="#" target="_blank">

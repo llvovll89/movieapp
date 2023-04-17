@@ -19,7 +19,7 @@ const Header = () => {
 
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-
+  const [scrollBottom, setScrollBottom] = useState(false);
   const searchQuery = useSelector((state) => String(state.search.query));
   const { dark, bgColor, color } = useSelector((state) => state.darkMode);
 
@@ -75,6 +75,14 @@ const Header = () => {
     searchInput.current.focus();
   };
 
+  const scrollEvent = useCallback(() => {
+    if (window.scrollY >= 56) {
+      setScrollBottom(true);
+    } else {
+      setScrollBottom(false);
+    }
+  }, []);
+
   const handleClickOutside = useCallback(
     (e) => {
       if (
@@ -101,27 +109,24 @@ const Header = () => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
+    window.addEventListener('scroll', scrollEvent);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('scroll', scrollEvent);
     };
-  }, [dispatch, searchQuery]);
+  }, [dispatch, searchQuery, scrollEvent]);
 
   return (
-    <HeaderContainer className={dark ? '' : 'dark'}>
+    <HeaderContainer className={`${
+      dark ? '' : 'dark'
+    } ${scrollBottom ? 'bottom' : ''}`}>
+    
       <div className="logo">
-        <Link to="/">블랙타이</Link>
+        <Link to="/">BLACK TIE</Link>
       </div>
       <div className="navbar">
-        <div
-          className="toggle"
-          onClick={toggleHandleClick}
-          // onTouchStart={toggleHandleClick}
-          // onTouchEnd={(e) => {
-          //   e.preventDefault();
-          //   e.stopPropagation();
-          // }}
-        >
+        <div className="toggle" onClick={toggleHandleClick}>
           {isNavbarVisible ? <AiOutlineClose /> : <RxHamburgerMenu />}
         </div>
         <div
@@ -179,8 +184,12 @@ const Header = () => {
               인물
             </button>
             <div className="dropdown-content">
-              <Link onClick={toggleHandleClick} to="/person/popular">유명인물</Link>
-              <Link onClick={toggleHandleClick} to="/person/entertainer">예능인</Link>
+              <Link onClick={toggleHandleClick} to="/person/popular">
+                유명인물
+              </Link>
+              <Link onClick={toggleHandleClick} to="/person/entertainer">
+                예능인
+              </Link>
             </div>
           </div>
         </div>

@@ -14,7 +14,7 @@ const ForeignNetflix = ({ url }) => {
   const API_BASE_URL = import.meta.env.VITE_BASE_URL;
   const POSTER_URL = 'https://image.tmdb.org/t/p/w500/';
 
-  const darkModeOn = useSelector((state) => state.darkMode.dark);
+  const dark = useSelector((state) => state.darkMode.dark);
   const history = useNavigate();
 
   const [perPage, setPerPage] = useState(6);
@@ -54,7 +54,9 @@ const ForeignNetflix = ({ url }) => {
 
   return (
     <Container>
-      <span>현재 외국에서 인기있는 Netflix 😎</span>
+      <div className="top">
+      <h2>현재 외국에서 인기있는 Netflix </h2>
+      </div>
       {isLoading && (
         <Loading>
           <Spinner />

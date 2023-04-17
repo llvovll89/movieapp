@@ -54,7 +54,7 @@ const TvDetail = () => {
   }, [handleResize]);
 
   const handleClick = () => {
-    history('/');
+    history(-1);
   };
 
   return (

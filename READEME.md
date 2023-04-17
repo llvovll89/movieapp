@@ -151,4 +151,13 @@ allsi
 
   04-13
   전체적인 색상을 dark한 느낌에서 -> white한 느낌으로 바꿈 
+
+  04.17 
+  인물 디테일 페이지에 cast데이터가 api에 20개 ? 이상시 left overflow로 인한 left 클래스가 보이지않음, 그래서 상수화시키고 options 변경!@
+  인물 ui & 디테일 페이지 수정 & 바꿈 (dark state이용)
+
+  전체적인 size와 UI 변경 , header bar에 스크롤이벤트 추가 (window.scrollY >= 56px 시 box-shadow 추가)
+  그리고 progressbar 추가해야할듯 
+
+  최신트레일러 추가 (main에)
 -->

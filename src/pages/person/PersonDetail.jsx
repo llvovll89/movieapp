@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAxios from '../../hooks/useAxios';
-import { DetailPage, Section } from '../../styles/GlobalStyle';
+import { DetailPage, Section, DetailPerson, ErrorBox } from '../../styles/GlobalStyle';
 import { Loading } from '../../styles/Loading';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
@@ -28,17 +28,38 @@ const PersonDetail = () => {
     `${API_BASE_URL}/person/${id}/combined_credits?api_key=${API_KEY}&language=ko`
   );
 
+  const PERSON_PAGE_SIZE_LARGE = 5;
+  const PERSON_PAGE_SIZE_MEDIUM = 4;
+  const PERSON_PAGE_SIZE_SMALL = 3;
+
   const handleResize = () => {
     if (window.innerWidth >= 1280) {
-      setPerPage(6);
+      setPerPage(PERSON_PAGE_SIZE_LARGE);
     } else if (window.innerWidth >= 924) {
-      setPerPage(4);
+      setPerPage(PERSON_PAGE_SIZE_MEDIUM);
     } else if (window.innerWidth >= 628) {
-      setPerPage(3);
+      setPerPage(PERSON_PAGE_SIZE_SMALL);
     } else {
-      setPerPage(2);
+      setPerPage(PERSON_PAGE_SIZE_SMALL);
     }
   };
+
+  const topRatedCast =
+    creditData?.cast?.reduce((prev, current) => {
+      return prev.vote_average > current.vote_average ? prev : current;
+    }, []) || [];
+
+  console.log(topRatedCast.backdrop_path);
+
+  const handleClick = () => {
+    history(-1);
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [handleResize]);
 
   return (
     <Section className={dark ? '' : 'dark'}>
@@ -53,9 +74,16 @@ const PersonDetail = () => {
         </ErrorBox>
       )}
       {!isLoading && !error && (
-        <DetailPage>
-          <div className="content">
-            <div className="top">
+        <DetailPerson>
+          <div
+            className={dark ? 'content' : 'content dark'}
+            style={{
+              backgroundImage: topRatedCast
+                ? `${BACKDROP_URL}${topRatedCast.backdrop_path}`
+                : null,
+            }}
+          >
+            <div className="left">
               <img
                 src={
                   data.profile_path
@@ -63,31 +91,71 @@ const PersonDetail = () => {
                     : NO_IMAGE_URL
                 }
                 alt={data.name}
+                loading="lazy"
               />
             </div>
-            <div className="bot">
+            <div className="right">
               <div className="title">
                 <h1>{data.name}</h1>
                 <div className="sub">
-                  <span>생년월일 {data.birthday}</span>
-                  <span>출생지 {data.place_of_birth}</span>
-                  <span>직업 {data.known_for_department}</span>
-                </div>
-
-                <div className="net">
-                  {/* 
-                <div className="pro_name">
-                  <span>작품 수 {data.combined_credits.cast.length}</span> <br/>
-                  <span>작품 제목 
-                  <br/>
-                  {data.combined_credits.cast.map((item) => item.title).slice(0, 6).join("")}</span>
+                  <div className="items">
+                    <p>생년월일</p>
+                    <span>{data.birthday}</span>
                   </div>
-                */}
+                  <div className="items">
+                    <p>출생지</p>
+                    <span>{data.place_of_birth}</span>
+                  </div>
+                  <div className="items">
+                    <p>직업</p>
+                    <span>{data.known_for_department}</span>
+                  </div>
                 </div>
               </div>
+
+              <div className="credit">
+                {creditData && creditData.cast && creditData.cast.length > 0 ? (
+                  <Splide
+                    options={{
+                      perPage: Math.min(creditData.cast.length, perPage),
+                      pagination: false,
+                      gap: '6px',
+                      drag: 'free',
+                      focus: 'center',
+                      arrows: true,
+                    }}
+                  >
+                    {creditData.cast.map((c) => (
+                      <SplideSlide key={c.id}>
+                        <div className="cast_contents">
+                          <img
+                            src={
+                              c.poster_path
+                                ? `${POSTER_URL}${c.poster_path}`
+                                : NO_IMAGE_URL
+                            }
+                          />
+                          <div className="cast_name">
+                            <p>{c.title ? c.title : c.name}</p>
+                            {c.character ? <p>{c.character}</p> : null}
+                          </div>
+                        </div>
+                      </SplideSlide>
+                    ))}
+                  </Splide>
+                ) : null}
+              </div>
             </div>
+
+            <button
+              className="close_btn"
+              onClick={handleClick}
+              onTouchStart={handleClick}
+            >
+              <AiOutlineClose />
+            </button>
           </div>
-        </DetailPage>
+        </DetailPerson>
       )}
     </Section>
   );

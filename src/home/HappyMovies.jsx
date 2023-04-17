@@ -17,7 +17,7 @@ const HappyMovies = ({ url }) => {
 
   const history = useNavigate();
 
-  const darkModeOn = useSelector((state) => state.darkMode.dark);
+  const dark = useSelector((state) => state.darkMode.dark);
 
   const [perPage, setPerPage] = useState(6);
   const [gap, setGap] = useState("6px");
@@ -57,7 +57,7 @@ const HappyMovies = ({ url }) => {
   return (
     <Container>
       <div className="top">
-        <span>재미와 감동을 느끼고싶을때 😂</span>
+        <h2>재미와 감동을 느끼고싶을때</h2>
       </div>
       {isLoading && (
         <Loading>
@@ -79,7 +79,7 @@ const HappyMovies = ({ url }) => {
         {happyMovies.results &&
           happyMovies.results.map((movie) => (
             <SplideSlide key={movie.id}>
-            <SliderItem className={darkModeOn ? "" : "dark"}
+            <SliderItem className={dark ? "" : "dark"}
             onClick={() => handleLinkClick(movie)}
             >
               <img

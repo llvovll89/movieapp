@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useCallback} from 'react';
 import useAxios from '../hooks/useAxios';
 import { Container } from '../styles/GlobalStyle';
 import { SliderItem } from '../styles/Sliders';
@@ -8,10 +8,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import { useSelector } from 'react-redux';
-import { useCallback } from 'react';
 
 const PopularMovies = ({ url }) => {
-  const darkModeOn = useSelector((state) => state.darkMode.dark);
+  const dark = useSelector((state) => state.darkMode.dark);
   const [perPage, setPerPage] = useState(6);
   const [gap, setGap] = useState('6px');
 
@@ -55,7 +54,9 @@ const PopularMovies = ({ url }) => {
 
   return (
     <Container>
-      <span>현재 가장 인기있는 🤩</span>
+      <div className="top">
+        <h2>현재 가장 인기있는 </h2>
+      </div>
       {isLoading && (
         <Loading>
           <Spinner />
@@ -76,16 +77,15 @@ const PopularMovies = ({ url }) => {
           popularMovies.results.map((movie) => (
             <SplideSlide key={movie.id}>
               <SliderItem
-                className={darkModeOn ? '' : 'dark'}
+                className={dark ? '' : 'dark'}
                 onClick={() => handleLinkClick(movie)}
               >
+                <img
+                  src={`${POSTER_URL}${movie.poster_path}`}
+                  alt={movie.title}
+                  loading="lazy"
+                />
 
-                  <img
-                    src={`${POSTER_URL}${movie.poster_path}`}
-                    alt={movie.title}
-                    loading="lazy"
-                  />
-                  
                 <div className="slider_contents">
                   <h3>{movie.title}</h3>
                   <p>

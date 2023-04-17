@@ -44,6 +44,11 @@ const SliderItem = styled.div`
   overflow: hidden;
   border-radius: 12px;
   cursor: pointer;
+  transition: transform 0.15s ease-in-out;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
 
   &.dark {
     background: rgb(29, 29, 29);

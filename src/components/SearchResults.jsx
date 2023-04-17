@@ -33,27 +33,25 @@ function SearchResults() {
     `${API_BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}&language=ko&page=${currentPage}`
   );
 
-  console.log(data);
-
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
   };
 
   const filteredData =
-  filter === 'all'
-    ? data.results || []
-    : (data.results || []).filter((movie) => {
-        if (!movie.production_countries) {
-          return false;
-        }
-        return filter === 'korean'
-          ? movie.production_countries.some(
-              (country) => country.iso_3166_1 === 'KR'
-            )
-          : movie.production_countries.every(
-              (country) => country.iso_3166_1 !== 'KR'
-            );
-      });
+    filter === 'all'
+      ? data.results || []
+      : (data.results || []).filter((movie) => {
+          if (!movie.production_countries) {
+            return false;
+          }
+          return filter === 'korean'
+            ? movie.production_countries.some(
+                (country) => country.iso_3166_1 === 'KR'
+              )
+            : movie.production_countries.every(
+                (country) => country.iso_3166_1 !== 'KR'
+              );
+        });
 
   const handlePageChange = (page) => {
     dispatch(setCurrentPage(page));
@@ -95,17 +93,28 @@ function SearchResults() {
               <Card key={movie.id}>
                 <div className="contents">
                   <div className="top">
-                    <Link to={`/movies/${movie.id}`}>
+                  <Link
+                  to={
+                    movie.media_type === 'movie'
+                      ? `/movies/${movie.id}`
+                      : movie.media_type === 'person'
+                        ? `/character/${movie.id}`
+                        : movie.media_type === "tv"
+                        ? `/tv/${movie.id}`
+                        : ""
+                  }
+                >
                       <img
-                      src={
-                        movie.poster_path
-                        ? `${POSTER_URL}${movie.poster_path}`
-                        : movie.profile_path
-                          ? `${POSTER_URL}${movie.profile_path}`
-                          : movie.known_for && movie.known_for[0].backdrop_path
+                        src={
+                          movie.poster_path
+                            ? `${POSTER_URL}${movie.poster_path}`
+                            : movie.profile_path
+                            ? `${POSTER_URL}${movie.profile_path}`
+                            : movie.known_for &&
+                              movie.known_for[0].backdrop_path
                             ? `${POSTER_URL}${movie.known_for[0].backdrop_path}`
                             : NO_IMAGE_URL
-                      }
+                        }
                         alt={movie.title}
                         loading="lazy"
                       />
@@ -116,28 +125,25 @@ function SearchResults() {
                       {movie.title ? movie.title : movie.name}
                     </p>
                     <div className="aver">
-                    {movie.vote_average ? (
-                      <p>
-                        평점 - <span>{movie.vote_average.toFixed(2)}</span>
-                      </p>
-                    ) : movie.popularity ? (
-                      <p>
-                        인기 - <span>{movie.popularity.toFixed(2)}</span>
-                      </p>
-                    ) : (
-                      <p>
-                        값 없음
-                      </p>
-                    )}
-                  </div>
+                      {movie.vote_average ? (
+                        <p>
+                          평점 - <span>{movie.vote_average.toFixed(2)}</span>
+                        </p>
+                      ) : movie.popularity ? (
+                        <p>
+                          인기 - <span>{movie.popularity.toFixed(2)}</span>
+                        </p>
+                      ) : (
+                        <p>값 없음</p>
+                      )}
+                    </div>
                     <p className="date">
-                    {movie.release_date
-                      ? movie.release_date
-                      : (movie.known_for || []).map((item) => (
-                          <span key={item.id}>{item.name || item.title}</span>
-                        ))}
-                  </p>
-                  
+                      {movie.release_date
+                        ? movie.release_date
+                        : (movie.known_for || []).map((item) => (
+                            <span key={item.id}>{item.name || item.title}</span>
+                          ))}
+                    </p>
                   </div>
                 </div>
               </Card>
@@ -159,7 +165,10 @@ function SearchResults() {
             >
               <FaArrowLeft />
             </PaginationButton>
-            <PaginationButton onClick={() => handlePageChange(currentPage + 1)}>
+            <PaginationButton
+              disabled={currentPage === 1}
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
               <FaArrowRight />
             </PaginationButton>
           </PaginationContainer>

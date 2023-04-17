@@ -11,10 +11,8 @@ import { AiOutlineClose } from 'react-icons/ai';
 
 const MovieDetail = () => {
   const { id } = useParams();
+  const dark = useSelector((state) => state.darkMode.dark);
   const [perPage, setPerPage] = useState(6);
-
-  const like = useSelector((state) => state.like.likeCount);
-  const dispatch = useDispatch();
 
   const NO_IMAGE_URL = 'https://via.placeholder.com/500x500.png?text=No+Image';
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -39,10 +37,8 @@ const MovieDetail = () => {
     `${API_BASE_URL}/movie/${id}/recommendations?api_key=${API_KEY}&language=ko-KR`
   );
 
-  console.log(data);
-
   const handleClick = () => {
-    history('/');
+    history(-1);
   };
 
   const handleResize = () => {
@@ -78,7 +74,7 @@ const MovieDetail = () => {
     );
 
   return (
-    <Section>
+    <Section className={dark ? '' : 'dark'}>
       <DetailPage>
         <div className="content">
           <div className="top">
@@ -166,9 +162,11 @@ const MovieDetail = () => {
 
                 <div className="items_b">
                   <h3>
-                  {recommendedMoviesData && recommendedMoviesData.results && recommendedMoviesData.results.length > 0
-                    ? '비슷한영화'
-                    : null}
+                    {recommendedMoviesData &&
+                    recommendedMoviesData.results &&
+                    recommendedMoviesData.results.length > 0
+                      ? '비슷한영화'
+                      : null}
                   </h3>
                   {recommendedMoviesData &&
                     recommendedMoviesData.results &&
@@ -203,11 +201,17 @@ const MovieDetail = () => {
                     )}
                 </div>
               </div>
-            ) : <div className='non'>
-                                  <p>아직 정보가없습니다.</p>
-            </div>}
+            ) : (
+              <div className="non">
+                <p>아직 정보가없습니다.</p>
+              </div>
+            )}
           </div>
-          <button className="close_btn" onClick={handleClick} onTouchStart={handleClick}>
+          <button
+            className="close_btn"
+            onClick={handleClick}
+            onTouchStart={handleClick}
+          >
             <AiOutlineClose />
           </button>
         </div>
