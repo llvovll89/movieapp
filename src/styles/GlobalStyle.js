@@ -1087,11 +1087,6 @@ const Section = styled.section`
   position: relative;
   padding-top: 76px;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: auto;
   transition: padding-left 0.15s ease;
   background: #ffffff;
   color: #000;
@@ -1269,7 +1264,6 @@ const Section = styled.section`
 
   @media screen and (max-width: 768px) {
     padding: 76px 0;
-    height: auto;
 
     .filter {
       padding-top: 12px;
