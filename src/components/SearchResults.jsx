@@ -70,22 +70,24 @@ function SearchResults() {
     return <ErrorBox>Error: {error.message}</ErrorBox>;
   }
 
+  // <SearchContainer> </SearchContainer>
+
   return (
     <Section className={dark ? '' : 'dark'}>
-      <SearchContainer>
-        <div className="items">
-          <p>
-            <span>" {query} "</span> (으)로 검색하신 결과 입니다.
-            <span> 총 {data.total_results}개</span>
-          </p>
-          <div className="filter">
-            <select name="filter" value={filter} onChange={handleFilterChange}>
-              <option value="all">전체</option>
-              <option value="korean">한국영화</option>
-              <option value="foreign">외국영화</option>
-            </select>
-          </div>
-        </div>
+      
+    <div className="items">
+    <p>
+      <span>" {query} "</span> (으)로 검색하신 결과 입니다.
+      <span> 총 {data.total_results}개</span>
+    </p>
+    <div className="filter">
+      <select name="filter" value={filter} onChange={handleFilterChange}>
+        <option value="all">전체</option>
+        <option value="korean">한국영화</option>
+        <option value="foreign">외국영화</option>
+      </select>
+    </div>
+  </div>
 
         {filteredData.length > 0 ? (
           <Results>
@@ -173,7 +175,7 @@ function SearchResults() {
             </PaginationButton>
           </PaginationContainer>
         )}
-      </SearchContainer>
+
     </Section>
   );
 }

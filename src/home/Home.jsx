@@ -8,9 +8,6 @@ import { Section } from '../styles/GlobalStyle';
 
 const Home = () => {
   const dark = useSelector((state) => state.darkMode.dark);
-  
-  https://api.themoviedb.org/3/
-
 
   return (
     <Section className={dark ? '' : 'dark'}>
