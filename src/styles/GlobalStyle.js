@@ -18,9 +18,11 @@ const GlobalWrap = styled.div`
   min-height: calc(
     100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top)
   );
+
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
 `;
 
 const ErrorBox = styled.div`
@@ -815,9 +817,9 @@ const HeaderContainer = styled.header`
   z-index: 1000;
   transition: background-color, box-shadow 0.15s linear;
 
-  &.bottom {
+  /* &.bottom {
     box-shadow: 0px 1px 1px #4fd2b2;
-  }
+  } */
 
   &.dark {
     background: #292a2d;
